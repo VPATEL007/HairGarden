@@ -67,7 +67,7 @@ class _SupportChatPageState extends State<SupportChatPage> {
                   height: SizeConfig.screenHeight * 0.7,
                   alignment: Alignment.center,
                   width: SizeConfig.screenWidth * 0.9,
-                  child: const Text("No Data Found"),
+                  child: const Text("Admin Not Replay"),
                 )
               : Stack(
                   children: [
@@ -117,7 +117,7 @@ class _SupportChatPageState extends State<SupportChatPage> {
                                                       TextDecoration.none)),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 3),
+                                            vertical: 7),
                                         child: Text(
                                             supportController
                                                     .supportChatModel
@@ -136,6 +136,7 @@ class _SupportChatPageState extends State<SupportChatPage> {
                                                     decoration:
                                                         TextDecoration.none)),
                                       ),
+
                                       Text(
                                           supportController
                                                   .supportChatModel
@@ -221,6 +222,7 @@ class _SupportChatPageState extends State<SupportChatPage> {
                                                             decoration:
                                                                 TextDecoration
                                                                     .none)),
+                                                SizedBox(height: 6),
                                                 Padding(
                                                   padding: const EdgeInsets
                                                       .symmetric(vertical: 3),

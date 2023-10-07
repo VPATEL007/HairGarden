@@ -179,55 +179,84 @@ class _payment_done_pageState extends State<payment_done_page>
 
                       //PRODUCT COST PRICE
 
-                      ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: _book_service.servname.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              Center(
-                                child: SizedBox(
-                                  width: SizeConfig.screenWidth * 0.9,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                    Center(
+                      child: SizedBox(
+                        width: SizeConfig.screenWidth * 0.9,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${_get_cart.response.value.data?[0].title.toString()}",
+                              style: font_style.black_400_16,
+                            ),
+                            const Spacer(),
+                            Text(
+                              "₹ ${double.parse(_get_cart.response.value.data?[0].price.toString() ?? "").toStringAsFixed(2)}",
+                              style: font_style.black_500_14,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.02,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: SizeConfig.screenWidth * 0.9,
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: _get_cart.response.value.data
+                                  ?.where(
+                                      (element) => element.type == "addonservice")
+                                  .toList()
+                                  .length,
+                              itemBuilder: (context, indexAT) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                      child: Container(
+                                        height: 1,
+                                        color: line_cont_col,
+                                        width: SizeConfig.screenWidth * 0.9,
+                                      )),
+                                  SizedBox(
+                                    height: SizeConfig.screenHeight * 0.010,
+                                  ),
+                                  Text(
+                                    "Add On Service",
+                                    style: font_style.black_500_16,
+                                  ),
+                                  SizedBox(
+                                    height: SizeConfig.screenHeight * 0.010,
+                                  ),
+                                  Center(
+                                      child: Container(
+                                        height: 1,
+                                        color: line_cont_col,
+                                        width: SizeConfig.screenWidth * 0.9,
+                                      )),
+                                  SizedBox(
+                                    height: SizeConfig.screenHeight * 0.010,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
                                     children: [
-                                      Text('Service Name',
-                                          style: font_style.black_500_16),
                                       Text(
-                                        "₹${_book_service.servname[index].toString()}",
-                                        style: font_style.black_500_16,
+                                        "${_get_cart.response.value.data?.where((element) => element.type == "addonservice").toList()[indexAT].title.toString().capitalizeFirst}",
+                                        style: font_style.black_400_16,
+                                      ),
+                                      const Spacer(),
+                                      Text(
+                                        "₹ ${double.parse(_get_cart.response.value.data?.where((element) => element.type == "addonservice").toList()[indexAT].price ?? "").toStringAsFixed(2)}",
+                                        style: font_style.black_500_14,
                                       ),
                                     ],
                                   ),
-                                ),
-                              ),
-                              SizedBox(height: SizeConfig.screenHeight * 0.01),
-                              Center(
-                                child: SizedBox(
-                                  width: SizeConfig.screenWidth * 0.9,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('Price',
-                                          style: font_style.black_500_16),
-                                      Text(
-                                        "₹${_book_service.totprice.toString()}",
-                                        style: font_style.black_500_16,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(
-                            height: 5,
-                          );
-                        },
+                                ],
+                              )),
+                        ),
                       ),
                       SizedBox(height: SizeConfig.screenHeight * 0.01),
                       // Center(

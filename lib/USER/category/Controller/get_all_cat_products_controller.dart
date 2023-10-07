@@ -94,7 +94,6 @@ class get_all_cat_products_controller extends GetxController {
         loading(false);
       }
       else {
-        loading(false);
         response = respo.obs;
         commontoas(respo.message.toString());
       }

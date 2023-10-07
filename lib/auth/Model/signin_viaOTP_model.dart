@@ -86,7 +86,7 @@ class Data {
     parentId = json['parent_id'].toString();
     referCode = json['refer_code'];
     roleId = json['role_id'];
-    pincode = json['pincode'];
+    pincode = json['pincode'].toString();
     address = json['address'];
     createAt = json['create_at'];
     updatedAt = json['updated_at'];

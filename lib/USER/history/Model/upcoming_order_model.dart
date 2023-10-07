@@ -33,6 +33,7 @@ class Data {
   String? paymentType;
   String? paymentId;
   String? paymentStatus;
+  String? serviceTitle;
   String? otp;
   String? price;
   String? slotName;
@@ -56,12 +57,13 @@ class Data {
       this.bookingId,
       this.pincode,
       this.status,
+        this.serviceTitle,
       this.staffdata,
       this.itemList});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
-    orderId = json['orderId']??"";
+    orderId = json['orderId'].toString()??"";
     paymentType = json['paymentType'];
     paymentId = json['payment_id'];
     paymentStatus = json['payment_status'];
@@ -72,6 +74,7 @@ class Data {
     bookingId = json['booking_id'].toString();
     pincode = json['pincode'].toString();
     status = json['status'];
+    serviceTitle = json['ServiceTitle'];
     staffdata = json['staffdata'] != null
         ? new Staffdata.fromJson(json['staffdata'])
         : null;
@@ -93,6 +96,7 @@ class Data {
     data['otp'] = this.otp;
     data['price'] = this.price;
     data['slot_name'] = this.slotName;
+    data['ServiceTitle'] = this.serviceTitle;
     data['booking_date'] = this.bookingDate;
     data['booking_id'] = this.bookingId;
     data['pincode'] = this.pincode;

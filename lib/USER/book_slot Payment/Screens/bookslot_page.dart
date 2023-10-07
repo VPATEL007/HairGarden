@@ -1256,30 +1256,30 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                           0.015,
                                                     ),
 
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "Service Cost",
-                                                          style: font_style
-                                                              .black_500_12,
-                                                        ),
-                                                        Text(
-                                                          _get_cart.response
-                                                              .value.total
-                                                              .toString(),
-                                                          style: font_style
-                                                              .black_400_12,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: SizeConfig
-                                                              .screenHeight *
-                                                          0.015,
-                                                    ),
+                                                    // Row(
+                                                    //   mainAxisAlignment:
+                                                    //       MainAxisAlignment
+                                                    //           .spaceBetween,
+                                                    //   children: [
+                                                    //     Text(
+                                                    //       "Service Cost",
+                                                    //       style: font_style
+                                                    //           .black_500_12,
+                                                    //     ),
+                                                    //     Text(
+                                                    //       _get_cart.response
+                                                    //           .value.total
+                                                    //           .toString(),
+                                                    //       style: font_style
+                                                    //           .black_400_12,
+                                                    //     ),
+                                                    //   ],
+                                                    // ),
+                                                    // SizedBox(
+                                                    //   height: SizeConfig
+                                                    //           .screenHeight *
+                                                    //       0.015,
+                                                    // ),
 
                                                     //LINE
                                                     Container(

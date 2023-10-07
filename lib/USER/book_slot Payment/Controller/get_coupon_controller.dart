@@ -9,7 +9,7 @@ class get_coupon_controller extends GetxController{
   var loading=false.obs;
   var response=get_coupon_model().obs;
   Rx<CouponModel> couponModel = CouponModel().obs;
-
+  RxBool isCouponUsed = false.obs;
   Future<void>get_coupon_cont(user_id) async {
     try{
       loading(true);
@@ -30,7 +30,7 @@ class get_coupon_controller extends GetxController{
     try{
       loading(true);
       final respo =await api_service().getAllCoupon(user_id);
-      print('Coupon==${respo.data?.first}');
+      print('Coupon==${respo.data?.first.amount}');
       if(respo.status==true){
         couponModel=respo.obs;
       }
@@ -50,9 +50,11 @@ class get_coupon_controller extends GetxController{
       final respo =await api_service().applyCoupon(user_id,coupan_id);
       if(respo==true){
         commontoas("Coupon Apply Successfully");
+        isCouponUsed(true);
       }
       else{
         commontoas("Coupon Already applied");
+        isCouponUsed(false);
       }
     }
     finally{

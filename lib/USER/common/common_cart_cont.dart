@@ -580,34 +580,34 @@ class _common_cart_contState extends State<common_cart_cont> {
                                     height: SizeConfig.screenHeight * 0.015,
                                   ),
 
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Service Cost",
-                                        style: font_style.black_500_14,
-                                      ),
-                                      Text(
-                                        "₹${_get_cart.response.value.total.toString()}",
-                                        style: font_style.black_500_14,
-                                      ),
-                                    ],
-                                  ),
-
-                                  SizedBox(
-                                    height: SizeConfig.screenHeight * 0.015,
-                                  ),
+                                  // Row(
+                                  //   mainAxisAlignment:
+                                  //       MainAxisAlignment.spaceBetween,
+                                  //   children: [
+                                  //     Text(
+                                  //       "Service Cost",
+                                  //       style: font_style.black_500_14,
+                                  //     ),
+                                  //     Text(
+                                  //       "₹${_get_cart.response.value.total.toString()}",
+                                  //       style: font_style.black_500_14,
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  //
+                                  // SizedBox(
+                                  //   height: SizeConfig.screenHeight * 0.015,
+                                  // ),
 
                                   //LINE
-                                  Container(
-                                    height: 1,
-                                    width: SizeConfig.screenWidth,
-                                    color: Colors.grey,
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.screenHeight * 0.015,
-                                  ),
+                                  // Container(
+                                  //   height: 1,
+                                  //   width: SizeConfig.screenWidth,
+                                  //   color: Colors.grey,
+                                  // ),
+                                  // SizedBox(
+                                  //   height: SizeConfig.screenHeight * 0.015,
+                                  // ),
 
                                   SizedBox(
                                     width: SizeConfig.screenWidth * 0.02,

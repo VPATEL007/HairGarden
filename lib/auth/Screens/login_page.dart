@@ -81,15 +81,18 @@ class _login_pageState extends State<login_page> {
 
   String? uid;
 
-
-
-
   Future<void> getuserid() async {
     SharedPreferences sf = await SharedPreferences.getInstance();
     setState(() {
       uid = sf.getString("stored_uid");
       print("USER ID ID ${uid.toString()}");
     });
+  }
+
+  @override
+  void initState() {
+    initPlatformState();
+    super.initState();
   }
 
   @override
@@ -139,12 +142,13 @@ class _login_pageState extends State<login_page> {
                       children: [
                         Text(
                           'Skip',
-                          style: font_style.white_400_16_under.copyWith(color: common_color),
+                          style: font_style.white_400_16_under
+                              .copyWith(color: common_color),
                         ),
                         const SizedBox(
                           width: 5,
                         ),
-                         Icon(
+                        Icon(
                           Icons.arrow_forward_ios,
                           color: common_color,
                           size: 15,
@@ -189,71 +193,74 @@ class _login_pageState extends State<login_page> {
                             clipBehavior: Clip.none,
                             alignment: Alignment.topLeft,
                             children: [
-                              Container(
-                                  padding: const EdgeInsets.only(left: 5),
-                                  color: common_color,
-                                  child: const Text(
-                                    " ",
-                                    style: TextStyle(
-                                        fontSize: 32,
-                                        fontFamily: 'Lato',
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600),
-                                  )),
-                              //LEFT STAR
-                              Positioned(
-                                  top: -SizeConfig.screenHeight * 0.02,
-                                  left: -SizeConfig.screenWidth * 0.23,
-                                  child: SizedBox(
-                                      height: SizeConfig.screenHeight * 0.015,
-                                      width: SizeConfig.screenWidth * 0.09,
-                                      child: SvgPicture.asset(
-                                          "assets/images/lest_star.svg",color: common_color))),
+                          Container(
+                              padding: const EdgeInsets.only(left: 5),
+                              color: common_color,
+                              child: const Text(
+                                " ",
+                                style: TextStyle(
+                                    fontSize: 32,
+                                    fontFamily: 'Lato',
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600),
+                              )),
+                          //LEFT STAR
+                          Positioned(
+                              top: -SizeConfig.screenHeight * 0.02,
+                              left: -SizeConfig.screenWidth * 0.23,
+                              child: SizedBox(
+                                  height: SizeConfig.screenHeight * 0.015,
+                                  width: SizeConfig.screenWidth * 0.09,
+                                  child: SvgPicture.asset(
+                                      "assets/images/lest_star.svg",
+                                      color: common_color))),
 
-                              //BIG STAR
-                              Positioned(
-                                  top: -SizeConfig.screenHeight * 0.05,
-                                  right: -SizeConfig.screenWidth * 0.14,
-                                  child: SizedBox(
-                                      height: SizeConfig.screenHeight * 0.035,
-                                      width: SizeConfig.screenWidth * 0.08,
-                                      child: SvgPicture.asset(
-                                          "assets/images/big_star_svg.svg",color: common_color,))),
+                          //BIG STAR
+                          Positioned(
+                              top: -SizeConfig.screenHeight * 0.05,
+                              right: -SizeConfig.screenWidth * 0.14,
+                              child: SizedBox(
+                                  height: SizeConfig.screenHeight * 0.035,
+                                  width: SizeConfig.screenWidth * 0.08,
+                                  child: SvgPicture.asset(
+                                    "assets/images/big_star_svg.svg",
+                                    color: common_color,
+                                  ))),
 
-                              //CIRCLE
-                              Positioned(
-                                top: -SizeConfig.screenHeight * 0.04,
-                                left: -SizeConfig.screenWidth * 0.1,
-                                child: Container(
-                                  height: SizeConfig.screenHeight * 0.08,
-                                  width: SizeConfig.screenWidth * 0.16,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                          color: yellow_col, width: 3)),
-                                ),
-                              ),
-                              // Positioned(
-                              //   top: -SizeConfig.screenHeight * 0.002,
-                              //   left: SizeConfig.screenWidth * 0.008,
-                              //   child: Container(
-                              //     height: SizeConfig.screenHeight * 0.04,
-                              //     width: SizeConfig.screenWidth * 0.1,
-                              //     color: Colors.transparent,
-                              //   ),
-                              // ),
-                              Container(
-                                  color: bg_col,
-                                  padding: const EdgeInsets.only(left: 5),
-                                  child:  Text(
-                                    "LOG IN",
-                                    style: TextStyle(
-                                        fontSize: 32,
-                                        fontFamily: 'Lato',
-                                        color: common_color,
-                                        fontWeight: FontWeight.w600),
-                                  )),
-                            ])),
+                          //CIRCLE
+                          Positioned(
+                            top: -SizeConfig.screenHeight * 0.04,
+                            left: -SizeConfig.screenWidth * 0.1,
+                            child: Container(
+                              height: SizeConfig.screenHeight * 0.08,
+                              width: SizeConfig.screenWidth * 0.16,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border:
+                                      Border.all(color: yellow_col, width: 3)),
+                            ),
+                          ),
+                          // Positioned(
+                          //   top: -SizeConfig.screenHeight * 0.002,
+                          //   left: SizeConfig.screenWidth * 0.008,
+                          //   child: Container(
+                          //     height: SizeConfig.screenHeight * 0.04,
+                          //     width: SizeConfig.screenWidth * 0.1,
+                          //     color: Colors.transparent,
+                          //   ),
+                          // ),
+                          Container(
+                              color: bg_col,
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text(
+                                "LOG IN",
+                                style: TextStyle(
+                                    fontSize: 32,
+                                    fontFamily: 'Lato',
+                                    color: common_color,
+                                    fontWeight: FontWeight.w600),
+                              )),
+                        ])),
 
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.1,
@@ -267,7 +274,8 @@ class _login_pageState extends State<login_page> {
                           "Mobile No.*",
                           style: font_style.white_600_14.copyWith(
                               color: Colors.black,
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -283,15 +291,18 @@ class _login_pageState extends State<login_page> {
                           maxLength: 10,
                           onChanged: (value) {
                             setState(() {
-                              isotp=false;
+                              isotp = false;
                             });
                           },
                           // readOnly: isotp == true ? true : false,
-                          style: font_style.white_400_16.copyWith(color:  Colors.black),
+                          style: font_style.white_400_16
+                              .copyWith(color: Colors.black),
                           decoration: InputDecoration(
                             counterText: "",
                             hintText: "Enter Your Mobile Number",
-                            hintStyle: font_style.white_400_16.copyWith( color: Colors.black,),
+                            hintStyle: font_style.white_400_16.copyWith(
+                              color: Colors.black,
+                            ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: yellow_col)),
                             focusedBorder: UnderlineInputBorder(
@@ -312,296 +323,327 @@ class _login_pageState extends State<login_page> {
                     // ),
                     isotp == false
                         ? SizedBox(
-                      height: SizeConfig.screenHeight * 0.03,
-                    )
+                            height: SizeConfig.screenHeight * 0.03,
+                          )
                         : SizedBox(
-                      height: SizeConfig.screenHeight * 0.02,
-                    ),
+                            height: SizeConfig.screenHeight * 0.02,
+                          ),
                     isotp == false
                         ? Container()
                         : Center(
-                      child: SizedBox(
-                        width: SizeConfig.screenWidth * 0.9,
-                        child: OtpTextField(
-                          numberOfFields: 6,
-                          fillColor: yellow_col,
-                            cursorColor: common_color,
-                          autoFocus: true,
-                          borderColor: yellow_col,
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                          styles: [
-                            font_style.otp_txtstyl.copyWith(color:  Colors.black),
-                            font_style.otp_txtstyl.copyWith(color:  Colors.black),
-                            font_style.otp_txtstyl.copyWith(color:  Colors.black),
-                            font_style.otp_txtstyl.copyWith(color:  Colors.black),
-                            font_style.otp_txtstyl.copyWith(color:  Colors.black),
-                            font_style.otp_txtstyl.copyWith(color:  Colors.black),
-                          ],
-                          enabledBorderColor:  Colors.black,
-                          keyboardType: TextInputType.phone,
-                          focusedBorderColor:  Colors.black,
+                            child: SizedBox(
+                              width: SizeConfig.screenWidth * 0.9,
+                              child: OtpTextField(
+                                numberOfFields: 6,
+                                fillColor: yellow_col,
+                                cursorColor: common_color,
+                                autoFocus: true,
+                                borderColor: yellow_col,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                styles: [
+                                  font_style.otp_txtstyl
+                                      .copyWith(color: Colors.black),
+                                  font_style.otp_txtstyl
+                                      .copyWith(color: Colors.black),
+                                  font_style.otp_txtstyl
+                                      .copyWith(color: Colors.black),
+                                  font_style.otp_txtstyl
+                                      .copyWith(color: Colors.black),
+                                  font_style.otp_txtstyl
+                                      .copyWith(color: Colors.black),
+                                  font_style.otp_txtstyl
+                                      .copyWith(color: Colors.black),
+                                ],
+                                enabledBorderColor: Colors.black,
+                                keyboardType: TextInputType.phone,
+                                focusedBorderColor: Colors.black,
 
-                          //set to true to show as box or false to show as dash
-                          showFieldAsBox: false,
-                          //runs when a code is typed in
-                          onCodeChanged: (String code) {
-                            // FocusScope.of(context).nextFocus();
-                            setState(() {
-                              // otp_controller = code.toString() ;
-                            });
-                          },
-                          //runs when every textfield is filled
-                          onSubmit: (String verificationCode) {
-                            setState(() {
-                              lentered_otp = verificationCode;
-                            });
-                          }, // end onSubmit
-                        ),
-                      ),
-                    ),
+                                //set to true to show as box or false to show as dash
+                                showFieldAsBox: false,
+                                //runs when a code is typed in
+                                onCodeChanged: (String code) {
+                                  // FocusScope.of(context).nextFocus();
+                                  setState(() {
+                                    // otp_controller = code.toString() ;
+                                  });
+                                },
+                                //runs when every textfield is filled
+                                onSubmit: (String verificationCode) {
+                                  setState(() {
+                                    lentered_otp = verificationCode;
+                                  });
+                                }, // end onSubmit
+                              ),
+                            ),
+                          ),
 
                     //OTP BTN
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25,vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 15),
                       child: Row(
                         children: [
                           GetBuilder<signin_send_otp_controller>(
-                              builder: (controller) => (_send_otp.timer?.isActive??false)?Obx(() => Text(
-                                "00:${_send_otp.timerValue.value}",
-                                style: font_style.yellow_400_14.copyWith(fontSize: 16,color:  Colors.black),
-                              )):const SizedBox()),
+                              builder: (controller) =>
+                                  (_send_otp.timer?.isActive ?? false)
+                                      ? Obx(() => Text(
+                                            "00:${_send_otp.timerValue.value}",
+                                            style: font_style.yellow_400_14
+                                                .copyWith(
+                                                    fontSize: 16,
+                                                    color: Colors.black),
+                                          ))
+                                      : const SizedBox()),
                           const Spacer(),
                           InkWell(
                               onTap: () {
-                                if(isotp)
-                                {
-                                  _send_login_otp_obj
-                                      .send_otp_cont(
+                                if (isotp) {
+                                  _send_login_otp_obj.send_otp_cont(
                                       lmno.text.toString(), "login");
                                   _send_otp.startTimer();
-
-                                }
-                                else
-                                {
+                                } else {
                                   commontoas('Please enter mobile number');
                                 }
-
                               },
                               child: Text(
                                 "Resend OTP",
-                                style: font_style.yellow_400_14_underline.copyWith(fontSize: 16,color:  Colors.black),
+                                style: font_style.yellow_400_14_underline
+                                    .copyWith(
+                                        fontSize: 16, color: Colors.black),
                               )),
                         ],
                       ),
                     ),
                     isotp == true
                         ? SizedBox(
-                      height: SizeConfig.screenHeight * 0.05,
-                    )
+                            height: SizeConfig.screenHeight * 0.05,
+                          )
                         : Container(),
                     //OTP BTN
                     isotp == false
                         ? Center(
-                      child: InkWell(
-                          onTap: () {
-
-                            if (lmno.text.isEmpty) {
-                              commontoas(
-                                  "Please Enter Your Mobile Number");
-                            }
-                            else {
-                              _send_login_otp_obj
-                                  .send_otp_cont(
-                                  lmno.text.toString(), "login")
-                                  .then((value) {
-                                 Get.focusScope?.unfocus();
-                                _send_otp.startTimer();
-                                if (_send_otp.checkRegister.value == false) {
-                                  setState(() {
-                                    isotp = false;
-                                  });
-                                } else {
-                                  setState(() {
-                                    isotp = true;
-                                  });
-                                }
-                              });
-                              // setState(() {
-
-                              // _send_otp.signin_send_otp_cont(lmno.text,lfname.text).then((value) {
-                              //   if(_send_otp.checkregister==false){
-                              //     setState(() {
-                              //       isotp=false;
-                              //     });
-                              //   }
-                              //   else{
-                              //     setState(() {
-                              //       isotp=true;
-                              //     });
-                              //   }
-                              //
-                              // });
-                              // });
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Container(
-                                width: SizeConfig.screenWidth * 0.9,
-                                height: SizeConfig.screenHeight * 0.06,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: common_color,
-                                  borderRadius: BorderRadius.circular(32),
-                                ),
-                                child: Obx(() => _send_login_otp_obj.loading.value
-                                    ? const CommonIndicator(color: Colors.white)
-                                    : Text("GET OTP",
-                                    style: font_style.grad_600_16.copyWith(color: Colors.white)),)
-                            ),
-                          )),
-                    )
-                        : Center(
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            if (widget.frompage == "skip") {
-                              if (lentered_otp.toString() == "" ||
-                                  lentered_otp == null) {
-                                commontoas(
-                                    "Please enter OTP");
-                              } else {
-                                _sgnin_viaotp
-                                    .signin_viaOTP_cont(lmno.text,
-                                    lentered_otp.toString())
-                                    .then((value) {
-                                  if (_sgnin_viaotp
-                                      .response.value.message ==
-                                      "Invalid OTP." &&
-                                      _sgnin_viaotp
-                                          .response.value.status ==
-                                          false) {
+                            child: InkWell(
+                                onTap: () {
+                                  if (lmno.text.isEmpty) {
                                     commontoas(
-                                        "Please enter OTP");
+                                        "Please Enter Your Mobile Number");
+                                  } else {
+                                    _send_login_otp_obj
+                                        .send_otp_cont(
+                                            lmno.text.toString(), "login")
+                                        .then((value) {
+                                      Get.focusScope?.unfocus();
+                                      _send_otp.startTimer();
+                                      if (_send_otp.checkRegister.value ==
+                                          false) {
+                                        setState(() {
+                                          isotp = false;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          isotp = true;
+                                        });
+                                      }
+                                    });
+                                    // setState(() {
+
+                                    // _send_otp.signin_send_otp_cont(lmno.text,lfname.text).then((value) {
+                                    //   if(_send_otp.checkregister==false){
+                                    //     setState(() {
+                                    //       isotp=false;
+                                    //     });
+                                    //   }
+                                    //   else{
+                                    //     setState(() {
+                                    //       isotp=true;
+                                    //     });
+                                    //   }
+                                    //
+                                    // });
+                                    // });
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Container(
+                                      width: SizeConfig.screenWidth * 0.9,
+                                      height: SizeConfig.screenHeight * 0.06,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: common_color,
+                                        borderRadius: BorderRadius.circular(32),
+                                      ),
+                                      child: Obx(
+                                        () => _send_login_otp_obj.loading.value
+                                            ? const CommonIndicator(
+                                                color: Colors.white)
+                                            : Text("GET OTP",
+                                                style: font_style.grad_600_16
+                                                    .copyWith(
+                                                        color: Colors.white)),
+                                      )),
+                                )),
+                          )
+                        : Center(
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (widget.frompage == "skip") {
+                                    if (lentered_otp.toString() == "" ||
+                                        lentered_otp == null) {
+                                      commontoas("Please enter OTP");
+                                    } else {
+                                      _sgnin_viaotp
+                                          .signin_viaOTP_cont(lmno.text,
+                                              lentered_otp.toString(),_deviceId)
+                                          .then((value) {
+                                        if (_sgnin_viaotp
+                                                    .response.value.message ==
+                                                "Invalid OTP." &&
+                                            _sgnin_viaotp
+                                                    .response.value.status ==
+                                                false) {
+                                          commontoas("Please enter OTP");
+                                        }
+                                        else if(_sgnin_viaotp
+                                            .response.value.message ==
+                                            "Your aren't registred with us.")
+                                        {
+                                          commontoas("Your aren't registred with us.");
+                                          Get.off(signup_page(frompage: ""));
+                                        }
+                                        else {
+                                          getuserid().then((value) {
+                                            initPlatformState()
+                                                .then((value) async {
+                                              String? getseladdindx;
+                                              SharedPreferences sf =
+                                                  await SharedPreferences
+                                                      .getInstance();
+                                              setState(() {
+                                                getseladdindx = sf.getString(
+                                                    "selectedaddressid");
+                                              });
+                                              _get_allprod
+                                                  .get_all_cat_products_cont();
+                                              _get_cart
+                                                  .get_cart_cont(
+                                                      uid.toString() == "" ||
+                                                              uid == null
+                                                          ? ""
+                                                          : uid.toString(),
+                                                      _deviceId.toString())
+                                                  .then((value) {
+                                                Get.to(const BottomBar(
+                                                    pasindx: 0));
+                                                // if (_get_cart.response.value
+                                                //     .data!.isEmpty) {
+                                                //
+                                                //   Get.to(
+                                                //       bottombar(pasindx: 0));
+                                                // }
+                                                // else {
+                                                //
+                                                //   getseladdindx==""||getseladdindx==null && _get_address.defaultaddid.toString()==""||_get_address.defaultaddid==null?
+                                                //   _get_address.get_address_cont(uid).then((value) => _get_staffs.get_staffs_cont("",_get_cart.response.value.data![0].categoryId)).then((value) =>  Get.to(bookslot_page())):
+                                                //   getseladdindx == "" ||
+                                                //           getseladdindx ==
+                                                //               null
+                                                //       ? _get_address
+                                                //           .get_address_cont(
+                                                //               uid)
+                                                //           .then((value) => _get_staffs.get_staffs_cont(
+                                                //               "",
+                                                //               _get_cart
+                                                //                   .response
+                                                //                   .value
+                                                //                   .data![0]
+                                                //                   .categoryId))
+                                                //           .then((value) => Get.to(
+                                                //               const bookslot_page()))
+                                                //       : _get_address
+                                                //           .get_address_cont(
+                                                //               uid)
+                                                //           .then((value) => _get_staffs.get_staffs_cont(
+                                                //               getseladdindx,
+                                                //               _get_cart
+                                                //                   .response
+                                                //                   .value
+                                                //                   .data![0]
+                                                //                   .categoryId))
+                                                //           .then((value) =>
+                                                //               Get.to(const bookslot_page()));
+                                                // }
+                                              });
+                                            });
+                                          });
+                                        }
+                                      });
+                                    }
                                   }
                                   else {
-                                    getuserid().then((value) {
-                                      initPlatformState()
-                                          .then((value) async {
-                                        String? getseladdindx;
-                                        SharedPreferences sf =
-                                        await SharedPreferences
-                                            .getInstance();
-                                        setState(() {
-                                          getseladdindx = sf.getString(
-                                              "selectedaddressid");
-                                        });
-                                        _get_allprod
-                                            .get_all_cat_products_cont();
-                                        _get_cart
-                                            .get_cart_cont(
-                                            uid.toString() == "" ||
-                                                uid == null
-                                                ? ""
-                                                : uid.toString(),
-                                            _deviceId.toString())
-                                            .then((value) {
-                                          Get.to(
-                                              const BottomBar(pasindx: 0));
-                                          // if (_get_cart.response.value
-                                          //     .data!.isEmpty) {
-                                          //
-                                          //   Get.to(
-                                          //       bottombar(pasindx: 0));
-                                          // }
-                                          // else {
-                                          //
-                                          //   getseladdindx==""||getseladdindx==null && _get_address.defaultaddid.toString()==""||_get_address.defaultaddid==null?
-                                          //   _get_address.get_address_cont(uid).then((value) => _get_staffs.get_staffs_cont("",_get_cart.response.value.data![0].categoryId)).then((value) =>  Get.to(bookslot_page())):
-                                          //   getseladdindx == "" ||
-                                          //           getseladdindx ==
-                                          //               null
-                                          //       ? _get_address
-                                          //           .get_address_cont(
-                                          //               uid)
-                                          //           .then((value) => _get_staffs.get_staffs_cont(
-                                          //               "",
-                                          //               _get_cart
-                                          //                   .response
-                                          //                   .value
-                                          //                   .data![0]
-                                          //                   .categoryId))
-                                          //           .then((value) => Get.to(
-                                          //               const bookslot_page()))
-                                          //       : _get_address
-                                          //           .get_address_cont(
-                                          //               uid)
-                                          //           .then((value) => _get_staffs.get_staffs_cont(
-                                          //               getseladdindx,
-                                          //               _get_cart
-                                          //                   .response
-                                          //                   .value
-                                          //                   .data![0]
-                                          //                   .categoryId))
-                                          //           .then((value) =>
-                                          //               Get.to(const bookslot_page()));
-                                          // }
-                                        });
-                                      });
-                                    });
-                                  }
-                                });
-                              }
-                            }
-                            else {
-                              if (lentered_otp.toString() == "" ||
-                                  lentered_otp == null) {
-                                commontoas(
-                                    "Please enter OTP");
-                              } else {
-                                _sgnin_viaotp
-                                    .signin_viaOTP_cont(lmno.text,
-                                    lentered_otp.toString())
-                                    .then((value) {
-                                  if (_sgnin_viaotp
-                                      .response.value.message ==
-                                      "Invalid OTP." &&
+                                    print('1');
+                                    if (lentered_otp.toString() == "" ||
+                                        lentered_otp == null) {
+                                      commontoas("Please enter OTP");
+                                    }
+                                    else {
+                                      print('3');
                                       _sgnin_viaotp
-                                          .response.value.status ==
-                                          false) {
-                                    commontoas( "Invalid OTP.");
-                                  } else {
-                                    Get.to(const BottomBar(pasindx: 0));
+                                          .signin_viaOTP_cont(lmno.text,
+                                              lentered_otp.toString(),_deviceId)
+                                          .then((_) {
+                                        if (_sgnin_viaotp
+                                                    .response.value.message ==
+                                                "Invalid OTP." &&
+                                            _sgnin_viaotp
+                                                    .response.value.status ==
+                                                false) {
+                                          commontoas("Invalid OTP.");
+                                        }
+                                        else if(_sgnin_viaotp
+                                            .response.value.message ==
+                                            "Your aren't registred with us.")
+                                        {
+                                          print('2');
+                                          commontoas("Your aren't registred with us.");
+                                          Get.off(signup_page(frompage: ""));
+                                        }
+                                        else {
+                                          Get.to(const BottomBar(pasindx: 0));
+                                        }
+                                      });
+                                    }
                                   }
                                 });
-                              }
-                            }
-                          });
-                        },
-                        child: Container(
-                          width: SizeConfig.screenWidth * 0.9,
-                          height: SizeConfig.screenHeight * 0.06,
-                          decoration: kGradientBoxDecoration,
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Container(
-                              width: SizeConfig.screenWidth * 0.9,
-                              height: SizeConfig.screenHeight * 0.06,
-                              alignment: Alignment.center,
-                              decoration: kInnerDecoration,
-                              child: Obx(() {
-                                return _sgnin_viaotp.loading.value ||
-                                    _get_cart.loading.value
-                                    ? const CommonIndicator(color: Colors.white)
-                                    : Text("LOG IN",
-                                    style: font_style.grad_600_16.copyWith(color: Colors.white));
-                              }),
+                              },
+                              child: Container(
+                                width: SizeConfig.screenWidth * 0.9,
+                                height: SizeConfig.screenHeight * 0.06,
+                                decoration: kGradientBoxDecoration,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Container(
+                                    width: SizeConfig.screenWidth * 0.9,
+                                    height: SizeConfig.screenHeight * 0.06,
+                                    alignment: Alignment.center,
+                                    decoration: kInnerDecoration,
+                                    child: Obx(() {
+                                      return _sgnin_viaotp.loading.value ||
+                                              _get_cart.loading.value
+                                          ? const CommonIndicator(
+                                              color: Colors.white)
+                                          : Text("LOG IN",
+                                              style: font_style.grad_600_16
+                                                  .copyWith(
+                                                      color: Colors.white));
+                                    }),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
 
                     const Spacer(),
                     Center(
@@ -612,7 +654,8 @@ class _login_pageState extends State<login_page> {
                           children: [
                             Text(
                               "Don’t have an Account? ",
-                              style: font_style.white_400_14.copyWith(color:  Colors.black),
+                              style: font_style.white_400_14
+                                  .copyWith(color: Colors.black),
                             ),
                             InkWell(
                                 onTap: () {
@@ -629,7 +672,8 @@ class _login_pageState extends State<login_page> {
                                 },
                                 child: Text(
                                   "Sign up",
-                                  style: font_style.yellow_400_14_underline.copyWith(color:  Colors.black),
+                                  style: font_style.yellow_400_14_underline
+                                      .copyWith(color: Colors.black),
                                 )),
                           ],
                         ),

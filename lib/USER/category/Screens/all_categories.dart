@@ -62,7 +62,7 @@ class _all_categoriesState extends State<all_categories> {
 
   // String? _get_allprod.uid;
 
-  getuserid() async {
+  Future<void> getuserid() async {
     SharedPreferences sf = await SharedPreferences.getInstance();
     _get_allprod.uid(sf.getString("stored_uid"));
     print("USER ID ID ${_get_allprod.uid.toString()}");
@@ -76,9 +76,11 @@ class _all_categoriesState extends State<all_categories> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       deviceId = await PlatformDeviceId.getDeviceId;
+      log('Vijay Device ID====${deviceId}');
     } on PlatformException {
       deviceId = 'Failed to get deviceId.';
     }
+    log('Error VIJAY====${deviceId}');
     if (!mounted) return;
     setState(() {
       _deviceId = deviceId;
@@ -98,43 +100,50 @@ class _all_categoriesState extends State<all_categories> {
 
   @override
   void initState() {
-    getuserid();
-    _get_allprod.get_all_cat_products_cont();
-    _get_allprod.get_all_cat_products_cont().then((value) async {
-      _get_allprod
-              .response
-              .value
-              .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
-              .serviceCategoryData!
-              .isEmpty
-          ? null
-          : compareid();
-      _get_allprod.indexOfId(_get_allprod.getbiyd.indexOf(widget.cateid));
-      _get_allprod.selected_cat(int.parse(_get_allprod
-          .response
-          .value
-          .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
-          .serviceCategoryData![0]
-          .subcatId
-          .toString()));
-      initPlatformState().then((value) {
-        _get_cart.get_cart_cont(
-            _get_allprod.uid.toString() == "" || _get_allprod.uid == null
-                ? ""
-                : _get_allprod.uid.toString(),
-            _deviceId.toString());
+    print('Enter');
+    getuserid().then((_)
+    {
+      _get_allprod.get_all_cat_products_cont().then((value) async {
+        print('1');
+        _get_allprod
+            .response
+            .value
+            .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
+            .serviceCategoryData!
+            .isEmpty
+            ? null
+            : compareid();
+        print('2');
+        _get_allprod.indexOfId(_get_allprod.getbiyd.indexOf(widget.cateid));
+        print('3');
+        _get_allprod.selected_cat(int.parse(_get_allprod
+            .response
+            .value
+            .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
+            .serviceCategoryData![0]
+            .subcatId
+            .toString()));
+        print('4');
+        initPlatformState().then((value) {
+          print('5');
+          _get_cart.get_cart_cont(
+              _get_allprod.uid.toString() == "" || _get_allprod.uid == null
+                  ? ""
+                  : _get_allprod.uid.toString(),
+              _deviceId.toString());
+        });
+        print('7');
       });
+      if (_get_allprod.getbiyd.isNotEmpty) {
+        _get_allprod.selected_cat(int.parse(_get_allprod
+            .response
+            .value
+            .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
+            .serviceCategoryData![0]
+            .subcatId
+            .toString()));
+      }
     });
-    if (_get_allprod.getbiyd.isNotEmpty) {
-      _get_allprod.selected_cat(int.parse(_get_allprod
-          .response
-          .value
-          .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
-          .serviceCategoryData![0]
-          .subcatId
-          .toString()));
-    }
-
     super.initState();
   }
 

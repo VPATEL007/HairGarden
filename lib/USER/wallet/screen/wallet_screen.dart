@@ -158,7 +158,7 @@ class _WallerScreenState extends State<WallerScreen> {
                                               walletController
                                                       .walletHistoryModel()
                                                       .data?[index]
-                                                      .remark ??
+                                                      .remark.toString().capitalizeFirst ??
                                                   "",
                                               style: font_style.black_600_16,
                                             ),

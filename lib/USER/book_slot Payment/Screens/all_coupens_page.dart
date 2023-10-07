@@ -85,20 +85,44 @@ class _AllCouponPageState extends State<AllCouponPage> {
                           contentPadding: const EdgeInsets.only(left: 6)),
                     ),
                   ),
-                  Container(
-                    width: 80,
-                    height: 32,
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.screenHeight * 0.01),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      color: yellow_col,
-                    ),
-                    // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
-                    child: Text(
-                      "APPLY",
-                      style: font_style.white_600_16,
+                  InkWell(
+                    onTap: () {
+                      _get_copupon
+                          .applyCoupon(
+                          uid,
+                          _get_copupon
+                              .couponModel()
+                              .data?[0]
+                              .coupanCode?.toUpperCase()??"")
+                          .then((_) {
+                        // if (_get_copupon
+                        //     .isCouponUsed.value) {
+                        //   setState(() {
+                        //     iscoupapply = true;
+                        //     couponDiscountAmount =
+                        //         _get_copupon
+                        //             .couponModel()
+                        //             .data?[0]
+                        //             .amount;
+                        //   });
+                        // }
+                      });
+                    },
+                    child: Container(
+                      width: 80,
+                      height: 32,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.screenHeight * 0.01),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: yellow_col,
+                      ),
+                      // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
+                      child: Text(
+                        "APPLY",
+                        style: font_style.white_600_16,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -246,7 +270,9 @@ class _AllCouponPageState extends State<AllCouponPage> {
                   border: Border.all(color: yellow_col, width: 1.0),
                   borderRadius: BorderRadius.circular(4)),
               margin: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.screenWidth * 0.040),
+                  horizontal: SizeConfig.screenWidth * 0.040,
+                  vertical: SizeConfig.screenWidth * 0.020,
+              ),
               child: ExpansionTile(
                 title: Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),

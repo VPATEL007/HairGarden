@@ -1675,7 +1675,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                                           height: 40),
                                                       const SizedBox(width: 10),
                                                       Text(
-                                                        'Service name',
+                                                        getUpcomingOrderController
+                                                            .response.value.data?[index].serviceTitle.toString().capitalizeFirst??"",
                                                         style: font_style
                                                             .black_600_18
                                                             .copyWith(

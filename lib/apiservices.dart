@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:hairgarden/COMMON/comontoast.dart';
 import 'package:hairgarden/USER/book_slot%20Payment/Model/book_service_model.dart';
 import 'package:hairgarden/USER/book_slot%20Payment/Model/coupen_model.dart';
 import 'package:hairgarden/USER/category/Model/get_addons_model.dart';
@@ -148,18 +149,24 @@ class api_service {
   }
 
   //SIGNIN OTP
-  Future<signin_viaOTP_model> signin_otp(mobile, otp) async {
+  Future<signin_viaOTP_model> signin_otp(mobile, otp,deviceID) async {
     final user_form = FormData();
     String? fcmToken = await FirebaseMessaging.instance.getToken();
     log('FCM TOKEN===${fcmToken}');
     user_form.fields.add(MapEntry("fcmToken", fcmToken??""));
     user_form.fields.add(MapEntry("mobile", mobile));
     user_form.fields.add(MapEntry("otp", otp));
+    user_form.fields.add(MapEntry("device_key", deviceID));
 
     final value_user = await dio.post("$baseurl/loginViaOtp", data: user_form);
+    log('LOGIN NOT ===${value_user.data}');
     if (value_user.statusCode == 200) {
       final result_user = signin_viaOTP_model.fromJson(value_user.data);
       return result_user;
+    }
+    else
+    {
+      commontoas(value_user.data['message']);
     }
     throw "Somthing went wrong";
   }
@@ -795,7 +802,7 @@ class api_service {
   Future<bool> applyCoupon(user_id, coupan_id) async {
     final user_form = FormData();
     user_form.fields.add(MapEntry("user_id", user_id));
-    user_form.fields.add(MapEntry("coupan_id", coupan_id));
+    user_form.fields.add(MapEntry("coupan_code", coupan_id));
     final value_user = await dio.post("$baseurl/applycoupan", data: user_form);
     print('Apply Coupon ===${value_user.data}');
     if (value_user.data['status'] == true) {
