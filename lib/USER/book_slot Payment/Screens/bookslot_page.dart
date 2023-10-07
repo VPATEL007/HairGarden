@@ -505,7 +505,7 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                 Container(
                                                   height:
                                                       SizeConfig.screenHeight *
-                                                          0.093,
+                                                          0.088,
                                                   width:
                                                       SizeConfig.screenWidth *
                                                           0.18,
@@ -1065,7 +1065,8 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                                       ? Container(
                                                                           width:
                                                                               SizeConfig.screenWidth * 0.18,
-                                                                          padding: const EdgeInsets.symmetric(
+                                                                          padding: const EdgeInsets
+                                                                              .symmetric(
                                                                               vertical: 8,
                                                                               horizontal: 5),
                                                                           decoration: BoxDecoration(
@@ -1371,7 +1372,7 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                                 0.25,
                                                             padding:
                                                                 const EdgeInsets
-                                                                        .symmetric(
+                                                                    .symmetric(
                                                                     vertical:
                                                                         10),
                                                             decoration: BoxDecoration(

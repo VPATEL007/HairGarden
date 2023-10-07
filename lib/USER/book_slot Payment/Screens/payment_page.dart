@@ -1,36 +1,27 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as formData;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:hairgarden/COMMON/common_circular_indicator.dart';
 import 'package:hairgarden/COMMON/comontoast.dart';
 import 'package:hairgarden/COMMON/font_style.dart';
 import 'package:hairgarden/USER/book_slot%20Payment/Screens/all_coupens_page.dart';
 import 'package:hairgarden/USER/book_slot%20Payment/Screens/instamojo_screen.dart';
-import 'package:hairgarden/USER/book_slot%20Payment/Screens/payment_done_page.dart';
-import 'package:hairgarden/USER/common/common_txt_list.dart';
-import 'package:instamojo/instamojo.dart';
 import 'package:platform_device_id/platform_device_id.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../COMMON/common_color.dart';
-import 'package:dio/dio.dart' as formData;
-import '../../myprofile/Controller/get_profile_info_controller.dart';
-import '../Controller/book_service_controller.dart';
-import '../Controller/get_coupon_controller.dart';
-import 'razor_credentials.dart' as razorCredentials;
+
 import '../../../COMMON/common_color.dart';
 import '../../../COMMON/size_config.dart';
 import '../../category/Controller/get_cart_controller.dart';
-import '../../common/common_txtform_yllow.dart';
-import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+import '../../myprofile/Controller/get_profile_info_controller.dart';
+import '../Controller/book_service_controller.dart';
+import '../Controller/get_coupon_controller.dart';
 
 class payment_page extends StatefulWidget {
   String? getslotid,
@@ -145,30 +136,11 @@ class _payment_pageState extends State<payment_page> {
     });
 
     initPlatformState();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    //   _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    //   _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     // });
     super.initState();
   }
 
   String? tot, discount, slot;
-
-  // void _handlePaymentSuccess(PaymentSuccessResponse response) {
-  //   // Do something when payment succeeds
-
-  //   verifySignature(
-  //     signature: response.signature,
-  //     paymentId: response.paymentId,
-  //     orderId: response.orderId,
-  //   );
-  //   Get.to(payment_done_page(
-  //     discount: discount.toString(),
-  //     date: widget.getbookdate.toString(),
-  //     tip: '',
-  //   ));
-  // }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
@@ -221,93 +193,7 @@ class _payment_pageState extends State<payment_page> {
   }
 
 // create order
-  void createOrder() async {
-    // String username = razorCredentials.keyId;
-    // String password = razorCredentials.keySecret;
-    // String basicAuth =
-    //     'Basic ${base64Encode(utf8.encode('$username:$password'))}';
-
-    // Map<String, dynamic> body = {
-    //   "amount": 100,
-    //   "currency": "INR",
-    //   "receipt": "rcptid_11"
-    // };
-    // // var res = await http.post(
-    // //   Uri.https(
-    // //       "api.razorpay.com", "v1/orders"), //https://api.razorpay.com/v1/orders
-    // //   headers: <String, String>{
-    // //     "Content-Type": "application/json",
-    // //     'authorization': basicAuth,
-    // //   },
-    // //   body: jsonEncode(body),
-    // // );
-
-    // if (res.statusCode == 200) {
-    //   openGateway(jsonDecode(res.body)['id']);
-    // }
-    // print(res.body);
-  }
-
-  // openGateway(String orderId) {
-  //   var options = {
-  //     'key': razorCredentials.keyId,
-  //     'amount': 100, //in the smallest currency sub-unit.
-  //     'name': 'Hair Garden',
-  //     'order_id': orderId, // Generate order_id using Orders API
-  //     'description': 'Fine T-Shirt',
-  //     'timeout': 60 * 5, // in seconds // 5 minutes
-  //     'prefill': {
-  //       'contact': '9123456789',
-  //       'email': 'mailto:ary@example.com',
-  //     }
-  //   };
-  //   _razorpay.open(options);
-  // }
-
-  // verifySignature({
-  //   String? signature,
-  //   String? paymentId,
-  //   String? orderId,
-  // }) async {
-  //   // Map<String, dynamic> body = {
-  //   //   'razorpay_signature': signature,
-  //   //   'razorpay_payment_id': paymentId,
-  //   //   'razorpay_order_id': orderId,
-  //   // };
-
-  //   // var parts = [];
-  //   // body.forEach((key, value) {
-  //   //   parts.add('${Uri.encodeQueryComponent(key)}='
-  //   //       '${Uri.encodeQueryComponent(value)}');
-  //   // });
-  //   // var formData = parts.join('&');
-  //   // var res = await http.post(
-  //   //   Uri.https(
-  //   //     "10.0.2.2", // my ip address , localhost
-  //   //     "razorpay_signature_verify.php",
-  //   //   ),
-  //   //   headers: {
-  //   //     "Content-Type": "application/x-www-form-urlencoded", // urlencoded
-  //   //   },
-  //   //   body: formData,
-  //   // );
-
-  //   // print(res.body);
-  //   // if (res.statusCode == 200) {
-  //   //   ScaffoldMessenger.of(context).showSnackBar(
-  //   //     SnackBar(
-  //   //       content: Text(res.body),
-  //   //     ),
-  //   //   );
-  //   // }
-  // }
-
-  @override
-  void dispose() {
-    // _razorpay.clear(); // Removes all listeners
-
-    super.dispose();
-  }
+  void createOrder() async {}
 
   List paymentoption = [
     "Pay through Credit / Debit Card / UPI",
@@ -439,76 +325,96 @@ class _payment_pageState extends State<payment_page> {
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.010,
                     ),
-                    Center(
-                        child: Container(
-                      height: 1,
-                      color: line_cont_col,
-                      width: SizeConfig.screenWidth * 0.9,
-                    )),
-                    SizedBox(
-                      height: SizeConfig.screenHeight * 0.010,
-                    ),
-
-                    Center(
-                      child: SizedBox(
-                        width: SizeConfig.screenWidth * 0.9,
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: _get_cart.response.value.data
+                    (_get_cart.response.value.data
                                 ?.where(
                                     (element) => element.type == "addonservice")
                                 .toList()
-                                .length,
-                            itemBuilder: (context, indexAT) => Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Add On Service",
-                                      style: font_style.black_500_16,
-                                    ),
-                                    SizedBox(
-                                      height: SizeConfig.screenHeight * 0.010,
-                                    ),
-                                    Center(
-                                        child: Container(
-                                      height: 1,
-                                      color: line_cont_col,
-                                      width: SizeConfig.screenWidth * 0.9,
-                                    )),
-                                    SizedBox(
-                                      height: SizeConfig.screenHeight * 0.010,
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "${_get_cart.response.value.data?.where((element) => element.type == "addonservice").toList()[indexAT].title.toString().capitalizeFirst}",
-                                          style: font_style.black_400_16,
-                                        ),
-                                        const Spacer(),
-                                        Text(
-                                          "₹ ${double.parse(_get_cart.response.value.data?.where((element) => element.type == "addonservice").toList()[indexAT].price ?? "").toStringAsFixed(2)}",
-                                          style: font_style.black_500_14,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                      ),
-                    ),
-                    SizedBox(
-                      height: SizeConfig.screenHeight * 0.010,
-                    ),
-                    Center(
-                        child: Container(
-                      height: 1,
-                      color: line_cont_col,
-                      width: SizeConfig.screenWidth * 0.9,
-                    )),
-                    SizedBox(
-                      height: SizeConfig.screenHeight * 0.010,
-                    ),
+                                .isNotEmpty ??
+                            false)
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                  child: Container(
+                                height: 1,
+                                color: line_cont_col,
+                                width: SizeConfig.screenWidth * 0.9,
+                              )),
+                              SizedBox(
+                                height: SizeConfig.screenHeight * 0.010,
+                              ),
+                              Center(
+                                child: SizedBox(
+                                  width: SizeConfig.screenWidth * 0.9,
+                                  child: ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: _get_cart.response.value.data
+                                          ?.where((element) =>
+                                              element.type == "addonservice")
+                                          .toList()
+                                          .length,
+                                      itemBuilder: (context, indexAT) => Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Add On Service",
+                                                style: font_style.black_500_16,
+                                              ),
+                                              SizedBox(
+                                                height:
+                                                    SizeConfig.screenHeight *
+                                                        0.010,
+                                              ),
+                                              Center(
+                                                  child: Container(
+                                                height: 1,
+                                                color: line_cont_col,
+                                                width: SizeConfig.screenWidth *
+                                                    0.9,
+                                              )),
+                                              SizedBox(
+                                                height:
+                                                    SizeConfig.screenHeight *
+                                                        0.010,
+                                              ),
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "${_get_cart.response.value.data?.where((element) => element.type == "addonservice").toList()[indexAT].title.toString().capitalizeFirst}",
+                                                    style:
+                                                        font_style.black_400_16,
+                                                  ),
+                                                  const Spacer(),
+                                                  Text(
+                                                    "₹ ${double.parse(_get_cart.response.value.data?.where((element) => element.type == "addonservice").toList()[indexAT].price ?? "").toStringAsFixed(2)}",
+                                                    style:
+                                                        font_style.black_500_14,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          )),
+                                ),
+                              ),
+                              SizedBox(
+                                height: SizeConfig.screenHeight * 0.010,
+                              ),
+                              Center(
+                                  child: Container(
+                                height: 1,
+                                color: line_cont_col,
+                                width: SizeConfig.screenWidth * 0.9,
+                              )),
+                              SizedBox(
+                                height: SizeConfig.screenHeight * 0.010,
+                              ),
+                            ],
+                          )
+                        : SizedBox(),
+
                     // Center(
                     //   child: SizedBox(
                     //     width: SizeConfig.screenWidth * 0.9,
@@ -555,8 +461,30 @@ class _payment_pageState extends State<payment_page> {
                           )
                         : const SizedBox(),
                     SizedBox(
-                      height: SizeConfig.screenHeight * 0.006,
+                      height:
+                          isTipSelected ? SizeConfig.screenHeight * 0.006 : 0,
                     ),
+                    // isWallet
+                    //     ? Center(
+                    //         child: SizedBox(
+                    //           width: SizeConfig.screenWidth * 0.9,
+                    //           child: Row(
+                    //             crossAxisAlignment: CrossAxisAlignment.center,
+                    //             children: [
+                    //               Text(
+                    //                 "Wallet Balance",
+                    //                 style: font_style.black_400_16,
+                    //               ),
+                    //               const Spacer(),
+                    //               Text(
+                    //                 "- ₹${_get_cart.walletAMount.value.toStringAsFixed(2)}",
+                    //                 style: font_style.black_500_14,
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : Container(),
                     iscoupapply == true
                         ? Center(
                             child: SizedBox(
@@ -616,26 +544,26 @@ class _payment_pageState extends State<payment_page> {
                             iscoupapply == true
                                 ? isTipSelected == true
                                     ? Text(
-                                        "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip)) - int.parse(couponDiscountAmount ?? 0.toString())}",
+                                        "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip.toString())) - int.parse(couponDiscountAmount ?? 0.toString())}",
                                         style:
                                             font_style.black_600_14_nounderline,
                                       )
                                     : Text(
-                                        "₹ ${int.parse(_get_cart.response.value.total.toString()) + int.parse(couponDiscountAmount ?? 0.toString())}",
+                                        "₹ ${int.parse(_get_cart.response.value.total.toString()) - int.parse(couponDiscountAmount ?? 0.toString())}",
                                         style:
                                             font_style.black_600_14_nounderline,
                                       )
                                 : isTipSelected == true
                                     ? Text(
-                                        "₹ ${(int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip)) - int.parse(couponDiscountAmount ?? 0.toString())).toDouble().toStringAsFixed(2)}",
+                                        "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip.toString()))}",
                                         style:
                                             font_style.black_600_14_nounderline,
                                       )
                                     : Text(
-                                        "₹ ${(int.parse(_get_cart.response.value.total.toString()) - int.parse(couponDiscountAmount ?? 0.toString())).toDouble().toStringAsFixed(2)}",
+                                        "₹ ${(double.parse(_get_cart.response.value.total.toString())).toStringAsFixed(2)}",
                                         style:
                                             font_style.black_600_14_nounderline,
-                                      ),
+                                      )
                           ],
                         ),
                       ),
@@ -847,30 +775,6 @@ class _payment_pageState extends State<payment_page> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Row(
                           children: [
-                            // Radio(
-                            //   activeColor: yellow_col,
-                            //   value: false,
-                            //   groupValue: isWallet,
-                            //   onChanged: (_get_cart.walletAMount.value == 0.0)
-                            //       ? (bool? value) {
-                            //           commontoas('Your Wallet Balance is 0');
-                            //         }
-                            //       : (value) {
-                            //     print('BOOL===${isWallet}');
-                            //       setState(() {
-                            //       // walletValue = value!;
-                            //         isWallet = !isWallet;
-                            //       //   if(isWallet)
-                            //       //   {
-                            //       //     isWallet=false;
-                            //       //   }
-                            //       //   else
-                            //       //   {
-                            //       //     isWallet=true;
-                            //       //   }
-                            //     });
-                            //       },
-                            // ),
                             Icon(
                                     isWallet
                                         ? Icons.radio_button_checked
@@ -936,7 +840,12 @@ class _payment_pageState extends State<payment_page> {
                                                 Expanded(
                                                   child: TextFormField(
                                                     style: font_style
-                                                        .greyA1A1AA_400_16.copyWith(color: Colors.black,fontWeight: FontWeight.w600),
+                                                        .greyA1A1AA_400_16
+                                                        .copyWith(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
                                                     controller: coupon,
                                                     decoration: InputDecoration(
                                                         enabledBorder:
@@ -954,26 +863,26 @@ class _payment_pageState extends State<payment_page> {
                                                 ),
                                                 InkWell(
                                                   onTap: () {
-                                                    if(iscoupapply)
-                                                    {
-                                                      iscoupapply= false;
+                                                    if (iscoupapply) {
+                                                      iscoupapply = false;
                                                       coupon.clear();
                                                       setState(() {});
-                                                      commontoas("Coupon Remove Successfully");
-                                                    }
-                                                    else
-                                                    {
+                                                      commontoas(
+                                                          "Coupon Remove Successfully");
+                                                    } else {
                                                       _get_copupon.applyCoupon(
                                                           uid,
-                                                          coupon.text.toUpperCase());
+                                                          coupon.text
+                                                              .toUpperCase());
                                                       setState(() {
                                                         iscoupapply = true;
-                                                        couponDiscountAmount = _get_copupon
-                                                            .couponModel()
-                                                            .data?[0].amount;
+                                                        couponDiscountAmount =
+                                                            _get_copupon
+                                                                .couponModel()
+                                                                .data?[0]
+                                                                .amount;
                                                       });
                                                     }
-
                                                   },
                                                   child: Container(
                                                     width: 80,
@@ -991,7 +900,9 @@ class _payment_pageState extends State<payment_page> {
                                                     ),
                                                     // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
                                                     child: Text(
-                                                      iscoupapply?"REMOVE":"APPLY",
+                                                      iscoupapply
+                                                          ? "REMOVE"
+                                                          : "APPLY",
                                                       style: font_style
                                                           .white_600_16,
                                                     ),
@@ -1050,16 +961,18 @@ class _payment_pageState extends State<payment_page> {
                                             if (iscoupapply) {
                                               iscoupapply = false;
                                               setState(() {});
-                                              commontoas("Coupon Remove Successfully");
-
+                                              commontoas(
+                                                  "Coupon Remove Successfully");
                                             } else {
                                               _get_copupon
                                                   .applyCoupon(
-                                                  uid,
-                                                  _get_copupon
-                                                      .couponModel()
-                                                      .data?[0]
-                                                      .coupanCode?.toUpperCase()??"")
+                                                      uid,
+                                                      _get_copupon
+                                                              .couponModel()
+                                                              .data?[0]
+                                                              .coupanCode
+                                                              ?.toUpperCase() ??
+                                                          "")
                                                   .then((_) {
                                                 if (_get_copupon
                                                     .isCouponUsed.value) {
@@ -1139,7 +1052,8 @@ class _payment_pageState extends State<payment_page> {
                     ),
                     //CHOOSE PAYMENT OPTION
                     (((_get_cart.response.value.total ?? 0) >
-                        _get_cart.walletAMount.value) && isWallet == true)
+                                _get_cart.walletAMount.value) &&
+                            isWallet == true)
                         ? Center(
                             child: SizedBox(
                               width: SizeConfig.screenWidth * 0.9,
@@ -1160,19 +1074,22 @@ class _payment_pageState extends State<payment_page> {
                       itemBuilder: (context, index) => (isWallet == true &&
                               index == 1)
                           ? SizedBox()
-                          : (index == 0 && isWallet == true && (_get_cart.response.value.total ?? 0) <
-                                  _get_cart.walletAMount.value)
-                              ?  SizedBox():RadioListTile(
-                        activeColor: yellow_col,
-                        title: Text(paymentoption[index].toString()),
-                        value: index,
-                        groupValue: _oneValue,
-                        onChanged: (value) {
-                          setState(() {
-                            _oneValue = value!;
-                          });
-                        },
-                      ),
+                          : (index == 0 &&
+                                  isWallet == true &&
+                                  (_get_cart.response.value.total ?? 0) <
+                                      _get_cart.walletAMount.value)
+                              ? SizedBox()
+                              : RadioListTile(
+                                  activeColor: yellow_col,
+                                  title: Text(paymentoption[index].toString()),
+                                  value: index,
+                                  groupValue: _oneValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _oneValue = value!;
+                                    });
+                                  },
+                                ),
                     ),
 
                     SizedBox(
@@ -1369,8 +1286,7 @@ class _payment_pageState extends State<payment_page> {
 
                     if (_oneValue == 0) {
                       startInstamojo(double.parse(totalPrice.toString()));
-                    }
-                    else if (_oneValue == 1) {
+                    } else if (_oneValue == 1) {
                       _book_service.book_service_cont(
                           iscoupapply == false
                               ? ""
@@ -1394,8 +1310,7 @@ class _payment_pageState extends State<payment_page> {
                               : widget.getstaffid.toString(),
                           widget.getstafftype,
                           widget.getbookdate.toString());
-                    }
-                    else {
+                    } else {
                       commontoas("Please select Payment Option");
                     }
                   },

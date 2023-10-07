@@ -101,16 +101,15 @@ class _all_categoriesState extends State<all_categories> {
   @override
   void initState() {
     print('Enter');
-    getuserid().then((_)
-    {
+    getuserid().then((_) {
       _get_allprod.get_all_cat_products_cont().then((value) async {
         print('1');
         _get_allprod
-            .response
-            .value
-            .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
-            .serviceCategoryData!
-            .isEmpty
+                .response
+                .value
+                .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
+                .serviceCategoryData!
+                .isEmpty
             ? null
             : compareid();
         print('2');
@@ -195,6 +194,8 @@ class _all_categoriesState extends State<all_categories> {
         return false;
       },
       child: Obx(() {
+        log('VIJAY DATA====${_get_allprod.getbiyd.contains(widget.cateid)}');
+        log('LENGTH===${_get_allprod.response.value.data?.length}');
         return Scaffold(
           backgroundColor: bg_col,
           appBar: AppBar(
@@ -217,21 +218,28 @@ class _all_categoriesState extends State<all_categories> {
                       color: Colors.transparent,
                     ),
                   )
-                : InkWell(
-                    onTap: () {
-                      setState(() {
-                        initPlatformState();
-                      });
-                    },
-                    child: Text(
-                      _get_allprod
-                          .response
-                          .value
-                          .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
-                          .name
-                          .toString(),
-                      style: font_style.green_600_20,
-                    )),
+                : (_get_allprod.response.value.data?.isNotEmpty ?? false)
+                    ? InkWell(
+                        onTap: () {
+                          setState(() {
+                            initPlatformState();
+                          });
+                        },
+                        child: Text(
+                          _get_allprod
+                                  .response
+                                  .value
+                                  .data?[!_get_allprod.getbiyd
+                                          .contains(widget.cateid)
+                                      ? 0
+                                      : _get_allprod.getbiyd
+                                          .indexOf(widget.cateid)]
+                                  .name
+                                  .toString() ??
+                              "",
+                          style: font_style.green_600_20,
+                        ))
+                    : SizedBox(),
             actions: [_get_cart.loading.value ? Container() : Container()],
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(SizeConfig.screenHeight * 0.06),
@@ -287,8 +295,11 @@ class _all_categoriesState extends State<all_categories> {
                               itemCount: _get_allprod
                                   .response
                                   .value
-                                  .data![_get_allprod.getbiyd
-                                      .indexOf(widget.cateid)]
+                                  .data![!_get_allprod.getbiyd
+                                          .contains(widget.cateid)
+                                      ? 0
+                                      : _get_allprod.getbiyd
+                                          .indexOf(widget.cateid)]
                                   .serviceCategoryData!
                                   .length,
                               itemBuilder: (context, catindex) {
@@ -331,16 +342,8 @@ class _all_categoriesState extends State<all_categories> {
                                     alignment: Alignment.center,
                                     height: SizeConfig.screenHeight * 0.04,
                                     decoration: BoxDecoration(
-                                        color: _get_allprod
-                                                    .selected_cat.value ==
-                                                int.parse(_get_allprod
-                                                    .response
-                                                    .value
-                                                    .data![_get_allprod.getbiyd
-                                                        .indexOf(widget.cateid)]
-                                                    .serviceCategoryData![
-                                                        catindex]
-                                                    .subcatId
+                                        color: _get_allprod.selected_cat.value ==
+                                                int.parse(_get_allprod.response.value.data![!_get_allprod.getbiyd.contains(widget.cateid) ? 0 : _get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![catindex].subcatId
                                                     .toString())
                                             ? common_color
                                             : Colors.transparent,
@@ -348,7 +351,11 @@ class _all_categoriesState extends State<all_categories> {
                                             color: _get_allprod
                                                     .response
                                                     .value
-                                                    .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
+                                                    .data![!_get_allprod.getbiyd.contains(
+                                                            widget.cateid)
+                                                        ? 0
+                                                        : _get_allprod.getbiyd
+                                                            .indexOf(widget.cateid)]
                                                     .serviceCategoryData![catindex]
                                                     .subcateProduct!
                                                     .isEmpty
@@ -359,8 +366,11 @@ class _all_categoriesState extends State<all_categories> {
                                       _get_allprod
                                           .response
                                           .value
-                                          .data![_get_allprod.getbiyd
-                                              .indexOf(widget.cateid)]
+                                          .data![!_get_allprod.getbiyd
+                                                  .contains(widget.cateid)
+                                              ? 0
+                                              : _get_allprod.getbiyd
+                                                  .indexOf(widget.cateid)]
                                           .serviceCategoryData![catindex]
                                           .subcatName
                                           .toString(),
@@ -368,9 +378,9 @@ class _all_categoriesState extends State<all_categories> {
                                                   int.parse(_get_allprod
                                                       .response
                                                       .value
-                                                      .data![_get_allprod
-                                                          .getbiyd
-                                                          .indexOf(
+                                                      .data![!_get_allprod.getbiyd.contains(widget.cateid)
+                                                          ? 0
+                                                          : _get_allprod.getbiyd.indexOf(
                                                               widget.cateid)]
                                                       .serviceCategoryData![
                                                           catindex]
@@ -380,19 +390,14 @@ class _all_categoriesState extends State<all_categories> {
                                                   .response
                                                   .value
                                                   .data![_get_allprod.getbiyd
-                                                      .indexOf(widget.cateid)]
-                                                  .serviceCategoryData![
-                                                      catindex]
+                                                          .contains(widget.cateid)
+                                                      ? _get_allprod.getbiyd.indexOf(widget.cateid)
+                                                      : 0]
+                                                  .serviceCategoryData![catindex]
                                                   .subcateProduct!
                                                   .isNotEmpty
                                           ? font_style.white_400_14
-                                          : _get_allprod
-                                                  .response
-                                                  .value
-                                                  .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
-                                                  .serviceCategoryData![catindex]
-                                                  .subcateProduct!
-                                                  .isEmpty
+                                          : _get_allprod.response.value.data![!_get_allprod.getbiyd.contains(widget.cateid) ? 0 : _get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![catindex].subcateProduct!.isEmpty
                                               ? const TextStyle(color: Colors.transparent)
                                               : font_style.black_400_14,
                                     ),
@@ -414,7 +419,9 @@ class _all_categoriesState extends State<all_categories> {
               : _get_allprod
                       .response
                       .value
-                      .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
+                      .data![!_get_allprod.getbiyd.contains(widget.cateid)
+                          ? 0
+                          : _get_allprod.getbiyd.indexOf(widget.cateid)]
                       .serviceCategoryData!
                       .isEmpty
                   ? const Center(
@@ -431,7 +438,9 @@ class _all_categoriesState extends State<all_categories> {
                         itemCount: _get_allprod
                             .response
                             .value
-                            .data![_get_allprod.getbiyd.indexOf(widget.cateid)]
+                            .data![!_get_allprod.getbiyd.contains(widget.cateid)
+                                ? 0
+                                : _get_allprod.getbiyd.indexOf(widget.cateid)]
                             .serviceCategoryData!
                             .length,
                         physics: const BouncingScrollPhysics(),
@@ -440,7 +449,10 @@ class _all_categoriesState extends State<all_categories> {
                                   .response
                                   .value
                                   .data![_get_allprod.getbiyd
-                                      .indexOf(widget.cateid)]
+                                          .contains(widget.cateid)
+                                      ? _get_allprod.getbiyd
+                                          .indexOf(widget.cateid)
+                                      : 0]
                                   .serviceCategoryData![scrollindex]
                                   .subcateProduct!
                                   .isEmpty
@@ -462,7 +474,10 @@ class _all_categoriesState extends State<all_categories> {
                                                 .response
                                                 .value
                                                 .data![_get_allprod.getbiyd
-                                                    .indexOf(widget.cateid)]
+                                                        .contains(widget.cateid)
+                                                    ? _get_allprod.getbiyd
+                                                        .indexOf(widget.cateid)
+                                                    : 0]
                                                 .serviceCategoryData![
                                                     scrollindex]
                                                 .subcateImage
@@ -478,7 +493,10 @@ class _all_categoriesState extends State<all_categories> {
                                           .response
                                           .value
                                           .data![_get_allprod.getbiyd
-                                              .indexOf(widget.cateid)]
+                                                  .contains(widget.cateid)
+                                              ? _get_allprod.getbiyd
+                                                  .indexOf(widget.cateid)
+                                              : 0]
                                           .serviceCategoryData![scrollindex]
                                           .subcateProduct!
                                           .length,
@@ -493,52 +511,40 @@ class _all_categoriesState extends State<all_categories> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   //IMAGE
-                                                  InkWell(
-                                                    onTap: () {
-                                                      print(_get_allprod
-                                                          .response
-                                                          .value
-                                                          .data![_get_allprod
-                                                              .getbiyd
-                                                              .indexOf(widget
-                                                                  .cateid)]
-                                                          .serviceCategoryData![
-                                                              scrollindex]
-                                                          .subcateProduct![
-                                                              prodindex]
-                                                          .id
-                                                          .toString());
-                                                      print(prodindex + 1);
-                                                    },
-                                                    child: Container(
-                                                      height: SizeConfig
-                                                              .screenHeight *
-                                                          0.11,
-                                                      width: SizeConfig
-                                                              .screenWidth *
-                                                          0.4,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(12),
-                                                          image:
-                                                              DecorationImage(
-                                                                  image:
-                                                                      // AssetImage("assets/images/product2_img.png"),
-                                                                      NetworkImage(_get_allprod
-                                                                          .response
-                                                                          .value
-                                                                          .data![_get_allprod.getbiyd.indexOf(widget
-                                                                              .cateid)]
-                                                                          .serviceCategoryData![
-                                                                              scrollindex]
-                                                                          .subcateProduct![
-                                                                              prodindex]
-                                                                          .image
-                                                                          .toString()),
-                                                                  fit: BoxFit
-                                                                      .fill)),
-                                                    ),
+                                                  Container(
+                                                    height: SizeConfig
+                                                            .screenHeight *
+                                                        0.16,
+                                                    width:
+                                                        SizeConfig.screenWidth *
+                                                            0.4,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        image: DecorationImage(
+                                                            image:
+                                                                // AssetImage("assets/images/product2_img.png"),
+                                                                NetworkImage(_get_allprod
+                                                                    .response
+                                                                    .value
+                                                                    .data![_get_allprod
+                                                                            .getbiyd
+                                                                            .contains(widget
+                                                                                .cateid)
+                                                                        ? _get_allprod
+                                                                            .getbiyd
+                                                                            .indexOf(widget
+                                                                                .cateid)
+                                                                        : 0]
+                                                                    .serviceCategoryData![
+                                                                        scrollindex]
+                                                                    .subcateProduct![
+                                                                        prodindex]
+                                                                    .image
+                                                                    .toString()),
+                                                            fit: BoxFit
+                                                                .contain)),
                                                   ),
                                                   SizedBox(
                                                     width:
@@ -564,9 +570,16 @@ class _all_categoriesState extends State<all_categories> {
                                                               .response
                                                               .value
                                                               .data![_get_allprod
-                                                                  .getbiyd
-                                                                  .indexOf(widget
-                                                                      .cateid)]
+                                                                      .getbiyd
+                                                                      .contains(
+                                                                          widget
+                                                                              .cateid)
+                                                                  ? _get_allprod
+                                                                      .getbiyd
+                                                                      .indexOf(
+                                                                          widget
+                                                                              .cateid)
+                                                                  : 0]
                                                               .serviceCategoryData![
                                                                   scrollindex]
                                                               .subcateProduct![
@@ -585,7 +598,7 @@ class _all_categoriesState extends State<all_categories> {
                                                         Row(
                                                           children: [
                                                             Text(
-                                                              "₹${_get_allprod.response.value.data![_get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![scrollindex].subcateProduct![prodindex].sellPrice.toString()}",
+                                                              "₹${_get_allprod.response.value.data![_get_allprod.getbiyd.contains(widget.cateid) ? _get_allprod.getbiyd.indexOf(widget.cateid) : 0].serviceCategoryData![scrollindex].subcateProduct![prodindex].sellPrice.toString()}",
                                                               style: font_style
                                                                   .yell_400_14,
                                                             ),
@@ -599,10 +612,14 @@ class _all_categoriesState extends State<all_categories> {
                                                                   .response
                                                                   .value
                                                                   .data![_get_allprod
-                                                                      .getbiyd
-                                                                      .indexOf(
-                                                                          widget
-                                                                              .cateid)]
+                                                                          .getbiyd
+                                                                          .contains(widget
+                                                                              .cateid)
+                                                                      ? _get_allprod
+                                                                          .getbiyd
+                                                                          .indexOf(widget
+                                                                              .cateid)
+                                                                      : 0]
                                                                   .serviceCategoryData![
                                                                       scrollindex]
                                                                   .subcateProduct![
@@ -614,7 +631,7 @@ class _all_categoriesState extends State<all_categories> {
                                                             ),
                                                             const Spacer(),
                                                             Text(
-                                                              "${_get_allprod.response.value.data![_get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![scrollindex].subcateProduct![prodindex].percent.toString()}% OFF",
+                                                              "${_get_allprod.response.value.data![_get_allprod.getbiyd.contains(widget.cateid) ? _get_allprod.getbiyd.indexOf(widget.cateid) : 0].serviceCategoryData![scrollindex].subcateProduct![prodindex].percent.toString()}% OFF",
                                                               style: font_style
                                                                   .black_400_14,
                                                             ),
@@ -630,9 +647,16 @@ class _all_categoriesState extends State<all_categories> {
                                                               .response
                                                               .value
                                                               .data![_get_allprod
-                                                                  .getbiyd
-                                                                  .indexOf(widget
-                                                                      .cateid)]
+                                                                      .getbiyd
+                                                                      .contains(
+                                                                          widget
+                                                                              .cateid)
+                                                                  ? _get_allprod
+                                                                      .getbiyd
+                                                                      .indexOf(
+                                                                          widget
+                                                                              .cateid)
+                                                                  : 0]
                                                               .serviceCategoryData![
                                                                   scrollindex]
                                                               .subcateProduct![
@@ -698,10 +722,10 @@ class _all_categoriesState extends State<all_categories> {
                                                                     _get_allprod.allproductid.indexOf(_get_allprod
                                                                         .response
                                                                         .value
-                                                                        .data![_get_allprod
-                                                                            .getbiyd
-                                                                            .indexOf(widget
-                                                                                .cateid)]
+                                                                        .data![_get_allprod.getbiyd.contains(widget.cateid)
+                                                                            ? _get_allprod.getbiyd.indexOf(widget
+                                                                                .cateid)
+                                                                            : 0]
                                                                         .serviceCategoryData![
                                                                             scrollindex]
                                                                         .subcateProduct![
@@ -713,7 +737,7 @@ class _all_categoriesState extends State<all_categories> {
                                                                             .screenWidth *
                                                                         0.18,
                                                                     padding: const EdgeInsets
-                                                                            .symmetric(
+                                                                        .symmetric(
                                                                         vertical:
                                                                             8,
                                                                         horizontal:
@@ -732,14 +756,11 @@ class _all_categoriesState extends State<all_categories> {
                                                                 : _get_cart.prodid.contains(_get_allprod
                                                                         .response
                                                                         .value
-                                                                        .data![_get_allprod
-                                                                            .getbiyd
-                                                                            .indexOf(widget
-                                                                                .cateid)]
-                                                                        .serviceCategoryData![
-                                                                            scrollindex]
-                                                                        .subcateProduct![
-                                                                            prodindex]
+                                                                        .data![_get_allprod.getbiyd.contains(widget.cateid)
+                                                                            ? _get_allprod.getbiyd.indexOf(widget.cateid)
+                                                                            : 0]
+                                                                        .serviceCategoryData![scrollindex]
+                                                                        .subcateProduct![prodindex]
                                                                         .id
                                                                         .toString())
                                                                     ?
@@ -748,7 +769,8 @@ class _all_categoriesState extends State<all_categories> {
                                                                     Container(
                                                                         width: SizeConfig.screenWidth *
                                                                             0.18,
-                                                                        padding: const EdgeInsets.symmetric(
+                                                                        padding: const EdgeInsets
+                                                                            .symmetric(
                                                                             vertical:
                                                                                 8,
                                                                             horizontal:
@@ -866,11 +888,15 @@ class _all_categoriesState extends State<all_categories> {
                                                                           initPlatformState();
                                                                           log('Vijay====${getcartcatid.contains(widget.cateid.toString())}');
                                                                           log('Vijay TWO====${_get_cart.response.value.status}');
-                                                                          setState(() {
-                                                                            selecedindx = _get_allprod.allproductid.indexOf(_get_allprod.response.value.data![_get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![scrollindex].subcateProduct![prodindex].id.toString());
+                                                                          setState(
+                                                                              () {
+                                                                            selecedindx =
+                                                                                _get_allprod.allproductid.indexOf(_get_allprod.response.value.data![_get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![scrollindex].subcateProduct![prodindex].id.toString());
                                                                             // _get_allprod.loadinglist[_get_allprod.allproductid.indexOf(_get_allprod.response.value.data![_get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![scrollindex].subcateProduct![prodindex].id.toString())] = true;
                                                                           });
-                                                                          _add_cart.add_cart_cont(_get_allprod.response.value.data![_get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![scrollindex].subcateProduct![prodindex].id.toString(), "1", _get_allprod.uid.toString() == "" || _get_allprod.uid == null ? "" : _get_allprod.uid.toString(), _deviceId.toString(), "service").then((value) {
+                                                                          _add_cart
+                                                                              .add_cart_cont(_get_allprod.response.value.data![_get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![scrollindex].subcateProduct![prodindex].id.toString(), "1", _get_allprod.uid.toString() == "" || _get_allprod.uid == null ? "" : _get_allprod.uid.toString(), _deviceId.toString(), "service")
+                                                                              .then((value) {
                                                                             setState(() {
                                                                               selecedindx = null;
                                                                               _get_cart.get_cart_cont(_get_allprod.uid.toString() == "" || _get_allprod.uid == null ? "" : _get_allprod.uid.toString(), _deviceId.toString());
@@ -898,8 +924,9 @@ class _all_categoriesState extends State<all_categories> {
                                                                               Alignment.center,
                                                                           width:
                                                                               SizeConfig.screenWidth * 0.18,
-                                                                          padding:
-                                                                              const EdgeInsets.symmetric(vertical: 8),
+                                                                          padding: const EdgeInsets
+                                                                              .symmetric(
+                                                                              vertical: 8),
                                                                           decoration: BoxDecoration(
                                                                               color: yellow_col,
                                                                               borderRadius: BorderRadius.circular(44)),

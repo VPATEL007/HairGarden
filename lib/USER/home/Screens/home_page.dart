@@ -711,7 +711,7 @@ class _home_pageState extends State<home_page> {
                                                               },
                                                               child: Container(
                                                                 padding: const EdgeInsets
-                                                                        .symmetric(
+                                                                    .symmetric(
                                                                     horizontal:
                                                                         10,
                                                                     vertical:
@@ -991,8 +991,8 @@ class _home_pageState extends State<home_page> {
                           onChanged: (String query) {
                             final suggestions =
                                 _get_allprod.allsearchtxt.where((element) {
-                              final exname = element.toString();
-                              final input = query.toString();
+                              final exname = element.toString().toLowerCase();
+                              final input = query.toString().toLowerCase();
                               return exname.contains(input);
                             }).toList();
                             setState(() => books = suggestions);
