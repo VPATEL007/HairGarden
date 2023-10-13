@@ -630,11 +630,47 @@ class _all_categoriesState extends State<all_categories> {
                                                                   .greyA1A1AA_400_14,
                                                             ),
                                                             const Spacer(),
-                                                            Text(
-                                                              "${_get_allprod.response.value.data![_get_allprod.getbiyd.contains(widget.cateid) ? _get_allprod.getbiyd.indexOf(widget.cateid) : 0].serviceCategoryData![scrollindex].subcateProduct![prodindex].percent.toString()}% OFF",
-                                                              style: font_style
-                                                                  .black_400_14,
-                                                            ),
+                                                            (_get_allprod
+                                                                    .response
+                                                                    .value
+                                                                    .data![_get_allprod
+                                                                            .getbiyd
+                                                                            .contains(widget
+                                                                                .cateid)
+                                                                        ? _get_allprod
+                                                                            .getbiyd
+                                                                            .indexOf(widget
+                                                                                .cateid)
+                                                                        : 0]
+                                                                    .serviceCategoryData![
+                                                                        scrollindex]
+                                                                    .subcateProduct![
+                                                                        prodindex]
+                                                                    .percent
+                                                                    .toString()=="0" || _get_allprod
+                                                                .response
+                                                                .value
+                                                                .data![_get_allprod
+                                                                .getbiyd
+                                                                .contains(widget
+                                                                .cateid)
+                                                                ? _get_allprod
+                                                                .getbiyd
+                                                                .indexOf(widget
+                                                                .cateid)
+                                                                : 0]
+                                                                .serviceCategoryData![
+                                                            scrollindex]
+                                                                .subcateProduct![
+                                                            prodindex]
+                                                                .percent
+                                                                .toString()=="null")
+                                                                ? SizedBox()
+                                                                : Text(
+                                                                    "${_get_allprod.response.value.data![_get_allprod.getbiyd.contains(widget.cateid) ? _get_allprod.getbiyd.indexOf(widget.cateid) : 0].serviceCategoryData![scrollindex].subcateProduct![prodindex].percent.toString()}% OFF",
+                                                                    style: font_style
+                                                                        .black_400_14,
+                                                                  ),
                                                           ],
                                                         ),
                                                         SizedBox(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -50,6 +52,7 @@ class book_service_controller extends GetxController {
           address_id,
           staff_id,
           staff_type);
+      log('PAYMNET RESPONSE+++++${respo.message}');
       if (respo.status == true) {
         response = respo.obs;
         servname.clear();

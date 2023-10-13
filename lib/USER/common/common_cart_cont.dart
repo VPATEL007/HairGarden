@@ -149,6 +149,10 @@ class _common_cart_contState extends State<common_cart_cont> {
                             void Function(void Function()) sState) {
                           return Obx(() {
                             return Container(
+                              constraints: BoxConstraints(
+                                  maxHeight: Get.height*0.65,
+                                  minHeight: Get.height*0.40
+                              ),
                               padding: EdgeInsets.symmetric(
                                   horizontal: SizeConfig.screenWidth * 0.05,
                                   vertical: SizeConfig.screenHeight * 0.01),
@@ -207,12 +211,12 @@ class _common_cart_contState extends State<common_cart_cont> {
                                             11
                                         ? SizeConfig.screenHeight * 0.055 * 11
                                         : SizeConfig.screenHeight *
-                                            0.055 *
+                                            0.080 *
                                             _get_cart
                                                 .response.value.data!.length,
                                     child: ListView.separated(
                                       shrinkWrap: true,
-                                      physics: const BouncingScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       scrollDirection: Axis.vertical,
                                       itemCount:
                                           _get_cart.response.value.data!.length,

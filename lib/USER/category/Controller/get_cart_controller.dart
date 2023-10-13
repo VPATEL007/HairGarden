@@ -40,6 +40,7 @@ class get_cart_controller extends GetxController {
             addonid.add(element.serviceCateId.toString());
           }
         });
+        response.value.data!.sort((a, b) => b.type!.compareTo(a.type!));
         print("PROD ID: $prodid");
         loading(false);
         // commontoas(msg: respo.message.toString());

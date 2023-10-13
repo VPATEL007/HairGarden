@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:get/get.dart';
 
 import '../../../apiservices.dart';
@@ -15,6 +17,9 @@ class add_address_controller extends GetxController{
     try{
       loading(true);
       final respo = await api_service().add_address(user_id, location, building_name, locality,latitude,longitude,pincode);
+      log("ADD ADDRESS COUNT===${respo.status}");
+      log("ADD ADDRESS MESSAGE===${respo.message}");
+      log("USERID===${user_id}");
       if(respo.status == true){
         response = respo.obs;
 

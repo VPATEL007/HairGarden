@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoding/geocoding.dart';
@@ -369,7 +371,12 @@ class _address_pageState extends State<address_page> {
                                                         .toString()
                                                         .replaceAll("\n", ""));
 
+
                                             Get.to(updateaddress(
+                                              pinCode: _get_address
+                                                  .response
+                                                  .value
+                                                  .data![index].pincode,
                                               passlat: double.parse(_get_address
                                                   .response
                                                   .value
@@ -389,23 +396,11 @@ class _address_pageState extends State<address_page> {
                                                   .value
                                                   .data![index]
                                                   .buildingName,
+
                                               locname: _get_address.response
                                                   .value.data![index].locality,
                                               pagename: "",
                                             ));
-
-                                            logger.i(
-                                                "address page data : below data");
-                                            logger.i(
-                                                "passLattitude--${double.parse(_get_address.response.value.data![index].latitude.toString())}");
-                                            logger.i(
-                                                "passLattitude--${double.parse(_get_address.response.value.data![index].longitude.toString())}");
-                                            logger.i(
-                                                "passLattitude--${_get_address.response.value.data![index].id}");
-                                            logger.i(
-                                                "passLattitude--${_get_address.response.value.data![index].buildingName}");
-                                            logger.i(
-                                                "passLattitude--${_get_address.response.value.data![index].locality}");
                                           },
                                           child: Container(
                                               child: Text(

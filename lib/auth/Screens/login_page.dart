@@ -428,7 +428,13 @@ class _login_pageState extends State<login_page> {
                                   if (lmno.text.isEmpty) {
                                     commontoas(
                                         "Please Enter Your Mobile Number");
-                                  } else {
+                                  }
+                                  else if(lmno.text.length<10)
+                                  {
+                                    commontoas(
+                                        "Please Enter 10 Digit Mobile Number");
+                                  }
+                                  else {
                                     _send_login_otp_obj
                                         .send_otp_cont(
                                             lmno.text.toString(), "login")

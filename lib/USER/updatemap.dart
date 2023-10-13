@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,7 +28,7 @@ var logger = Logger();
 
 class updateaddress extends StatefulWidget {
   double? passlat, passlong;
-  String? addid, buildname, locname, pagename;
+  String? addid, buildname, locname, pagename,pinCode="";
 
   updateaddress(
       {required this.passlat,
@@ -34,7 +36,9 @@ class updateaddress extends StatefulWidget {
       required this.addid,
       required this.buildname,
       required this.locname,
-      required this.pagename});
+      required this.pagename,
+      this.pinCode
+      });
 
   @override
   State<updateaddress> createState() => _updateaddressState();
@@ -43,24 +47,25 @@ class updateaddress extends StatefulWidget {
 class _updateaddressState extends State<updateaddress> {
   PickResult? selectedPlace;
   bool _showPlacePickerInContainer = false;
-  bool _showGoogleMapInContainer = false;
+  final bool _showGoogleMapInContainer = false;
 
-  bool _mapsInitialized = false;
-  String _mapsRenderer = "latest";
+  final bool _mapsInitialized = false;
+  final String _mapsRenderer = "latest";
   double? lat;
   double? long;
   String? uid;
-  bool _isclicked = true;
+  final bool _isclicked = true;
 
   final _text = TextEditingController();
 
   TextEditingController updbuildname = TextEditingController();
+  TextEditingController areaName = TextEditingController();
   TextEditingController updlocaname = TextEditingController();
   TextEditingController updpincode = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   Future<void> getCurruntLocation() async {
-    final LocationSettings locationSettings = LocationSettings(
+    final LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
       distanceFilter: 100,
     );
@@ -90,17 +95,16 @@ class _updateaddressState extends State<updateaddress> {
     setState(() {
       center = LatLng(double.parse(widget.passlat.toString()),
           (double.parse(widget.passlong.toString())));
-      updbuildname.text = widget.buildname!;
-      updlocaname.text = widget.locname!;
+      updbuildname.text = widget.buildname??"";
+      updlocaname.text = widget.locname??"";
+      updpincode.text = widget.pinCode??"";
       uid = sf.getString("stored_uid");
-      print("USER ID ID ${uid.toString()}");
     });
   }
 
   @override
   void initState() {
     getuserid();
-    // getCurruntLocation();
     super.initState();
   }
 
@@ -139,7 +143,6 @@ class _updateaddressState extends State<updateaddress> {
 
   String? address;
 
-  final _add_address = Get.put(add_address_controller());
   final _get_address = Get.put(get_address_controller());
   final _upd_address = Get.put(edit_address_controller());
   final _get_testimonials = Get.put(get_testimonials_controller());
@@ -160,17 +163,17 @@ class _updateaddressState extends State<updateaddress> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: center == null
-          ? CommonIndicator()
+          ? const CommonIndicator()
           : SafeArea(
-              child: Container(
+              child: SizedBox(
                 height: SizeConfig.screenHeight,
                 width: SizeConfig.screenWidth,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Expanded(
-                      child: Container(
-                          // height: SizeConfig.screenWidth*0.9,
+                      child: SizedBox(
+
                           width: SizeConfig.screenWidth,
                           child: PlacePicker(
                             forceAndroidLocationManager: true,
@@ -189,44 +192,36 @@ class _updateaddressState extends State<updateaddress> {
                             selectedPlaceWidgetBuilder:
                                 (_, selectedPlace, state, isSearchBarFocused) {
                               if (state == SearchingState.Searching) {
-                                CommonIndicator();
+                                const CommonIndicator();
                               } else {
                                 int count = 0;
                                 List nu = [];
                                 print(selectedPlace!.formattedAddress!.length);
                                 for (int i = 0;
-                                    i < selectedPlace!.formattedAddress!.length;
+                                    i < selectedPlace.formattedAddress!.length;
                                     i++) {
-                                  if (selectedPlace!
-                                              .formattedAddress![i] ==
+                                  if (selectedPlace.formattedAddress![i] ==
                                           "0" ||
-                                      selectedPlace!
-                                              .formattedAddress![i] ==
+                                      selectedPlace.formattedAddress![i] ==
                                           "1" ||
-                                      selectedPlace!
-                                              .formattedAddress![i] ==
+                                      selectedPlace.formattedAddress![i] ==
                                           "2" ||
-                                      selectedPlace!
-                                              .formattedAddress![i] ==
+                                      selectedPlace.formattedAddress![i] ==
                                           "3" ||
-                                      selectedPlace!
-                                              .formattedAddress![i] ==
+                                      selectedPlace.formattedAddress![i] ==
                                           "4" ||
-                                      selectedPlace!
-                                              .formattedAddress![i] ==
+                                      selectedPlace.formattedAddress![i] ==
                                           "5" ||
-                                      selectedPlace!
-                                              .formattedAddress![i] ==
+                                      selectedPlace.formattedAddress![i] ==
                                           "6" ||
-                                      selectedPlace!
-                                              .formattedAddress![i] ==
+                                      selectedPlace.formattedAddress![i] ==
                                           "7" ||
-                                      selectedPlace!.formattedAddress![i] ==
+                                      selectedPlace.formattedAddress![i] ==
                                           "8" ||
-                                      selectedPlace!.formattedAddress![i] ==
+                                      selectedPlace.formattedAddress![i] ==
                                           "9") {
                                     count++;
-                                    nu.add(selectedPlace!.formattedAddress![i]);
+                                    nu.add(selectedPlace.formattedAddress![i]);
                                   } else {}
                                 }
                                 List pincodes = [];
@@ -261,10 +256,10 @@ class _updateaddressState extends State<updateaddress> {
                                                 SizeConfig.screenHeight * 0.01,
                                           ),
                                           Container(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 20),
                                             width: SizeConfig.screenWidth,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               color: Colors.white,
                                               borderRadius: BorderRadius.only(
                                                   topLeft: Radius.circular(20),
@@ -298,21 +293,17 @@ class _updateaddressState extends State<updateaddress> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        InkWell(
-                                                            onTap: () {
-                                                              print("Pic");
-                                                            },
-                                                            child: Text(
-                                                              "Your Location",
-                                                              style: font_style
-                                                                  .green_600_14,
-                                                            )),
+                                                        Text(
+                                                          "Your Location",
+                                                          style: font_style
+                                                              .green_600_14,
+                                                        ),
                                                         SizedBox(
                                                           height: SizeConfig
                                                                   .screenHeight *
                                                               0.01,
                                                         ),
-                                                        Container(
+                                                        SizedBox(
                                                             width: SizeConfig
                                                                     .screenWidth *
                                                                 0.8,
@@ -320,7 +311,7 @@ class _updateaddressState extends State<updateaddress> {
                                                             child: state ==
                                                                     SearchingState
                                                                         .Searching
-                                                                ? CommonIndicator()
+                                                                ? const CommonIndicator()
                                                                 : Text(
                                                                     selectedPlace!
                                                                         .formattedAddress
@@ -362,6 +353,27 @@ class _updateaddressState extends State<updateaddress> {
                                                         .B3B3B3_400_16,
                                                   ),
                                                 ),
+                                                TextFormField(
+                                                  controller: areaName,
+                                                  style:
+                                                  font_style.black_400_16,
+                                                  decoration: InputDecoration(
+                                                    enabledBorder:
+                                                    UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: yellow_col),
+                                                    ),
+                                                    focusedBorder:
+                                                    UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: yellow_col),
+                                                    ),
+                                                    hintText:
+                                                    "Enter Area Name",
+                                                    hintStyle: font_style
+                                                        .B3B3B3_400_16,
+                                                  ),
+                                                ),
 
                                                 //ENTER LOCALITY
 
@@ -387,8 +399,7 @@ class _updateaddressState extends State<updateaddress> {
                                                 ),
 
                                                 // PINCODE TXTFORM
-                                                pincodestr.toString() == ""
-                                                    ? TextFormField(
+                                                TextFormField(
                                                         controller: updpincode,
                                                         style: font_style
                                                             .black_400_16,
@@ -415,8 +426,8 @@ class _updateaddressState extends State<updateaddress> {
                                                           hintStyle: font_style
                                                               .B3B3B3_400_16,
                                                         ),
-                                                      )
-                                                    : Container(),
+                                                      ),
+                                                    // : Container(),
                                                 SizedBox(
                                                   height:
                                                       SizeConfig.screenHeight *
@@ -430,11 +441,9 @@ class _updateaddressState extends State<updateaddress> {
                                                     child:
                                                         _upd_address
                                                                 .loading.value
-                                                            ? CommonIndicator()
+                                                            ? const CommonIndicator()
                                                             : InkWell(
                                                                 onTap: () {
-                                                                  print(
-                                                                      "PINCODE: $pincodestr");
 
                                                                   // Get.to(address_page());
                                                                   if (updbuildname
@@ -476,7 +485,7 @@ class _updateaddressState extends State<updateaddress> {
                                                                                   fillYTlists();
                                                                                   print(_get_testimonials.yturl);
                                                                                 });
-                                                                                Get.to(BottomBar(pasindx: 0));
+                                                                                Get.to(const BottomBar(pasindx: 0));
                                                                               } else {
                                                                                 Get.back();
                                                                               }
@@ -484,7 +493,7 @@ class _updateaddressState extends State<updateaddress> {
                                                                     logger.i(
                                                                         "add--${widget.addid}");
                                                                     logger.i(
-                                                                        "addresh--${selectedPlace!.formattedAddress.toString()}");
+                                                                        "addresh--${selectedPlace.formattedAddress.toString()}");
                                                                     logger.i(
                                                                         "update building--${updbuildname.text}");
                                                                     logger.i(
@@ -497,7 +506,7 @@ class _updateaddressState extends State<updateaddress> {
                                                                 },
                                                                 child:
                                                                     Container(
-                                                                  padding: EdgeInsets
+                                                                  padding: const EdgeInsets
                                                                       .symmetric(
                                                                           vertical:
                                                                               10),
@@ -521,11 +530,11 @@ class _updateaddressState extends State<updateaddress> {
                                                                               .linear,
                                                                       radius: 1,
                                                                       colors: [
-                                                                        Color(
+                                                                        const Color(
                                                                             0xffBF8D2C),
-                                                                        Color(
+                                                                        const Color(
                                                                             0xffDBE466),
-                                                                        Color(
+                                                                        const Color(
                                                                             0xffBF8D2C)
                                                                       ],
                                                                       "Update",

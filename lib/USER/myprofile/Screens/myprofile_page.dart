@@ -148,50 +148,75 @@ class _myprofile_pageState extends State<myprofile_page> {
                 ? const CommonIndicator()
                 : Column(
                     children: [
-                      Stack(
-                          clipBehavior: Clip.none,
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Container(
-                              width: SizeConfig.screenWidth,
-                              height: SizeConfig.screenHeight * 0.18,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/profile_bg_img.png"),
-                                      fit: BoxFit.cover)),
-                            ),
-                            Positioned(
-                              top: SizeConfig.screenHeight * 0.08,
-                              child: Container(
-                                width: SizeConfig.screenWidth * 0.3,
-                                height: SizeConfig.screenHeight * 0.18,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        image: (_get_profile_info
-                                                    .response
-                                                    .value
-                                                    .data
-                                                    ?.profile
-                                                    ?.isNotEmpty ??
-                                                false)
-                                            ? NetworkImage(_get_profile_info
-                                                    .response
-                                                    .value
-                                                    .data
-                                                    ?.profile ??
-                                                '')
-                                            : const AssetImage(
-                                                    "assets/images/person2.jpg")
-                                                as ImageProvider,
-                                        fit: BoxFit.cover)),
-                              ),
-                            ),
-                          ]),
+                      // Stack(
+                      //     clipBehavior: Clip.none,
+                      //     alignment: Alignment.bottomCenter,
+                      //     children: [
+                      //       Container(
+                      //         width: SizeConfig.screenWidth,
+                      //         height: SizeConfig.screenHeight * 0.18,
+                      //         decoration: const BoxDecoration(
+                      //             image: DecorationImage(
+                      //                 image: AssetImage(
+                      //                     "assets/images/profile_bg_img.png"),
+                      //                 fit: BoxFit.cover)),
+                      //       ),
+                      //       Positioned(
+                      //         top: SizeConfig.screenHeight * 0.08,
+                      //         child: Container(
+                      //           width: SizeConfig.screenWidth * 0.3,
+                      //           height: SizeConfig.screenHeight * 0.18,
+                      //           decoration: BoxDecoration(
+                      //               border: Border.all(color: Colors.black),
+                      //               shape: BoxShape.circle,
+                      //               image: DecorationImage(
+                      //                   image: (_get_profile_info
+                      //                               .response
+                      //                               .value
+                      //                               .data
+                      //                               ?.profile
+                      //                               ?.isNotEmpty ??
+                      //                           false)
+                      //                       ? NetworkImage(_get_profile_info
+                      //                               .response
+                      //                               .value
+                      //                               .data
+                      //                               ?.profile ??
+                      //                           '')
+                      //                       : const AssetImage(
+                      //                               "assets/images/person2.jpg")
+                      //                           as ImageProvider,
+                      //                   fit: BoxFit.cover)),
+                      //         ),
+                      //       ),
+                      //     ]),
+                      Container(
+                        width: SizeConfig.screenWidth * 0.3,
+                        height: SizeConfig.screenHeight * 0.18,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: (_get_profile_info
+                                    .response
+                                    .value
+                                    .data
+                                    ?.profile
+                                    ?.isNotEmpty ??
+                                    false)
+                                    ? NetworkImage(_get_profile_info
+                                    .response
+                                    .value
+                                    .data
+                                    ?.profile ??
+                                    '')
+                                    : const AssetImage(
+                                    "assets/images/person2.jpg")
+                                as ImageProvider,
+                                fit: BoxFit.cover)),
+                      ),
                       SizedBox(
-                        height: SizeConfig.screenHeight * 0.07,
+                        height: SizeConfig.screenHeight * 0.01,
                       ),
                       Text(
                         _get_profile_info.response.value.data!.firstName

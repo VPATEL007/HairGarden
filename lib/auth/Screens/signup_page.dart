@@ -66,12 +66,7 @@ class _signup_pageState extends State<signup_page> {
     border: Border.all(color: Colors.transparent, width: 0.3),
     borderRadius: BorderRadius.circular(32),
   );
-  final _get_allprod = Get.put(get_all_cat_products_controller());
-  final _send_otp = Get.put(signin_send_otp_controller());
   final _registrationOtp = Get.put(send_otp_controller());
-  final _get_staffs = Get.put(get_staffs_controller());
-  final _get_address = Get.put(get_address_controller());
-  final _get_cart = Get.put(get_cart_controller());
   var appbarheight = AppBar().preferredSize.height;
   String? _deviceId;
   final _signup = Get.put(signup_controller());
@@ -627,7 +622,12 @@ class _signup_pageState extends State<signup_page> {
                                       smno.text == "" ||
                                       selectedGenderValue == "") {
                                     commontoas("Please fill required field..");
-                                  } else {
+                                  }
+                                  else if(smno.text.length<10)
+                                  {
+                                    commontoas("Please Enter 10 Digit Mobile Number");
+                                  }
+                                  else {
                                     _registrationOtp
                                         .send_otp_cont(smno.text, "Singup")
                                         .then((value) {
@@ -636,37 +636,6 @@ class _signup_pageState extends State<signup_page> {
                                       });
                                     });
                                   }
-
-                                  //
-                                  //
-                                  // if(sfname.text==null || sfname.text==""){
-                                  //   commontoas(msg: "Enter your first name");
-                                  // }else if(slname.text==null || slname.text==""){
-                                  //   commontoas(msg: "Enter your last name");
-                                  // }else if(smail.text==null || smail.text==""){
-                                  //   commontoas(msg: "Enter your email");
-                                  // }else if(smno.text==null || smno.text==""){
-                                  //   commontoas(msg: "Enter your mobile number");
-                                  // }else if(selectedValue2==null || selectedValue2==""){
-                                  //   commontoas(msg: "PLease select your Gender");
-                                  // }else {
-                                  //   _registrationOtp.send_otp_cont(smno.text,sfname.text).then((value) {
-                                  //     setState(() {
-                                  //       isotp=true;
-                                  //     });
-                                  //   });
-                                  // }
-
-                                  //
-                                  // if(smno.text==null||smno.text==""){
-                                  //   commontoas(msg: "Please Enter Your Mobile Number");
-                                  // }
-                                  // if(slname.text==""||smail.text==""){
-                                  //   commontoas(msg: "Please Enter Your Details");
-                                  // }
-                                  // else{
-                                  //
-                                  // }
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(2.0),

@@ -413,358 +413,381 @@ class _HistoryPageState extends State<HistoryPage> {
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 15),
-                                            child: InkWell(
-                                              onTap: () {
-                                                Get.bottomSheet(Container(
-                                                  color: Colors.white,
-                                                  height: 250,
-                                                  child: Stack(
-                                                    children: [
-                                                      Column(
-                                                        crossAxisAlignment:
+                                            child: Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    Get.bottomSheet(Container(
+                                                      color: Colors.white,
+                                                      constraints: BoxConstraints(
+                                                          maxHeight: Get.height*0.65,
+                                                          minHeight: Get.height*0.35
+                                                      ),
+                                                      child: Stack(
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
-                                                        mainAxisSize:
+                                                            mainAxisSize:
                                                             MainAxisSize.min,
-                                                        children: [
-                                                          SizedBox(
-                                                            height: SizeConfig
+                                                            children: [
+                                                              SizedBox(
+                                                                height: SizeConfig
                                                                     .screenHeight *
-                                                                0.009,
-                                                          ),
-                                                          Align(
-                                                            child: Container(
-                                                              width: 100,
-                                                              height: 6,
-                                                              decoration: BoxDecoration(
-                                                                  color: const Color(
-                                                                      0xffA1A1AA),
-                                                                  borderRadius:
+                                                                    0.009,
+                                                              ),
+                                                              Align(
+                                                                child: Container(
+                                                                  width: 100,
+                                                                  height: 6,
+                                                                  decoration: BoxDecoration(
+                                                                      color: const Color(
+                                                                          0xffA1A1AA),
+                                                                      borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              30)),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
+                                                                          30)),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: SizeConfig
                                                                     .screenHeight *
-                                                                0.009,
-                                                          ),
-                                                          //SERVICES
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        15),
-                                                            child: Text(
-                                                              "Service name",
-                                                              style: font_style
-                                                                  .black_600_18,
-                                                            ),
-                                                          ),
-                                                          const Divider(
-                                                              thickness: 1,
-                                                              color: Color(
-                                                                  0xffE4E4E7)),
-                                                          SizedBox(
-                                                            height: SizeConfig
+                                                                    0.009,
+                                                              ),
+                                                              //SERVICES
+                                                              ListView.builder(
+                                                                  shrinkWrap: true,
+                                                                  itemCount: getOrderHistory
+                                                                      .response.value.data?[index].itemList?.length,
+                                                                  itemBuilder: (context, indexAt) => Padding(
+                                                                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                                                    child: SizedBox(
+                                                                      width: SizeConfig.screenWidth * 0.9,
+                                                                      child: Row(
+                                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          Text(
+                                                                            getOrderHistory
+                                                                                .response.value.data?[index].itemList?[indexAt].title??"",
+                                                                            style: font_style.black_400_16,
+                                                                          ),
+                                                                          const Spacer(),
+                                                                          Text(
+                                                                            "₹ ${double.parse(getOrderHistory
+                                                                                .response.value.data?[index].itemList?[indexAt].price??"").toStringAsFixed(2)}",
+                                                                            style: font_style.black_500_14,
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  )),
+                                                              const Divider(
+                                                                  thickness: 1,
+                                                                  color: Color(
+                                                                      0xffE4E4E7)),
+                                                              SizedBox(
+                                                                height: SizeConfig
                                                                     .screenHeight *
-                                                                0.01,
-                                                          ),
+                                                                    0.01,
+                                                              ),
 
-                                                          //DATE
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
+                                                              //DATE
+                                                              Center(
+                                                                child: SizedBox(
+                                                                    width: SizeConfig
                                                                         .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "DATE",
-                                                                      style: font_style
-                                                                          .yell_400_16,
-                                                                    ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      getOrderHistory
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .bookingDate
-                                                                          .toString(),
-                                                                      style: font_style
-                                                                          .black_400_16,
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          ),
+                                                                        0.9,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "DATE",
+                                                                          style: font_style
+                                                                              .yell_400_16,
+                                                                        ),
+                                                                        const Spacer(),
+                                                                        Text(
+                                                                          getOrderHistory
+                                                                              .response
+                                                                              .value
+                                                                              .data![
+                                                                          index]
+                                                                              .bookingDate
+                                                                              .toString(),
+                                                                          style: font_style
+                                                                              .black_400_16,
+                                                                        ),
+                                                                      ],
+                                                                    )),
+                                                              ),
 
-                                                          SizedBox(
-                                                            height: SizeConfig
+                                                              SizedBox(
+                                                                height: SizeConfig
                                                                     .screenHeight *
-                                                                0.01,
-                                                          ),
+                                                                    0.01,
+                                                              ),
 
-                                                          //ID ORDER
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
+                                                              //ID ORDER
+                                                              Center(
+                                                                child: SizedBox(
+                                                                    width: SizeConfig
                                                                         .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "ID ORDER",
-                                                                      style: font_style
-                                                                          .yell_400_16,
-                                                                    ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      getOrderHistory
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .bookingId
-                                                                          .toString(),
-                                                                      style: font_style
-                                                                          .black_400_16,
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
+                                                                        0.9,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "ID ORDER",
+                                                                          style: font_style
+                                                                              .yell_400_16,
+                                                                        ),
+                                                                        const Spacer(),
+                                                                        Text(
+                                                                          getOrderHistory
+                                                                              .response
+                                                                              .value
+                                                                              .data![
+                                                                          index]
+                                                                              .bookingId
+                                                                              .toString(),
+                                                                          style: font_style
+                                                                              .black_400_16,
+                                                                        ),
+                                                                      ],
+                                                                    )),
+                                                              ),
+                                                              SizedBox(
+                                                                height: SizeConfig
                                                                     .screenHeight *
-                                                                0.01,
-                                                          ),
+                                                                    0.01,
+                                                              ),
 
-                                                          //SUB TOTAL
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
+                                                              //SUB TOTAL
+                                                              Center(
+                                                                child: SizedBox(
+                                                                    width: SizeConfig
                                                                         .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Sub Total",
-                                                                      style: font_style
-                                                                          .yell_400_16,
-                                                                    ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      "₹ ${getOrderHistory.response.value.data![index].price.toString()}",
-                                                                      style: font_style
-                                                                          .black_400_16,
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
+                                                                        0.9,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "Total Amount",
+                                                                          style: font_style
+                                                                              .yell_400_16,
+                                                                        ),
+                                                                        const Spacer(),
+                                                                        Text(
+                                                                          "₹ ${getOrderHistory.response.value.data![index].price.toString()}",
+                                                                          style: font_style
+                                                                              .black_400_16,
+                                                                        ),
+                                                                      ],
+                                                                    )),
+                                                              ),
+                                                              SizedBox(
+                                                                height: SizeConfig
                                                                     .screenHeight *
-                                                                0.01,
-                                                          ),
+                                                                    0.01,
+                                                              ),
 
-                                                          //PROFESSONAL
-                                                          Center(
-                                                            child:
+                                                              //PROFESSONAL
+                                                              Center(
+                                                                child:
                                                                 InkWell(
-                                                              onTap: () {
-                                                                if (getOrderHistory
+                                                                  onTap: () {
+                                                                    if (getOrderHistory
                                                                         .response
                                                                         .value
                                                                         .data![
-                                                                            index]
+                                                                    index]
                                                                         .staffdata
                                                                         ?.staffId !=
-                                                                    null) {
-                                                                  getStaffDetailsController
-                                                                      .get_staffs_details_cont(getOrderHistory
+                                                                        null) {
+                                                                      getStaffDetailsController
+                                                                          .get_staffs_details_cont(getOrderHistory
                                                                           .response
                                                                           .value
                                                                           .data![
-                                                                              index]
+                                                                      index]
                                                                           .staffdata!
                                                                           .staffId
                                                                           .toString())
-                                                                      .then(
-                                                                          (value) {
-                                                                    Get.to(
-                                                                        your_reviews(
-                                                                      staffid: getOrderHistory
-                                                                          .response
-                                                                          .value
-                                                                          .data?[
-                                                                              index]
-                                                                          .staffdata!
-                                                                          .staffId
-                                                                          .toString(),
-                                                                      frompage:
-                                                                          "upcoming",
-                                                                    ));
-                                                                    // if (getStaffDetailsController
-                                                                    //     .response
-                                                                    //     .value
-                                                                    //     .status ==
-                                                                    //     false) {
-                                                                    //   Fluttertoast
-                                                                    //       .showToast(
-                                                                    //       msg:
-                                                                    //       "No Data Found");
-                                                                    // } else {
-                                                                    //   Get.to(
-                                                                    //       your_reviews(
-                                                                    //         staffid: getUpcomingOrderController
-                                                                    //             .response
-                                                                    //             .value
-                                                                    //             .data?[
-                                                                    //         index]
-                                                                    //             .staffdata!
-                                                                    //             .staffId
-                                                                    //             .toString(),
-                                                                    //         frompage:
-                                                                    //         "upcoming",
-                                                                    //       ));
-                                                                    // }
-                                                                  });
-                                                                } else {
-                                                                  commontoas(
-                                                                      "No Staff Found");
-                                                                }
-                                                              },
-                                                              child: SizedBox(
-                                                                  width: SizeConfig
+                                                                          .then(
+                                                                              (value) {
+                                                                            Get.to(
+                                                                                your_reviews(
+                                                                                  staffid: getOrderHistory
+                                                                                      .response
+                                                                                      .value
+                                                                                      .data?[
+                                                                                  index]
+                                                                                      .staffdata!
+                                                                                      .staffId
+                                                                                      .toString(),
+                                                                                  frompage:
+                                                                                  "upcoming",
+                                                                                ));
+                                                                            // if (getStaffDetailsController
+                                                                            //     .response
+                                                                            //     .value
+                                                                            //     .status ==
+                                                                            //     false) {
+                                                                            //   Fluttertoast
+                                                                            //       .showToast(
+                                                                            //       msg:
+                                                                            //       "No Data Found");
+                                                                            // } else {
+                                                                            //   Get.to(
+                                                                            //       your_reviews(
+                                                                            //         staffid: getUpcomingOrderController
+                                                                            //             .response
+                                                                            //             .value
+                                                                            //             .data?[
+                                                                            //         index]
+                                                                            //             .staffdata!
+                                                                            //             .staffId
+                                                                            //             .toString(),
+                                                                            //         frompage:
+                                                                            //         "upcoming",
+                                                                            //       ));
+                                                                            // }
+                                                                          });
+                                                                    } else {
+                                                                      commontoas(
+                                                                          "No Staff Found");
+                                                                    }
+                                                                  },
+                                                                  child: SizedBox(
+                                                                      width: SizeConfig
                                                                           .screenWidth *
-                                                                      0.9,
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "Professional",
-                                                                        style: font_style
-                                                                            .yell_400_16,
-                                                                      ),
-                                                                      const Spacer(),
-                                                                      Text(
-                                                                        getOrderHistory.response.value.data![index].staffdata!.staffName.toString() == "" ||
+                                                                          0.9,
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            "Professional",
+                                                                            style: font_style
+                                                                                .yell_400_16,
+                                                                          ),
+                                                                          const Spacer(),
+                                                                          Text(
+                                                                            getOrderHistory.response.value.data![index].staffdata!.staffName.toString() == "" ||
                                                                                 getOrderHistory.response.value.data![index].staffdata!.staffName == null
-                                                                            ? "Waiting for assign"
-                                                                            : getOrderHistory.response.value.data![index].staffdata!.staffName.toString(),
-                                                                        style: font_style
-                                                                            .black_400_14_under,
-                                                                      ),
-                                                                      const Icon(
-                                                                          Icons
-                                                                              .keyboard_arrow_right_outlined)
-                                                                    ],
-                                                                  )),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
+                                                                                ? "Waiting for assign"
+                                                                                : getOrderHistory.response.value.data![index].staffdata!.staffName.toString(),
+                                                                            style: font_style
+                                                                                .black_400_14_under,
+                                                                          ),
+                                                                          const Icon(
+                                                                              Icons
+                                                                                  .keyboard_arrow_right_outlined)
+                                                                        ],
+                                                                      )),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: SizeConfig
                                                                     .screenHeight *
-                                                                0.01,
-                                                          ),
+                                                                    0.01,
+                                                              ),
 
-                                                          //PAYMENT METHOD
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
+                                                              //PAYMENT METHOD
+                                                              Center(
+                                                                child: SizedBox(
+                                                                    width: SizeConfig
                                                                         .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Payment Method",
-                                                                      style: font_style
-                                                                          .yell_400_16,
-                                                                    ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      getOrderHistory
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .paymentType
-                                                                          .toString(),
-                                                                      style: font_style
-                                                                          .black_400_16,
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
+                                                                        0.9,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "Payment Method",
+                                                                          style: font_style
+                                                                              .yell_400_16,
+                                                                        ),
+                                                                        const Spacer(),
+                                                                        Text(
+                                                                          getOrderHistory
+                                                                              .response
+                                                                              .value
+                                                                              .data![
+                                                                          index]
+                                                                              .paymentType
+                                                                              .toString()=="cod"?"Pay After Service":getOrderHistory
+                                                                              .response
+                                                                              .value
+                                                                              .data![
+                                                                          index]
+                                                                              .paymentType
+                                                                              .toString(),
+                                                                          style: font_style
+                                                                              .black_400_16,
+                                                                        ),
+                                                                      ],
+                                                                    )),
+                                                              ),
+                                                              SizedBox(
+                                                                height: SizeConfig
                                                                     .screenHeight *
-                                                                0.01,
-                                                          ),
+                                                                    0.01,
+                                                              ),
 
-                                                          //STATUS
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
+                                                              //STATUS
+                                                              Center(
+                                                                child: SizedBox(
+                                                                    width: SizeConfig
                                                                         .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Status",
-                                                                      style: font_style
-                                                                          .yell_400_16,
-                                                                    ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      getOrderHistory
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .status
-                                                                          .toString(),
-                                                                      style: font_style
-                                                                          .blue_600_14
-                                                                          .copyWith(
+                                                                        0.9,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "Booking Status",
+                                                                          style: font_style
+                                                                              .yell_400_16,
+                                                                        ),
+                                                                        const Spacer(),
+                                                                        Text(
+                                                                          getOrderHistory
+                                                                              .response
+                                                                              .value
+                                                                              .data![
+                                                                          index]
+                                                                              .status
+                                                                              .toString(),
+                                                                          style: font_style
+                                                                              .blue_600_14
+                                                                              .copyWith(
                                                                               color: const Color(0xff22C55E)),
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
+                                                                        ),
+                                                                      ],
+                                                                    )),
+                                                              ),
+                                                              SizedBox(
+                                                                height: SizeConfig
                                                                     .screenHeight *
-                                                                0.01,
+                                                                    0.01,
+                                                              ),
+                                                            ],
                                                           ),
+                                                          Positioned(
+                                                              left: SizeConfig
+                                                                  .screenWidth *
+                                                                  0.40,
+                                                              top: 50,
+                                                              child: Image.asset(
+                                                                  getOrderHistory
+                                                                      .response
+                                                                      .value
+                                                                      .data![
+                                                                  index]
+                                                                      .status ==
+                                                                      'Confirmed'
+                                                                      ? 'assets/images/success.png'
+                                                                      : 'assets/images/cancel.png',
+                                                                  width: 100,
+                                                                  height: 80))
                                                         ],
                                                       ),
-                                                      Positioned(
-                                                          left: SizeConfig
-                                                                  .screenWidth *
-                                                              0.40,
-                                                          top: 50,
-                                                          child: Image.asset(
-                                                              getOrderHistory
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .status ==
-                                                                      'Confirmed'
-                                                                  ? 'assets/images/success.png'
-                                                                  : 'assets/images/cancel.png',
-                                                              width: 100,
-                                                              height: 80))
-                                                    ],
-                                                  ),
-                                                ));
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  Row(
+                                                    ));
+                                                  },
+                                                  child: Row(
                                                     children: [
                                                       Image.asset(
                                                           'assets/images/log.png',
@@ -772,7 +795,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                                           height: 40),
                                                       const SizedBox(width: 10),
                                                       Text(
-                                                        'Service name',
+                                                        '${getOrderHistory
+                                                            .response.value.data?[index].itemList?[0].title}',
                                                         style: font_style
                                                             .black_600_18
                                                             .copyWith(
@@ -786,35 +810,188 @@ class _HistoryPageState extends State<HistoryPage> {
                                                           size: 15)
                                                     ],
                                                   ),
-                                                  const Divider(
-                                                      thickness: 1.0,
-                                                      color: Color(0xffE4E4E7)),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Category',
-                                                        style: font_style
-                                                            .black_600_18
-                                                            .copyWith(
-                                                                color: Colors
-                                                                    .black),
-                                                      ),
-                                                      const Spacer(),
-                                                      Text(
-                                                        '₹ 120',
-                                                        style: font_style
-                                                            .black_600_18
-                                                            .copyWith(
-                                                                color: const Color(
-                                                                    0xff52525B),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
+                                                ),
+                                                const Divider(
+                                                    thickness: 1.0,
+                                                    color: Color(0xffE4E4E7)),
+                                               Column(
+                                                 children: [
+                                                   Center(
+                                                     child: SizedBox(
+                                                         width: SizeConfig
+                                                             .screenWidth *
+                                                             0.9,
+                                                         child: Row(
+                                                           children: [
+                                                             Text(
+                                                               "DATE",
+                                                               style: font_style
+                                                                   .yell_400_16,
+                                                             ),
+                                                             const Spacer(),
+                                                             Text(
+                                                               getOrderHistory
+                                                                   .response
+                                                                   .value
+                                                                   .data![
+                                                               index]
+                                                                   .bookingDate
+                                                                   .toString(),
+                                                               style: font_style
+                                                                   .black_400_16,
+                                                             ),
+                                                           ],
+                                                         )),
+                                                   ),
+
+                                                   SizedBox(
+                                                     height: SizeConfig
+                                                         .screenHeight *
+                                                         0.01,
+                                                   ),
+
+                                                   //ID ORDER
+                                                   Center(
+                                                     child: SizedBox(
+                                                         width: SizeConfig
+                                                             .screenWidth *
+                                                             0.9,
+                                                         child: Row(
+                                                           children: [
+                                                             Text(
+                                                               "ID ORDER",
+                                                               style: font_style
+                                                                   .yell_400_16,
+                                                             ),
+                                                             const Spacer(),
+                                                             Text(
+                                                               getOrderHistory
+                                                                   .response
+                                                                   .value
+                                                                   .data![
+                                                               index]
+                                                                   .bookingId
+                                                                   .toString(),
+                                                               style: font_style
+                                                                   .black_400_16,
+                                                             ),
+                                                           ],
+                                                         )),
+                                                   ),
+                                                   SizedBox(
+                                                     height: SizeConfig
+                                                         .screenHeight *
+                                                         0.01,
+                                                   ),
+
+                                                   //SUB TOTAL
+                                                   Center(
+                                                     child: SizedBox(
+                                                         width: SizeConfig
+                                                             .screenWidth *
+                                                             0.9,
+                                                         child: Row(
+                                                           children: [
+                                                             Text(
+                                                               "Total Amount",
+                                                               style: font_style
+                                                                   .yell_400_16,
+                                                             ),
+                                                             const Spacer(),
+                                                             Text(
+                                                               "₹ ${getOrderHistory.response.value.data![index].price.toString()}",
+                                                               style: font_style
+                                                                   .black_400_16,
+                                                             ),
+                                                           ],
+                                                         )),
+                                                   ),
+                                                   SizedBox(
+                                                     height: SizeConfig
+                                                         .screenHeight *
+                                                         0.01,
+                                                   ),
+
+
+
+                                                   //PAYMENT METHOD
+                                                   Center(
+                                                     child: SizedBox(
+                                                         width: SizeConfig
+                                                             .screenWidth *
+                                                             0.9,
+                                                         child: Row(
+                                                           children: [
+                                                             Text(
+                                                               "Payment Method",
+                                                               style: font_style
+                                                                   .yell_400_16,
+                                                             ),
+                                                             const Spacer(),
+                                                             Text(
+                                                               getOrderHistory
+                                                                   .response
+                                                                   .value
+                                                                   .data![
+                                                               index]
+                                                                   .paymentType
+                                                                   .toString()=="cod"?"Pay After Service":getOrderHistory
+                                                                   .response
+                                                                   .value
+                                                                   .data![
+                                                               index]
+                                                                   .paymentType
+                                                                   .toString(),
+                                                               style: font_style
+                                                                   .black_400_16,
+                                                             ),
+                                                           ],
+                                                         )),
+                                                   ),
+                                                   SizedBox(
+                                                     height: SizeConfig
+                                                         .screenHeight *
+                                                         0.01,
+                                                   ),
+
+                                                   //STATUS
+                                                   Center(
+                                                     child: SizedBox(
+                                                         width: SizeConfig
+                                                             .screenWidth *
+                                                             0.9,
+                                                         child: Row(
+                                                           children: [
+                                                             Text(
+                                                               "Booking Status",
+                                                               style: font_style
+                                                                   .yell_400_16,
+                                                             ),
+                                                             const Spacer(),
+                                                             Text(
+                                                               getOrderHistory
+                                                                   .response
+                                                                   .value
+                                                                   .data![
+                                                               index]
+                                                                   .status
+                                                                   .toString(),
+                                                               style: font_style
+                                                                   .blue_600_14
+                                                                   .copyWith(
+                                                                   color: const Color(0xff22C55E)),
+                                                             ),
+                                                           ],
+                                                         )),
+                                                   ),
+                                                   SizedBox(
+                                                     height: SizeConfig
+                                                         .screenHeight *
+                                                         0.01,
+                                                   ),
+                                                 ],
+                                               )
+                                              ],
                                             ),
                                           );
                                         },
@@ -843,831 +1020,384 @@ class _HistoryPageState extends State<HistoryPage> {
                                                 .response.value.data?.length ??
                                             0,
                                         itemBuilder: (context, index) {
-                                          // return Column(
-                                          //   crossAxisAlignment:
-                                          //       CrossAxisAlignment.start,
-                                          //   mainAxisSize: MainAxisSize.min,
-                                          //   children: [
-                                          //     //PRODUCT NAME
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Text(
-                                          //             getUpcomingOrderController
-                                          //                 .response
-                                          //                 .value
-                                          //                 .data![index]
-                                          //                 .bookingId
-                                          //                 .toString(),
-                                          //             style: font_style
-                                          //                 .black_600_18,
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.009,
-                                          //     ),
-                                          //
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.009,
-                                          //     ),
-                                          //     //SERVICES
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "SERVICES",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 "${getUpcomingOrderController.response.value.data?[index].itemList?.length} Service",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     // Container(
-                                          //     //   height: 18,
-                                          //     //   width: SizeConfig
-                                          //     //       .screenWidth *
-                                          //     //       0.3,
-                                          //     //   alignment: Alignment
-                                          //     //       .centerRight,
-                                          //     //   child: ListView
-                                          //     //       .separated(
-                                          //     //     shrinkWrap:
-                                          //     //     true,
-                                          //     //     scrollDirection:
-                                          //     //     Axis.horizontal,
-                                          //     //     itemCount: getUpcomingOrderController
-                                          //     //         .response
-                                          //     //         .value
-                                          //     //         .data?[
-                                          //     //     index]
-                                          //     //         .itemList?.length??0,
-                                          //     //     itemBuilder:
-                                          //     //         (context,
-                                          //     //         servindex) {
-                                          //     //       return Text(
-                                          //     //         getUpcomingOrderController
-                                          //     //             .response
-                                          //     //             .value
-                                          //     //             .data![
-                                          //     //         index]
-                                          //     //             .itemList![
-                                          //     //         servindex]
-                                          //     //             .title
-                                          //     //             .toString()
-                                          //     //             .toString(),
-                                          //     //         style: font_style
-                                          //     //             .black_400_14,
-                                          //     //       );
-                                          //     //     },
-                                          //     //     separatorBuilder:
-                                          //     //         (context,
-                                          //     //         servindex) {
-                                          //     //       return const Text(
-                                          //     //           ", ");
-                                          //     //     },
-                                          //     //   ),
-                                          //     // ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //DATE
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "DATE",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getUpcomingOrderController
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![index]
-                                          //                     .bookingDate
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .black_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "Payment Status",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getUpcomingOrderController
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![index]
-                                          //                     .paymentStatus
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .black_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //SLOT
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "TIME SLOT",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getUpcomingOrderController
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![index]
-                                          //                     .slotName
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .black_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //ID ORDER
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "ID ORDER",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getUpcomingOrderController
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![index]
-                                          //                     .bookingId
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .black_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //SUB TOTAL
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "Sub Total",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 "₹ ${getUpcomingOrderController.response.value.data![index].price.toString()}",
-                                          //                 style: font_style
-                                          //                     .black_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //PROFESSONAL
-                                          //     Center(
-                                          //       child: InkWell(
-                                          //         onTap: () {
-                                          //           if (getUpcomingOrderController
-                                          //                   .response
-                                          //                   .value
-                                          //                   .data![index]
-                                          //                   .staffdata
-                                          //                   ?.staffId !=
-                                          //               null) {
-                                          //             getStaffDetailsController
-                                          //                 .get_staffs_details_cont(
-                                          //                     getUpcomingOrderController
-                                          //                         .response
-                                          //                         .value
-                                          //                         .data![
-                                          //                             index]
-                                          //                         .staffdata!
-                                          //                         .staffId
-                                          //                         .toString())
-                                          //                 .then((value) {
-                                          //               Get.to(
-                                          //                   your_reviews(
-                                          //                     staffid: getUpcomingOrderController
-                                          //                         .response
-                                          //                         .value
-                                          //                         .data?[
-                                          //                     index]
-                                          //                         .staffdata!
-                                          //                         .staffId
-                                          //                         .toString(),
-                                          //                     frompage:
-                                          //                     "upcoming",
-                                          //                   ));
-                                          //               // if (getStaffDetailsController
-                                          //               //         .response
-                                          //               //         .value
-                                          //               //         .status ==
-                                          //               //     false) {
-                                          //               //   Fluttertoast
-                                          //               //       .showToast(
-                                          //               //           msg:
-                                          //               //               "No Data Found");
-                                          //               // } else {
-                                          //               //   Get.to(
-                                          //               //       your_reviews(
-                                          //               //     staffid: getUpcomingOrderController
-                                          //               //         .response
-                                          //               //         .value
-                                          //               //         .data?[
-                                          //               //             index]
-                                          //               //         .staffdata!
-                                          //               //         .staffId
-                                          //               //         .toString(),
-                                          //               //     frompage:
-                                          //               //         "upcoming",
-                                          //               //   ));
-                                          //               // }
-                                          //             });
-                                          //           } else {
-                                          //             commontoas(
-                                          //
-                                          //                     "No Staff Found");
-                                          //           }
-                                          //         },
-                                          //         child: SizedBox(
-                                          //             width: SizeConfig
-                                          //                     .screenWidth *
-                                          //                 0.9,
-                                          //             child: Row(
-                                          //               children: [
-                                          //                 Text(
-                                          //                   "Professional",
-                                          //                   style: font_style
-                                          //                       .yellow_400_14,
-                                          //                 ),
-                                          //                 const Spacer(),
-                                          //                 Text(
-                                          //                   getUpcomingOrderController.response.value.data![index].staffdata!.staffName.toString() ==
-                                          //                               "" ||
-                                          //                           getUpcomingOrderController.response.value.data![index].staffdata!.staffName ==
-                                          //                               null
-                                          //                       ? "Waiting for assign"
-                                          //                       : getUpcomingOrderController
-                                          //                           .response
-                                          //                           .value
-                                          //                           .data![
-                                          //                               index]
-                                          //                           .staffdata!
-                                          //                           .staffName
-                                          //                           .toString(),
-                                          //                   style: font_style
-                                          //                       .black_400_14_under,
-                                          //                 ),
-                                          //                 const Icon(Icons
-                                          //                     .keyboard_arrow_right_outlined)
-                                          //               ],
-                                          //             )),
-                                          //       ),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //PAYMENT METHOD
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "Payment Method",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getUpcomingOrderController
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![index]
-                                          //                     .paymentType
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .black_600_14_nounderline,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //STATUS
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "Status",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getUpcomingOrderController
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![index]
-                                          //                     .status
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .blue_600_14.copyWith(
-                                          //                   color: getUpcomingOrderController
-                                          //                       .response
-                                          //                       .value
-                                          //                       .data![index]
-                                          //                       .status=="Pending"?Colors.red:Colors.green
-                                          //                 ),
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     // //SHARE OTP
-                                          //     // Center(
-                                          //     //   child: Container(
-                                          //     //       alignment:
-                                          //     //           Alignment.center,
-                                          //     //       width: SizeConfig
-                                          //     //               .screenWidth *
-                                          //     //           0.9,
-                                          //     //       child: Text(
-                                          //     //         "Share the OTP with service provider to start service",
-                                          //     //         style: font_style
-                                          //     //             .yellow_400_14,
-                                          //     //       )),
-                                          //     // ),
-                                          //     // SizedBox(
-                                          //     //   height: SizeConfig
-                                          //     //           .screenHeight *
-                                          //     //       0.01,
-                                          //     // ),
-                                          //     //
-                                          //     // //OTP
-                                          //     // Center(
-                                          //     //   child: Text(
-                                          //     //     getUpcomingOrderController
-                                          //     //         .response
-                                          //     //         .value
-                                          //     //         .data![index]
-                                          //     //         .otp
-                                          //     //         .toString(),
-                                          //     //     style: font_style
-                                          //     //         .yellow_600_24,
-                                          //     //   ),
-                                          //     // ),
-                                          //   ],
-                                          // );
-
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 15),
-                                            child: InkWell(
-                                              onTap: () {
-                                                Get.bottomSheet(Container(
-                                                  color: Colors.white,
-                                                  height: 250,
-                                                  child: Stack(
-                                                    children: [
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          SizedBox(
-                                                            height: SizeConfig
-                                                                    .screenHeight *
-                                                                0.009,
-                                                          ),
-                                                          Align(
-                                                            child: Container(
-                                                              width: 100,
-                                                              height: 6,
-                                                              decoration: BoxDecoration(
-                                                                  color: const Color(
-                                                                      0xffA1A1AA),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              30)),
+                                            child: Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    Get.bottomSheet(
+                                                        Container(
+                                                      color: Colors.white,
+                                                      constraints: BoxConstraints(
+                                                        maxHeight: Get.height*0.65,
+                                                        minHeight: Get.height*0.35
+                                                      ),
+                                                      child: SingleChildScrollView(
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                          mainAxisSize:
+                                                          MainAxisSize.min,
+                                                          children: [
+                                                            SizedBox(
+                                                              height: SizeConfig
+                                                                  .screenHeight *
+                                                                  0.009,
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
-                                                                    .screenHeight *
-                                                                0.009,
-                                                          ),
-                                                          //SERVICES
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        15),
-                                                            child: Text(
-                                                              "Service name",
-                                                              style: font_style
-                                                                  .black_600_18,
+                                                            Align(
+                                                              child: Container(
+                                                                width: 100,
+                                                                height: 6,
+                                                                decoration: BoxDecoration(
+                                                                    color: const Color(
+                                                                        0xffA1A1AA),
+                                                                    borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                        30)),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          const Divider(
-                                                              thickness: 1,
-                                                              color: Color(
-                                                                  0xffE4E4E7)),
-                                                          SizedBox(
-                                                            height: SizeConfig
-                                                                    .screenHeight *
-                                                                0.01,
-                                                          ),
-
-                                                          //DATE
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
-                                                                        .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "DATE",
-                                                                      style: font_style
-                                                                          .yell_400_16,
+                                                            SizedBox(
+                                                              height: SizeConfig
+                                                                  .screenHeight *
+                                                                  0.009,
+                                                            ),
+                                                            //SERVICES
+                                                            // Padding(
+                                                            //   padding:
+                                                            //       const EdgeInsets
+                                                            //               .symmetric(
+                                                            //           horizontal:
+                                                            //               15),
+                                                            //   child: Text(
+                                                            //     "Service name",
+                                                            //     style: font_style
+                                                            //         .black_600_18,
+                                                            //   ),
+                                                            // ),
+                                                            const Divider(
+                                                                thickness: 1,
+                                                                color: Color(
+                                                                    0xffE4E4E7)),
+                                                            SizedBox(
+                                                              height: SizeConfig
+                                                                  .screenHeight *
+                                                                  0.01,
+                                                            ),
+                                                            ListView.builder(
+                                                                physics: const NeverScrollableScrollPhysics(),
+                                                                shrinkWrap: true,
+                                                                itemCount: getUpcomingOrderController
+                                                                    .response.value.data?[index].itemList?.length,
+                                                                itemBuilder: (context, indexAt) => Padding(
+                                                                  padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                                                  child: SizedBox(
+                                                                    width: SizeConfig.screenWidth * 0.9,
+                                                                    child: Row(
+                                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                                      children: [
+                                                                        Text(
+                                                                          getUpcomingOrderController
+                                                                              .response.value.data?[index].itemList?[indexAt].title??"",
+                                                                          style: font_style.black_400_16,
+                                                                        ),
+                                                                        const Spacer(),
+                                                                        Text(
+                                                                          "₹ ${double.parse(getUpcomingOrderController
+                                                                              .response.value.data?[index].itemList?[indexAt].price??"").toStringAsFixed(2)}",
+                                                                          style: font_style.black_500_14,
+                                                                        ),
+                                                                      ],
                                                                     ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      getUpcomingOrderController
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .bookingDate
-                                                                          .toString(),
-                                                                      style: font_style
-                                                                          .black_400_16,
-                                                                    ),
-                                                                  ],
+                                                                  ),
                                                                 )),
-                                                          ),
-
-                                                          SizedBox(
-                                                            height: SizeConfig
-                                                                    .screenHeight *
-                                                                0.01,
-                                                          ),
-
-                                                          //ID ORDER
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
-                                                                        .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "ID ORDER",
-                                                                      style: font_style
-                                                                          .yell_400_16,
-                                                                    ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      getUpcomingOrderController
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .bookingId
-                                                                          .toString(),
-                                                                      style: font_style
-                                                                          .black_400_16,
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
-                                                                    .screenHeight *
-                                                                0.01,
-                                                          ),
-
-                                                          //SUB TOTAL
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
-                                                                        .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Sub Total",
-                                                                      style: font_style
-                                                                          .yell_400_16,
-                                                                    ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      "₹ ${getUpcomingOrderController.response.value.data![index].price.toString()}",
-                                                                      style: font_style
-                                                                          .black_400_16,
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
-                                                                    .screenHeight *
-                                                                0.01,
-                                                          ),
-
-                                                          //PROFESSONAL
-                                                          Center(
-                                                            child:
-                                                                InkWell(
-                                                              onTap: () {
-                                                                if (getUpcomingOrderController
-                                                                        .response
-                                                                        .value
-                                                                        .data![
-                                                                            index]
-                                                                        .staffdata
-                                                                        ?.staffId !=
-                                                                    null) {
-                                                                  getStaffDetailsController
-                                                                      .get_staffs_details_cont(getUpcomingOrderController
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .staffdata!
-                                                                          .staffId
-                                                                          .toString())
-                                                                      .then(
-                                                                          (value) {
-                                                                    Get.to(
-                                                                        your_reviews(
-                                                                      staffid: getUpcomingOrderController
-                                                                          .response
-                                                                          .value
-                                                                          .data?[
-                                                                              index]
-                                                                          .staffdata!
-                                                                          .staffId
-                                                                          .toString(),
-                                                                      frompage:
-                                                                          "upcoming",
-                                                                    ));
-                                                                    // if (getStaffDetailsController
-                                                                    //     .response
-                                                                    //     .value
-                                                                    //     .status ==
-                                                                    //     false) {
-                                                                    //   Fluttertoast
-                                                                    //       .showToast(
-                                                                    //       msg:
-                                                                    //       "No Data Found");
-                                                                    // } else {
-                                                                    //   Get.to(
-                                                                    //       your_reviews(
-                                                                    //         staffid: getUpcomingOrderController
-                                                                    //             .response
-                                                                    //             .value
-                                                                    //             .data?[
-                                                                    //         index]
-                                                                    //             .staffdata!
-                                                                    //             .staffId
-                                                                    //             .toString(),
-                                                                    //         frompage:
-                                                                    //         "upcoming",
-                                                                    //       ));
-                                                                    // }
-                                                                  });
-                                                                } else {
-                                                                  commontoas(
-                                                                      "No Staff Found");
-                                                                }
-                                                              },
+                                                            const Divider(
+                                                                thickness: 1,
+                                                                color: Color(
+                                                                    0xffE4E4E7)),
+                                                            //DATE
+                                                            Center(
                                                               child: SizedBox(
                                                                   width: SizeConfig
-                                                                          .screenWidth *
+                                                                      .screenWidth *
                                                                       0.9,
                                                                   child: Row(
                                                                     children: [
                                                                       Text(
-                                                                        "Professional",
+                                                                        "DATE",
                                                                         style: font_style
                                                                             .yell_400_16,
                                                                       ),
                                                                       const Spacer(),
                                                                       Text(
-                                                                        getUpcomingOrderController.response.value.data![index].staffdata!.staffName.toString() == "" ||
-                                                                                getUpcomingOrderController.response.value.data![index].staffdata!.staffName == null
-                                                                            ? "Waiting for assign"
-                                                                            : getUpcomingOrderController.response.value.data![index].staffdata!.staffName.toString(),
+                                                                        getUpcomingOrderController
+                                                                            .response
+                                                                            .value
+                                                                            .data![
+                                                                        index]
+                                                                            .bookingDate
+                                                                            .toString(),
                                                                         style: font_style
-                                                                            .black_400_14_under,
+                                                                            .black_400_16,
                                                                       ),
-                                                                      const Icon(
-                                                                          Icons
-                                                                              .keyboard_arrow_right_outlined)
                                                                     ],
                                                                   )),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
-                                                                    .screenHeight *
-                                                                0.01,
-                                                          ),
 
-                                                          //PAYMENT METHOD
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
-                                                                        .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Payment Method",
-                                                                      style: font_style
-                                                                          .yell_400_16,
-                                                                    ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      getUpcomingOrderController
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .paymentType
-                                                                          .toString(),
-                                                                      style: font_style
-                                                                          .black_400_16,
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
-                                                                    .screenHeight *
-                                                                0.01,
-                                                          ),
+                                                            SizedBox(
+                                                              height: SizeConfig
+                                                                  .screenHeight *
+                                                                  0.01,
+                                                            ),
 
-                                                          //STATUS
-                                                          Center(
-                                                            child: SizedBox(
-                                                                width: SizeConfig
+                                                            //ID ORDER
+                                                            Center(
+                                                              child: SizedBox(
+                                                                  width: SizeConfig
+                                                                      .screenWidth *
+                                                                      0.9,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "ID ORDER",
+                                                                        style: font_style
+                                                                            .yell_400_16,
+                                                                      ),
+                                                                      const Spacer(),
+                                                                      Text(
+                                                                        getUpcomingOrderController
+                                                                            .response
+                                                                            .value
+                                                                            .data![
+                                                                        index]
+                                                                            .bookingId
+                                                                            .toString(),
+                                                                        style: font_style
+                                                                            .black_400_16,
+                                                                      ),
+                                                                    ],
+                                                                  )),
+                                                            ),
+                                                            SizedBox(
+                                                              height: SizeConfig
+                                                                  .screenHeight *
+                                                                  0.01,
+                                                            ),
+
+                                                            //SUB TOTAL
+                                                            Center(
+                                                              child: SizedBox(
+                                                                  width: SizeConfig
+                                                                      .screenWidth *
+                                                                      0.9,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Total Amount",
+                                                                        style: font_style
+                                                                            .yell_400_16,
+                                                                      ),
+                                                                      const Spacer(),
+                                                                      Text(
+                                                                        "₹ ${getUpcomingOrderController.response.value.data![index].price.toString()}",
+                                                                        style: font_style
+                                                                            .black_400_16,
+                                                                      ),
+                                                                    ],
+                                                                  )),
+                                                            ),
+                                                            SizedBox(
+                                                              height: SizeConfig
+                                                                  .screenHeight *
+                                                                  0.01,
+                                                            ),
+
+                                                            //PROFESSONAL
+                                                            Center(
+                                                              child:
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  if (getUpcomingOrderController
+                                                                      .response
+                                                                      .value
+                                                                      .data![
+                                                                  index]
+                                                                      .staffdata
+                                                                      ?.staffId !=
+                                                                      null) {
+                                                                    getStaffDetailsController
+                                                                        .get_staffs_details_cont(getUpcomingOrderController
+                                                                        .response
+                                                                        .value
+                                                                        .data![
+                                                                    index]
+                                                                        .staffdata!
+                                                                        .staffId
+                                                                        .toString())
+                                                                        .then(
+                                                                            (value) {
+                                                                          Get.to(
+                                                                              your_reviews(
+                                                                                staffid: getUpcomingOrderController
+                                                                                    .response
+                                                                                    .value
+                                                                                    .data?[
+                                                                                index]
+                                                                                    .staffdata!
+                                                                                    .staffId
+                                                                                    .toString(),
+                                                                                frompage:
+                                                                                "upcoming",
+                                                                              ));
+                                                                          // if (getStaffDetailsController
+                                                                          //     .response
+                                                                          //     .value
+                                                                          //     .status ==
+                                                                          //     false) {
+                                                                          //   Fluttertoast
+                                                                          //       .showToast(
+                                                                          //       msg:
+                                                                          //       "No Data Found");
+                                                                          // } else {
+                                                                          //   Get.to(
+                                                                          //       your_reviews(
+                                                                          //         staffid: getUpcomingOrderController
+                                                                          //             .response
+                                                                          //             .value
+                                                                          //             .data?[
+                                                                          //         index]
+                                                                          //             .staffdata!
+                                                                          //             .staffId
+                                                                          //             .toString(),
+                                                                          //         frompage:
+                                                                          //         "upcoming",
+                                                                          //       ));
+                                                                          // }
+                                                                        });
+                                                                  } else {
+                                                                    commontoas(
+                                                                        "No Staff Found");
+                                                                  }
+                                                                },
+                                                                child: SizedBox(
+                                                                    width: SizeConfig
                                                                         .screenWidth *
-                                                                    0.9,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Status",
-                                                                      style: font_style
-                                                                          .yell_400_16,
-                                                                    ),
-                                                                    const Spacer(),
-                                                                    Text(
-                                                                      getUpcomingOrderController
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                              index]
-                                                                          .status
-                                                                          .toString(),
-                                                                      style: font_style
-                                                                          .blue_600_14
-                                                                          .copyWith(
-                                                                              color: const Color(0xff22C55E)),
-                                                                    ),
-                                                                  ],
-                                                                )),
-                                                          ),
-                                                          SizedBox(
-                                                            height: SizeConfig
-                                                                    .screenHeight *
-                                                                0.01,
-                                                          ),
-                                                        ],
+                                                                        0.9,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "Professional",
+                                                                          style: font_style
+                                                                              .yell_400_16,
+                                                                        ),
+                                                                        const Spacer(),
+                                                                        Text(
+                                                                          getUpcomingOrderController.response.value.data![index].staffdata!.staffName.toString() == "" ||
+                                                                              getUpcomingOrderController.response.value.data![index].staffdata!.staffName == null
+                                                                              ? "Waiting for assign"
+                                                                              : getUpcomingOrderController.response.value.data![index].staffdata!.staffName.toString(),
+                                                                          style: font_style
+                                                                              .black_400_14_under,
+                                                                        ),
+                                                                        const Icon(
+                                                                            Icons
+                                                                                .keyboard_arrow_right_outlined)
+                                                                      ],
+                                                                    )),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: SizeConfig
+                                                                  .screenHeight *
+                                                                  0.01,
+                                                            ),
+
+                                                            //PAYMENT METHOD
+                                                            Center(
+                                                              child: SizedBox(
+                                                                  width: SizeConfig
+                                                                      .screenWidth *
+                                                                      0.9,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Payment Method",
+                                                                        style: font_style
+                                                                            .yell_400_16,
+                                                                      ),
+                                                                      const Spacer(),
+                                                                      Text(
+                                                                        getUpcomingOrderController
+                                                                            .response
+                                                                            .value
+                                                                            .data![
+                                                                        index]
+                                                                            .paymentType
+                                                                            .toString()=="cod"?"Pay After Service":getUpcomingOrderController
+                                                                            .response
+                                                                            .value
+                                                                            .data![
+                                                                        index]
+                                                                            .paymentType
+                                                                            .toString(),
+                                                                        style: font_style
+                                                                            .black_400_16,
+                                                                      ),
+                                                                    ],
+                                                                  )),
+                                                            ),
+                                                            SizedBox(
+                                                              height: SizeConfig
+                                                                  .screenHeight *
+                                                                  0.01,
+                                                            ),
+
+                                                            //STATUS
+                                                            Center(
+                                                              child: SizedBox(
+                                                                  width: SizeConfig
+                                                                      .screenWidth *
+                                                                      0.9,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Booking Status",
+                                                                        style: font_style
+                                                                            .yell_400_16,
+                                                                      ),
+                                                                      const Spacer(),
+                                                                      Text(
+                                                                        getUpcomingOrderController
+                                                                            .response
+                                                                            .value
+                                                                            .data![
+                                                                        index]
+                                                                            .status
+                                                                            .toString(),
+                                                                        style: font_style
+                                                                            .blue_600_14
+                                                                            .copyWith(
+                                                                            color: const Color(0xff22C55E)),
+                                                                      ),
+                                                                    ],
+                                                                  )),
+                                                            ),
+                                                            SizedBox(
+                                                              height: SizeConfig
+                                                                  .screenHeight *
+                                                                  0.01,
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                      // Positioned(
-                                                      //     left: SizeConfig.screenWidth*0.40,
-                                                      //     top: 50,
-                                                      //     child: Image.asset(getUpcomingOrderController
-                                                      //         .response
-                                                      //         .value
-                                                      //         .data![index]
-                                                      //         .status=='Confirmed'?'assets/images/success.png':'assets/images/cancel.png',width: 100,height: 80))
-                                                    ],
-                                                  ),
-                                                ));
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  Row(
+                                                    ),
+                                                        isScrollControlled: true
+                                                    );
+                                                  },
+                                                  child: Row(
                                                     children: [
                                                       Image.asset(
                                                           'assets/images/log.png',
@@ -1676,7 +1406,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                       const SizedBox(width: 10),
                                                       Text(
                                                         getUpcomingOrderController
-                                                            .response.value.data?[index].serviceTitle.toString().capitalizeFirst??"",
+                                                            .response.value.data?[index].itemList?[0].title.toString().capitalizeFirst??"",
                                                         style: font_style
                                                             .black_600_18
                                                             .copyWith(
@@ -1690,35 +1420,188 @@ class _HistoryPageState extends State<HistoryPage> {
                                                           size: 15)
                                                     ],
                                                   ),
-                                                  const Divider(
-                                                      thickness: 1.0,
-                                                      color: Color(0xffE4E4E7)),
-                                                  Row(
-                                                    children: [
-                                                      Text(
-                                                        'Price',
-                                                        style: font_style
-                                                            .black_600_18
-                                                            .copyWith(
-                                                                color: Colors
-                                                                    .black),
-                                                      ),
-                                                      const Spacer(),
-                                                      Text(
-                                                        '₹ ${getUpcomingOrderController.response.value.data![index].price ?? ''}',
-                                                        style: font_style
-                                                            .black_600_18
-                                                            .copyWith(
-                                                                color: const Color(
-                                                                    0xff52525B),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
+                                                ),
+                                                const Divider(
+                                                    thickness: 1.0,
+                                                    color: Color(0xffE4E4E7)),
+                                                Column(
+                                                  children: [
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                              .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "DATE",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                getUpcomingOrderController
+                                                                    .response
+                                                                    .value
+                                                                    .data![
+                                                                index]
+                                                                    .bookingDate
+                                                                    .toString(),
+                                                                style: font_style
+                                                                    .black_400_16,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                          .screenHeight *
+                                                          0.01,
+                                                    ),
+
+                                                    //ID ORDER
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                              .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "ID ORDER",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                getUpcomingOrderController
+                                                                    .response
+                                                                    .value
+                                                                    .data![
+                                                                index]
+                                                                    .bookingId
+                                                                    .toString(),
+                                                                style: font_style
+                                                                    .black_400_16,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                          .screenHeight *
+                                                          0.01,
+                                                    ),
+
+                                                    //SUB TOTAL
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                              .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "Total Amount",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                "₹ ${getUpcomingOrderController.response.value.data![index].price.toString()}",
+                                                                style: font_style
+                                                                    .black_400_16,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                          .screenHeight *
+                                                          0.01,
+                                                    ),
+
+
+
+                                                    //PAYMENT METHOD
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                              .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "Payment Method",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                getUpcomingOrderController
+                                                                    .response
+                                                                    .value
+                                                                    .data![
+                                                                index]
+                                                                    .paymentType
+                                                                    .toString()=="cod"?"Pay After Service":getUpcomingOrderController
+                                              .response
+                                              .value
+                                              .data![
+                                          index]
+                                              .paymentType
+                                              .toString(),
+                                                                style: font_style
+                                                                    .black_400_16,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                          .screenHeight *
+                                                          0.01,
+                                                    ),
+
+                                                    //STATUS
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                              .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "Booking Status",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                getUpcomingOrderController
+                                                                    .response
+                                                                    .value
+                                                                    .data![
+                                                                index]
+                                                                    .status
+                                                                    .toString(),
+                                                                style: font_style
+                                                                    .blue_600_14
+                                                                    .copyWith(
+                                                                    color: const Color(0xff22C55E)),
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                          .screenHeight *
+                                                          0.01,
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
                                             ),
                                           );
                                         },

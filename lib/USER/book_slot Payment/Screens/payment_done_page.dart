@@ -125,81 +125,33 @@ class _payment_done_pageState extends State<payment_done_page>
                         height: SizeConfig.screenHeight * 0.03,
                       ),
 
-                      //IMAGE RABIA ROW
-                      // Container(
-                      //   padding: EdgeInsets.symmetric(horizontal: 2,vertical: SizeConfig.screenHeight*0.01),
-                      //   width: SizeConfig.screenWidth*0.9,
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(8),
-                      //     border: Border.all(color: line_cont_col)
-                      //   ),
-                      //   child: Row(
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     children: [
-                      //       //IMAGES
-                      //       Container(
-                      //         height: SizeConfig.screenHeight*0.07,
-                      //         width: SizeConfig.screenWidth*0.14,
-                      //         decoration: BoxDecoration(
-                      //             shape: BoxShape.circle,
-                      //             image: DecorationImage(
-                      //                 image: AssetImage("assets/images/rabia_img.png"),
-                      //                 fit: BoxFit.cover
-                      //             )
-                      //         ),
-                      //
-                      //       ),
-                      //       SizedBox(width: SizeConfig.screenWidth*0.02,),
-                      //
-                      //       Column(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: [
-                      //           Text("Rabia",style: font_style.black_600_14,),
-                      //           Row(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children: [
-                      //               Icon(Icons.star_half,color: Color(0xffF2C94C),size: 15,),
-                      //               Text("4.5",style: font_style.black_400_10,),
-                      //             ],
-                      //           ),
-                      //           Container(
-                      //               width: SizeConfig.screenWidth*0.7,
-                      //               child: Text("Our Best Recommend will be Assigned to you",style: font_style.greyA1A1AA_400_12,)),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // SizedBox(height: SizeConfig.screenHeight*0.03,),
-
-                      //DATE TIME CONT
-
-
-                      //PRODUCT COST PRICE
-
-                    Center(
-                      child: SizedBox(
-                        width: SizeConfig.screenWidth * 0.9,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "${_get_cart.response.value.data?[0].title.toString()}",
-                              style: font_style.black_400_16,
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _get_cart.response.value.data?.where((element) => element.type=="service").toList().length,
+                        itemBuilder: (context, index) => Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: SizedBox(
+                              width: SizeConfig.screenWidth * 0.9,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${_get_cart.response.value.data?.where((element) => element.type=="service").toList()[index].title.toString()}",
+                                    style: font_style.black_400_16,
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    "₹ ${double.parse(_get_cart.response.value.data?.where((element) => element.type=="service").toList()?[index].price.toString() ?? "").toStringAsFixed(2)}",
+                                    style: font_style.black_500_14,
+                                  ),
+                                ],
+                              ),
                             ),
-                            const Spacer(),
-                            Text(
-                              "₹ ${double.parse(_get_cart.response.value.data?[0].price.toString() ?? "").toStringAsFixed(2)}",
-                              style: font_style.black_500_14,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                          ),
+                        ),),
                       SizedBox(
-                        height: SizeConfig.screenHeight * 0.02,
+                        height: SizeConfig.screenHeight * 0.01,
                       ),
                       Center(
                         child: SizedBox(
@@ -214,31 +166,28 @@ class _payment_done_pageState extends State<payment_done_page>
                               itemBuilder: (context, indexAT) => Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Center(
+                                  (indexAT==0)? Center(
                                       child: Container(
                                         height: 1,
                                         color: line_cont_col,
                                         width: SizeConfig.screenWidth * 0.9,
-                                      )),
+                                      )):SizedBox(),
                                   SizedBox(
                                     height: SizeConfig.screenHeight * 0.010,
                                   ),
-                                  Text(
+                                  (indexAT==0)?Text(
                                     "Add On Service",
                                     style: font_style.black_500_16,
-                                  ),
+                                  ):SizedBox(),
                                   SizedBox(
                                     height: SizeConfig.screenHeight * 0.010,
                                   ),
-                                  Center(
-                                      child: Container(
-                                        height: 1,
-                                        color: line_cont_col,
-                                        width: SizeConfig.screenWidth * 0.9,
-                                      )),
-                                  SizedBox(
-                                    height: SizeConfig.screenHeight * 0.010,
-                                  ),
+                                  // Center(
+                                  //     child: Container(
+                                  //       height: 1,
+                                  //       color: line_cont_col,
+                                  //       width: SizeConfig.screenWidth * 0.9,
+                                  //     )),
                                   Row(
                                     crossAxisAlignment:
                                     CrossAxisAlignment.center,
@@ -259,29 +208,6 @@ class _payment_done_pageState extends State<payment_done_page>
                         ),
                       ),
                       SizedBox(height: SizeConfig.screenHeight * 0.01),
-                      // Center(
-                      //   child: Container(
-                      //     width: SizeConfig.screenWidth*0.9,
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         Text("Service Cost",style: font_style.black_500_16,),
-                      //         Text("₹${_book_service.totprice}",style: font_style.black_500_16,),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(height: SizeConfig.screenHeight*0.01,),
-                      //LINE
-                      // Center(
-                      //     child: Container(
-                      //       height: 1,
-                      //       color: line_cont_col,
-                      //       width: SizeConfig.screenWidth*0.9,
-                      //     )
-                      // ),
-                      // SizedBox(height: SizeConfig.screenHeight*0.01,),
-
                       widget.tip.isNotEmpty
                           ? Center(
                               child: SizedBox(

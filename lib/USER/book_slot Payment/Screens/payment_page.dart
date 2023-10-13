@@ -98,6 +98,7 @@ class _payment_pageState extends State<payment_page> {
   TextEditingController coupon = TextEditingController();
   int walletValue = -1;
   bool isWallet = false;
+  bool isPayAfterService = false;
   final _razorpay = Razorpay();
   String? _deviceId;
 
@@ -226,45 +227,6 @@ class _payment_pageState extends State<payment_page> {
           "Payment",
           style: font_style.green_600_20,
         ),
-
-        // bottom: PreferredSize(
-        //   preferredSize: Size.fromHeight(SizeConfig.screenHeight*0.055),
-        //   child: Padding(
-        //     padding:  EdgeInsets.only(left: SizeConfig.screenWidth*0.05),
-        //     child: Container(
-        //       height: SizeConfig.screenHeight*0.04,
-        //       width: SizeConfig.screenWidth,
-        //       child: ListView.separated(
-        //         shrinkWrap: true,
-        //         scrollDirection: Axis.horizontal,
-        //         itemCount: payment_list.length,
-        //         itemBuilder: (context, index) {
-        //           return InkWell(
-        //             onTap: (){
-        //               setState(() {
-        //                 selected_payment=index;
-        //               });
-        //             },
-        //             child: Container(
-        //               padding: EdgeInsets.symmetric(horizontal: 10),
-        //               alignment: Alignment.center,
-        //               height: SizeConfig.screenHeight*0.04,
-        //               decoration: BoxDecoration(
-        //                   color: selected_payment==index?common_color:Colors.transparent,
-        //                   border: Border.all(color: common_color),
-        //                   borderRadius: BorderRadius.circular(50)
-        //               ),
-        //               child: Text(payment_list[index].toString(),style:selected_payment==index?font_style.white_400_14: font_style.black_400_14,),
-        //             ),
-        //           );
-        //         },
-        //         separatorBuilder: (context, index) {
-        //           return SizedBox(width: SizeConfig.screenWidth*0.03,);
-        //         },
-        //       ),
-        //     ),
-        //   ) ,
-        // ),
       ),
       body: Obx(() {
         return _get_cart.loading.value ||
@@ -282,11 +244,11 @@ class _payment_pageState extends State<payment_page> {
                     Center(
                         child: Container(
                       height: 1,
-                      color: line_cont_col,
+                      color: Colors.black,
                       width: SizeConfig.screenWidth,
                     )),
                     SizedBox(
-                      height: SizeConfig.screenHeight * 0.020,
+                      height: SizeConfig.screenHeight * 0.015,
                     ),
 
                     //SUMMARY
@@ -300,24 +262,52 @@ class _payment_pageState extends State<payment_page> {
                       ),
                     ),
                     SizedBox(
-                      height: SizeConfig.screenHeight * 0.010,
+                      height: SizeConfig.screenHeight * 0.020,
                     ),
                     //PRODUCT COST
-                    Center(
-                      child: SizedBox(
-                        width: SizeConfig.screenWidth * 0.9,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _get_cart.response.value.data
+                          ?.where((element) => element.type == "service")
+                          .toList()
+                          .length,
+                      itemBuilder: (context, index) => Center(
+                        child: Column(
                           children: [
-                            Text(
-                              "${_get_cart.response.value.data?[0].title.toString()}",
-                              style: font_style.black_400_16,
+                            SizedBox(
+                              width: SizeConfig.screenWidth * 0.9,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${_get_cart.response.value.data?[index].title.toString()}",
+                                    style: font_style.black_400_16,
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    "₹ ${double.parse(_get_cart.response.value.data?[index].price.toString() ?? "").toStringAsFixed(2)}",
+                                    style: font_style.black_500_14,
+                                  ),
+                                ],
+                              ),
                             ),
-                            const Spacer(),
-                            Text(
-                              "₹ ${double.parse(_get_cart.response.value.data?[0].price.toString() ?? "").toStringAsFixed(2)}",
-                              style: font_style.black_500_14,
-                            ),
+                            index ==
+                                    ((_get_cart.response.value.data
+                                                ?.where((element) =>
+                                                    element.type == "service")
+                                                .toList()
+                                                .length ??
+                                            0) -
+                                        1)
+                                ? const SizedBox()
+                                : Center(
+                                    child: Container(
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 7),
+                                    height: 1.3,
+                                    color: line_cont_col,
+                                    width: SizeConfig.screenWidth * 0.9,
+                                  )),
                           ],
                         ),
                       ),
@@ -357,10 +347,13 @@ class _payment_pageState extends State<payment_page> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "Add On Service",
-                                                style: font_style.black_500_16,
-                                              ),
+                                              indexAT == 0
+                                                  ? Text(
+                                                      "Add On Service",
+                                                      style: font_style
+                                                          .black_500_16,
+                                                    )
+                                                  : SizedBox(),
                                               SizedBox(
                                                 height:
                                                     SizeConfig.screenHeight *
@@ -413,32 +406,8 @@ class _payment_pageState extends State<payment_page> {
                               ),
                             ],
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
 
-                    // Center(
-                    //   child: SizedBox(
-                    //     width: SizeConfig.screenWidth * 0.9,
-                    //     child: Row(
-                    //       crossAxisAlignment: CrossAxisAlignment.center,
-                    //       children: [
-                    //         Text(
-                    //           "Price",
-                    //           style: font_style.black_400_16,
-                    //         ),
-                    //         const Spacer(),
-                    //         Text(
-                    //           "₹ ${double.parse(_get_cart.response.value.data?[0].price.toString()??"").toStringAsFixed(2)}",
-                    //           style: font_style.black_500_14,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: SizeConfig.screenHeight * 0.006,
-                    // ),
-
-                    //TIP AMOUNT
                     isTipSelected
                         ? Center(
                             child: SizedBox(
@@ -462,29 +431,18 @@ class _payment_pageState extends State<payment_page> {
                         : const SizedBox(),
                     SizedBox(
                       height:
+                          isTipSelected ? SizeConfig.screenHeight * 0.009 : 0,
+                    ),
+                    isTipSelected?Center(
+                        child: Container(
+                      height: 1,
+                      color: line_cont_col,
+                      width: SizeConfig.screenWidth * 0.9,
+                    )):SizedBox(),
+                    SizedBox(
+                      height:
                           isTipSelected ? SizeConfig.screenHeight * 0.006 : 0,
                     ),
-                    // isWallet
-                    //     ? Center(
-                    //         child: SizedBox(
-                    //           width: SizeConfig.screenWidth * 0.9,
-                    //           child: Row(
-                    //             crossAxisAlignment: CrossAxisAlignment.center,
-                    //             children: [
-                    //               Text(
-                    //                 "Wallet Balance",
-                    //                 style: font_style.black_400_16,
-                    //               ),
-                    //               const Spacer(),
-                    //               Text(
-                    //                 "- ₹${_get_cart.walletAMount.value.toStringAsFixed(2)}",
-                    //                 style: font_style.black_500_14,
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       )
-                    //     : Container(),
                     iscoupapply == true
                         ? Center(
                             child: SizedBox(
@@ -508,7 +466,46 @@ class _payment_pageState extends State<payment_page> {
                         : Container(),
 
                     SizedBox(
-                      height: SizeConfig.screenHeight * 0.017,
+                      height: iscoupapply == true?SizeConfig.screenHeight * 0.005:0,
+                    ),
+                    isWallet == true
+                        ? Center(
+                            child: SizedBox(
+                              width: SizeConfig.screenWidth * 0.9,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Wallet Amount",
+                                    style: font_style.black_400_16,
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    (isTipSelected==true)?_get_cart.walletAMount.value >((int.parse(_get_cart
+                                        .response.value.total
+                                        .toString()))+ (int.parse(selected_tip.toString())))?"-₹${((int.parse(_get_cart
+                                        .response.value.total
+                                        .toString()))+ (int.parse(selected_tip.toString())))}":
+                                    _get_cart.walletAMount.value >
+                                            (int.parse(_get_cart
+                                                .response.value.total
+                                                .toString()))
+                                        ? "-₹${(int.parse(_get_cart.response.value.total.toString()))}"
+                                        : "-₹${_get_cart.walletAMount.value.toStringAsFixed(2)}":_get_cart.walletAMount.value >
+                                        (int.parse(_get_cart
+                                            .response.value.total
+                                            .toString()))
+                                        ? "-₹${(int.parse(_get_cart.response.value.total.toString()))}"
+                                        : "-₹${_get_cart.walletAMount.value.toStringAsFixed(2)}",
+                                    style: font_style.black_500_14,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        : Container(),
+                    SizedBox(
+                      height: isWallet == true?SizeConfig.screenHeight * 0.017:5,
                     ),
 
                     //WALLET DEDUCT
@@ -530,6 +527,15 @@ class _payment_pageState extends State<payment_page> {
                             height: 0,
                           ),
 
+                    //LINE
+                    Center(
+                        child: Container(
+                      height: 1,
+                      color: Colors.black,
+                      width: SizeConfig.screenWidth,
+                    )),
+                    SizedBox(height: SizeConfig.screenHeight * 0.025),
+
                     //TOTAL
                     Center(
                       child: SizedBox(
@@ -543,158 +549,57 @@ class _payment_pageState extends State<payment_page> {
                             const Spacer(),
                             iscoupapply == true
                                 ? isTipSelected == true
-                                    ? Text(
-                                        "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip.toString())) - int.parse(couponDiscountAmount ?? 0.toString())}",
-                                        style:
-                                            font_style.black_600_14_nounderline,
-                                      )
-                                    : Text(
-                                        "₹ ${int.parse(_get_cart.response.value.total.toString()) - int.parse(couponDiscountAmount ?? 0.toString())}",
-                                        style:
-                                            font_style.black_600_14_nounderline,
-                                      )
+                                    ? isWallet == true
+                                        ? Text(
+                                            "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip.toString())) - int.parse(couponDiscountAmount ?? 0.toString()) - (_get_cart.walletAMount.value > (int.parse(_get_cart.response.value.total.toString())) ? (int.parse(_get_cart.response.value.total.toString())) : (_get_cart.walletAMount.value))}",
+                                            style: font_style
+                                                .black_600_14_nounderline,
+                                          )
+                                        : Text(
+                                            "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip.toString())) - int.parse(couponDiscountAmount ?? 0.toString())}",
+                                            style: font_style
+                                                .black_600_14_nounderline,
+                                          )
+                                    : isWallet == true
+                                        ? Text(
+                                            "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip.toString())) - int.parse(couponDiscountAmount ?? 0.toString()) - (_get_cart.walletAMount.value > (int.parse(_get_cart.response.value.total.toString())) ? (int.parse(_get_cart.response.value.total.toString())) : (_get_cart.walletAMount.value))}",
+                                            style: font_style
+                                                .black_600_14_nounderline,
+                                          )
+                                        : Text(
+                                            "₹ ${int.parse(_get_cart.response.value.total.toString()) - int.parse(couponDiscountAmount ?? 0.toString())}",
+                                            style: font_style
+                                                .black_600_14_nounderline,
+                                          )
                                 : isTipSelected == true
-                                    ? Text(
-                                        "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip.toString()))}",
-                                        style:
-                                            font_style.black_600_14_nounderline,
-                                      )
-                                    : Text(
-                                        "₹ ${(double.parse(_get_cart.response.value.total.toString())).toStringAsFixed(2)}",
-                                        style:
-                                            font_style.black_600_14_nounderline,
-                                      )
+                                    ? isWallet == true
+                                        ? Text(
+                                            "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip.toString())) - (_get_cart.walletAMount.value > ((int.parse(_get_cart.response.value.total.toString())) + (int.parse(selected_tip.toString()))) ? ((int.parse(_get_cart.response.value.total.toString())) + (int.parse(selected_tip.toString()))) : (_get_cart.walletAMount.value))}",
+                                            style: font_style
+                                                .black_600_14_nounderline,
+                                          )
+                                        : Text(
+                                            "₹ ${int.parse(_get_cart.response.value.total.toString()) + (int.parse(selected_tip.toString()))}",
+                                            style: font_style
+                                                .black_600_14_nounderline,
+                                          )
+                                    : isWallet == true
+                                        ? Text(
+                                            "₹ ${int.parse(_get_cart.response.value.total.toString())   - (_get_cart.walletAMount.value > (int.parse(_get_cart.response.value.total.toString())) ? (int.parse(_get_cart.response.value.total.toString())) : (_get_cart.walletAMount.value))}",
+                                            style: font_style
+                                                .black_600_14_nounderline,
+                                          )
+                                        : Text(
+                                            "₹ ${(double.parse(_get_cart.response.value.total.toString())).toStringAsFixed(2)}",
+                                            style: font_style
+                                                .black_600_14_nounderline,
+                                          )
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(height: SizeConfig.screenHeight * 0.025),
-                    //LINE
-                    Center(
-                        child: Container(
-                      height: 1,
-                      color: line_cont_col,
-                      width: SizeConfig.screenWidth,
-                    )),
-                    SizedBox(height: SizeConfig.screenHeight * 0.025),
-                    //CARD NO TEXT
-                    // Center(
-                    //   child: Container(
-                    //     width: SizeConfig.screenWidth*0.9,
-                    //     child: Text("Card Number",style: font_style.gr27272A_600_14,),
-                    //   ),
-                    // ),
-                    // SizedBox(height: SizeConfig.screenHeight*0.015,),
-                    // Center(child: common_txtform_yllow(hinttxt: "XXXX-XXXX-XXXX",controller: cno),),
-                    //
-                    // SizedBox(height: SizeConfig.screenHeight*0.015,),
-                    // //CARD HOLDER
-                    // Center(
-                    //   child: Container(
-                    //     width: SizeConfig.screenWidth*0.9,
-                    //     child: Text("Card Holder",style: font_style.gr27272A_600_14,),
-                    //   ),
-                    // ),
-                    // SizedBox(height: SizeConfig.screenHeight*0.015,),
-                    // Center(child: common_txtform_yllow(hinttxt: "XXXXXXXX XXXXX",controller: cholder),),
-                    //
-                    // SizedBox(height: SizeConfig.screenHeight*0.015,),
-                    // Center(
-                    //   child: Container(
-                    //     width: SizeConfig.screenWidth*0.9,
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [
-                    //         //EXPIRY
-                    //         Column(
-                    //           children: [
-                    //             //EXPIRY DATE
-                    //             Center(
-                    //               child: Container(
-                    //                 width: SizeConfig.screenWidth*0.42,
-                    //                 child: Text("Expiry Date",style: font_style.gr27272A_600_14,),
-                    //               ),
-                    //             ),
-                    //             SizedBox(height: SizeConfig.screenHeight*0.015,),
-                    //             Container(
-                    //               width: SizeConfig.screenWidth*0.42,
-                    //               child: TextFormField(
-                    //                 // textAlignVertical: TextAlignVertical.center,
-                    //                 controller: cexpiry,
-                    //                 textAlignVertical: TextAlignVertical.center,
-                    //                 style: font_style.greyA1A1AA_400_16,
-                    //                 keyboardType: TextInputType.number,
-                    //                 inputFormatters: [
-                    //                   FilteringTextInputFormatter.digitsOnly,
-                    //                   LengthLimitingTextInputFormatter(4),
-                    //                   CardMonthInputFormatter(),
-                    //                 ],
-                    //                 decoration:  InputDecoration(
-                    //                   hintStyle: font_style.greyA1A1AA_400_16,
-                    //                     hintText: "XX/XX",
-                    //                     contentPadding: EdgeInsets.only(left: 6),
-                    //                   enabledBorder: OutlineInputBorder(
-                    //                     borderRadius: BorderRadius.circular(4),
-                    //                     borderSide: BorderSide(color: yellow_col),
-                    //                   ),
-                    //                   focusedBorder:OutlineInputBorder(
-                    //                     borderRadius: BorderRadius.circular(4),
-                    //                     borderSide: BorderSide(color: yellow_col),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //
-                    //         //CVV
-                    //         Column(
-                    //           children: [
-                    //             //CVV
-                    //             Center(
-                    //               child: Container(
-                    //                 width: SizeConfig.screenWidth*0.42,
-                    //                 child: Text("CVV",style: font_style.gr27272A_600_14,),
-                    //               ),
-                    //             ),
-                    //             SizedBox(height: SizeConfig.screenHeight*0.015,),
-                    //             Container(
-                    //               width: SizeConfig.screenWidth*0.42,
-                    //               child: TextFormField(
-                    //                 controller: ccvv,
-                    //                 // textAlignVertical: TextAlignVertical.center,
-                    //                 textAlignVertical: TextAlignVertical.center,
-                    //                 style: font_style.greyA1A1AA_400_16,
-                    //                 keyboardType: TextInputType.number,
-                    //                 inputFormatters: [
-                    //                   FilteringTextInputFormatter.digitsOnly,
-                    //                   LengthLimitingTextInputFormatter(4),
-                    //                   CardMonthInputFormatter(),
-                    //                 ],
-                    //                 decoration:  InputDecoration(
-                    //                   hintStyle: font_style.greyA1A1AA_400_16,
-                    //                   hintText: "XXX",
-                    //                   contentPadding: EdgeInsets.only(left: 6),
-                    //                   enabledBorder: OutlineInputBorder(
-                    //                     borderRadius: BorderRadius.circular(4),
-                    //                     borderSide: BorderSide(color: yellow_col),
-                    //                   ),
-                    //                   focusedBorder:OutlineInputBorder(
-                    //                     borderRadius: BorderRadius.circular(4),
-                    //                     borderSide: BorderSide(color: yellow_col),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(height: SizeConfig.screenHeight*0.038,),
 
-                    //ADD A TIP TXT
+                    SizedBox(height: SizeConfig.screenHeight * 0.025),
                     Center(
                       child: SizedBox(
                         width: SizeConfig.screenWidth * 0.9,
@@ -758,122 +663,295 @@ class _payment_pageState extends State<payment_page> {
                         ),
                       ),
                     ),
+
                     SizedBox(
-                      height: SizeConfig.screenHeight * 0.036,
+                      height: SizeConfig.screenHeight * 0.025,
                     ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          isWallet = !isWallet;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: yellow_col, width: 1.0),
-                            borderRadius: BorderRadius.circular(4)),
-                        margin: const EdgeInsets.symmetric(horizontal: 15),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          children: [
-                            Icon(
-                                    isWallet
-                                        ? Icons.radio_button_checked
-                                        : Icons.radio_button_off,
-                                    color: common_color)
-                                .paddingSymmetric(horizontal: 10),
-                            Icon(
-                              Icons.account_balance_wallet,
-                              color: common_color,
-                            ),
-                            const SizedBox(width: 15),
-                            Text(
-                              "Wallet Balance",
-                              style: font_style.black_600_16,
-                            ),
-                            const Spacer(),
-                            Obx(() => Text(
-                                  "₹${_get_cart.walletAMount.value.toStringAsFixed(2)}",
-                                  style: font_style.black_600_16,
-                                )),
-                            SizedBox(
-                              width: SizeConfig.screenWidth * 0.020,
-                            ),
-                          ],
-                        ),
-                      ),
+                    ListView.separated(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemCount: paymentoption.length,
+                      controller: ScrollController(),
+                      separatorBuilder: (_, __) => const SizedBox(height: 0),
+                      itemBuilder: (context, index) => (isWallet == true &&
+                              index == 1)
+                          ? const SizedBox()
+                          : (index == 0 &&
+                                  isWallet == true &&
+                                  (_get_cart.response.value.total ?? 0) <
+                                      _get_cart.walletAMount.value)
+                              ? const SizedBox()
+                              : RadioListTile(
+                                  activeColor: yellow_col,
+                                  title: Text(paymentoption[index].toString()),
+                                  value: index,
+                                  groupValue: _oneValue,
+                                  onChanged: (value) {
+                                    if (value == 1) {
+                                      setState(() {
+                                        isPayAfterService = true;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        isPayAfterService = false;
+                                      });
+                                    }
+                                    setState(() {
+                                      _oneValue = value!;
+                                    });
+                                  },
+                                ),
                     ),
+                    SizedBox(
+                      height: SizeConfig.screenHeight * 0.015,
+                    ),
+                    isPayAfterService
+                        ? const SizedBox()
+                        : InkWell(
+                            onTap: () {
+                              setState(() {
+                                isWallet = !isWallet;
+                              });
+                              if(isWallet)
+                              {
+                                iscoupapply=false;
+                                setState(() {
+
+                                });
+                              }
+
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: yellow_col, width: 1.0),
+                                  borderRadius: BorderRadius.circular(4)),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                          isWallet
+                                              ? Icons.radio_button_checked
+                                              : Icons.radio_button_off,
+                                          color: common_color)
+                                      .paddingSymmetric(horizontal: 10),
+                                  Icon(
+                                    Icons.account_balance_wallet,
+                                    color: common_color,
+                                  ),
+                                  const SizedBox(width: 15),
+                                  Text(
+                                    "Wallet Balance",
+                                    style: font_style.black_600_16,
+                                  ),
+                                  const Spacer(),
+                                  Obx(() => Text(
+                                        "₹${_get_cart.walletAMount.value.toStringAsFixed(2)}",
+                                        style: font_style.black_600_16,
+                                      )),
+                                  SizedBox(
+                                    width: SizeConfig.screenWidth * 0.020,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.025,
                     ),
                     (_get_copupon.couponModel().data?.isNotEmpty ??
                             false || iscoupapply == false)
                         ? isWallet == true
-                            ? SizedBox()
-                            : Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: yellow_col, width: 1.0),
-                                    borderRadius: BorderRadius.circular(4)),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 15),
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Column(
-                                  children: [
-                                    (_get_copupon.couponModel().data?.length ??
-                                                0) >
-                                            1
-                                        ? SizedBox()
-                                        : Container(
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: yellow_col,
-                                                    width: 1.0),
-                                                borderRadius:
-                                                    BorderRadius.circular(4)),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 2),
-                                            margin: const EdgeInsets.symmetric(
-                                                horizontal: 15),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: TextFormField(
-                                                    style: font_style
-                                                        .greyA1A1AA_400_16
-                                                        .copyWith(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                    controller: coupon,
-                                                    decoration: InputDecoration(
-                                                        enabledBorder:
-                                                            InputBorder.none,
-                                                        focusedBorder:
-                                                            InputBorder.none,
-                                                        hintText:
-                                                            "Enter COUPON here",
-                                                        hintStyle: font_style
-                                                            .greyA1A1AA_400_16,
-                                                        contentPadding:
-                                                            const EdgeInsets
-                                                                .only(left: 6)),
-                                                  ),
+                            ? const SizedBox()
+                            : isPayAfterService == true
+                                ? const SizedBox()
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: yellow_col, width: 1.0),
+                                        borderRadius: BorderRadius.circular(4)),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 15),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Column(
+                                      children: [
+                                        (_get_copupon
+                                                        .couponModel()
+                                                        .data
+                                                        ?.length ??
+                                                    0) >
+                                                1
+                                            ? const SizedBox()
+                                            : Container(
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: yellow_col,
+                                                        width: 1.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4)),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 2),
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: TextFormField(
+                                                        style: font_style
+                                                            .greyA1A1AA_400_16
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                        controller: coupon,
+                                                        decoration: InputDecoration(
+                                                            enabledBorder:
+                                                                InputBorder
+                                                                    .none,
+                                                            focusedBorder:
+                                                                InputBorder
+                                                                    .none,
+                                                            hintText:
+                                                                "Enter COUPON here",
+                                                            hintStyle: font_style
+                                                                .greyA1A1AA_400_16,
+                                                            contentPadding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    left: 6)),
+                                                      ),
+                                                    ),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        if (iscoupapply) {
+                                                          iscoupapply = false;
+                                                          coupon.clear();
+                                                          setState(() {});
+                                                          commontoas(
+                                                              "Coupon Remove Successfully");
+                                                        } else {
+                                                          _get_copupon.applyCoupon(
+                                                              uid,
+                                                              coupon.text
+                                                                  .toUpperCase());
+                                                          setState(() {
+                                                            iscoupapply = true;
+                                                            couponDiscountAmount =
+                                                                _get_copupon
+                                                                    .couponModel()
+                                                                    .data?[0]
+                                                                    .amount;
+                                                          });
+                                                        }
+                                                      },
+                                                      child: Container(
+                                                        width: 80,
+                                                        height: 32,
+                                                        alignment:
+                                                            Alignment.center,
+                                                        padding: EdgeInsets.symmetric(
+                                                            vertical: SizeConfig
+                                                                    .screenHeight *
+                                                                0.01),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          color: yellow_col,
+                                                        ),
+                                                        // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
+                                                        child: Text(
+                                                          iscoupapply
+                                                              ? "REMOVE"
+                                                              : "APPLY",
+                                                          style: font_style
+                                                              .white_600_16,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: SizeConfig
+                                                              .screenWidth *
+                                                          0.020,
+                                                    ),
+                                                  ],
                                                 ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    if (iscoupapply) {
-                                                      iscoupapply = false;
-                                                      coupon.clear();
-                                                      setState(() {});
-                                                      commontoas(
-                                                          "Coupon Remove Successfully");
-                                                    } else {
-                                                      _get_copupon.applyCoupon(
+                                              ),
+                                        SizedBox(height: Get.height * 0.03),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/images/offer_svg.svg",
+                                                color: common_color),
+                                            const SizedBox(width: 15),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "${_get_copupon.couponModel().data?[0].description}",
+                                                  style:
+                                                      font_style.black_600_16,
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "CODE:",
+                                                      style: font_style
+                                                          .black_600_16
+                                                          .copyWith(
+                                                              color: const Color(
+                                                                  0xff18181B)),
+                                                    ),
+                                                    Text(
+                                                      "\t\t${_get_copupon.couponModel().data?[0].coupanCode}",
+                                                      style: font_style
+                                                          .black_600_16
+                                                          .copyWith(
+                                                              color:
+                                                                  yellow_col),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            InkWell(
+                                              onTap: () {
+                                                if (iscoupapply) {
+                                                  iscoupapply = false;
+                                                  setState(() {});
+                                                  commontoas(
+                                                      "Coupon Remove Successfully");
+                                                } else {
+                                                  _get_copupon
+                                                      .applyCoupon(
                                                           uid,
-                                                          coupon.text
-                                                              .toUpperCase());
+                                                          _get_copupon
+                                                                  .couponModel()
+                                                                  .data?[0]
+                                                                  .coupanCode
+                                                                  ?.toUpperCase() ??
+                                                              "")
+                                                      .then((_) {
+                                                    if (_get_copupon
+                                                        .isCouponUsed.value) {
                                                       setState(() {
                                                         iscoupapply = true;
                                                         couponDiscountAmount =
@@ -883,170 +961,77 @@ class _payment_pageState extends State<payment_page> {
                                                                 .amount;
                                                       });
                                                     }
-                                                  },
-                                                  child: Container(
-                                                    width: 80,
-                                                    height: 32,
-                                                    alignment: Alignment.center,
-                                                    padding: EdgeInsets.symmetric(
-                                                        vertical: SizeConfig
-                                                                .screenHeight *
-                                                            0.01),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                      color: yellow_col,
-                                                    ),
-                                                    // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
-                                                    child: Text(
-                                                      iscoupapply
-                                                          ? "REMOVE"
-                                                          : "APPLY",
-                                                      style: font_style
-                                                          .white_600_16,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width:
-                                                      SizeConfig.screenWidth *
-                                                          0.020,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                    SizedBox(height: Get.height * 0.03),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SvgPicture.asset(
-                                            "assets/images/offer_svg.svg",
-                                            color: common_color),
-                                        const SizedBox(width: 15),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${_get_copupon.couponModel().data?[0].description}",
-                                              style: font_style.black_600_16,
-                                            ),
-                                            const SizedBox(height: 10),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "CODE:",
-                                                  style: font_style.black_600_16
-                                                      .copyWith(
-                                                          color: const Color(
-                                                              0xff18181B)),
-                                                ),
-                                                Text(
-                                                  "\t\t${_get_copupon.couponModel().data?[0].coupanCode}",
-                                                  style: font_style.black_600_16
-                                                      .copyWith(
-                                                          color: yellow_col),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        InkWell(
-                                          onTap: () {
-                                            if (iscoupapply) {
-                                              iscoupapply = false;
-                                              setState(() {});
-                                              commontoas(
-                                                  "Coupon Remove Successfully");
-                                            } else {
-                                              _get_copupon
-                                                  .applyCoupon(
-                                                      uid,
-                                                      _get_copupon
-                                                              .couponModel()
-                                                              .data?[0]
-                                                              .coupanCode
-                                                              ?.toUpperCase() ??
-                                                          "")
-                                                  .then((_) {
-                                                if (_get_copupon
-                                                    .isCouponUsed.value) {
-                                                  setState(() {
-                                                    iscoupapply = true;
-                                                    couponDiscountAmount =
-                                                        _get_copupon
-                                                            .couponModel()
-                                                            .data?[0]
-                                                            .amount;
                                                   });
                                                 }
-                                              });
-                                            }
-                                          },
-                                          child: Container(
-                                            width: 80,
-                                            height: 32,
-                                            alignment: Alignment.center,
-                                            padding: EdgeInsets.symmetric(
-                                                vertical:
-                                                    SizeConfig.screenHeight *
+                                              },
+                                              child: Container(
+                                                width: 80,
+                                                height: 32,
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: SizeConfig
+                                                            .screenHeight *
                                                         0.01),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              color: yellow_col,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  color: yellow_col,
+                                                ),
+                                                // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
+                                                child: Text(
+                                                  iscoupapply
+                                                      ? "REMOVE"
+                                                      : "APPLY",
+                                                  style:
+                                                      font_style.white_600_16,
+                                                ),
+                                              ),
                                             ),
-                                            // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
-                                            child: Text(
-                                              iscoupapply ? "REMOVE" : "APPLY",
-                                              style: font_style.white_600_16,
+                                            SizedBox(
+                                              width: SizeConfig.screenWidth *
+                                                  0.020,
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          width: SizeConfig.screenWidth * 0.020,
+                                        const Divider(
+                                          thickness: 1.0,
                                         ),
+                                        (_get_copupon
+                                                        .couponModel()
+                                                        .data
+                                                        ?.length ??
+                                                    0) >
+                                                1
+                                            ? InkWell(
+                                                onTap: () {
+                                                  Get.to(const AllCouponPage());
+                                                },
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "View all Coupon",
+                                                      style: font_style
+                                                          .black_600_16
+                                                          .copyWith(
+                                                              color: const Color(
+                                                                  0xff27272A)),
+                                                    ),
+                                                    const SizedBox(width: 5),
+                                                    const Icon(
+                                                        Icons
+                                                            .arrow_forward_ios_rounded,
+                                                        size: 13)
+                                                  ],
+                                                ),
+                                              )
+                                            : const SizedBox()
                                       ],
                                     ),
-                                    const Divider(
-                                      thickness: 1.0,
-                                    ),
-                                    (_get_copupon.couponModel().data?.length ??
-                                                0) >
-                                            1
-                                        ? InkWell(
-                                            onTap: () {
-                                              Get.to(const AllCouponPage());
-                                            },
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "View all Coupon",
-                                                  style: font_style.black_600_16
-                                                      .copyWith(
-                                                          color: const Color(
-                                                              0xff27272A)),
-                                                ),
-                                                const SizedBox(width: 5),
-                                                const Icon(
-                                                    Icons
-                                                        .arrow_forward_ios_rounded,
-                                                    size: 13)
-                                              ],
-                                            ),
-                                          )
-                                        : SizedBox()
-                                  ],
-                                ),
-                              )
-                        : SizedBox(),
+                                  )
+                        : const SizedBox(),
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.015,
                     ),
@@ -1063,194 +1048,11 @@ class _payment_pageState extends State<payment_page> {
                               ),
                             ),
                           )
-                        : SizedBox(),
-
-                    ListView.separated(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemCount: paymentoption.length,
-                      controller: ScrollController(),
-                      separatorBuilder: (_, __) => const SizedBox(height: 0),
-                      itemBuilder: (context, index) => (isWallet == true &&
-                              index == 1)
-                          ? SizedBox()
-                          : (index == 0 &&
-                                  isWallet == true &&
-                                  (_get_cart.response.value.total ?? 0) <
-                                      _get_cart.walletAMount.value)
-                              ? SizedBox()
-                              : RadioListTile(
-                                  activeColor: yellow_col,
-                                  title: Text(paymentoption[index].toString()),
-                                  value: index,
-                                  groupValue: _oneValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _oneValue = value!;
-                                    });
-                                  },
-                                ),
-                    ),
+                        : const SizedBox(),
 
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.015,
                     ),
-                    //APPLY COUPON
-                    // Center(
-                    //   child: Container(
-                    //     width: SizeConfig.screenWidth*0.9,
-                    //     child: Row(
-                    //       children: [
-                    //         SvgPicture.asset("assets/images/apply_cupon.svg"),
-                    //         SizedBox(width: SizeConfig.screenWidth*0.02,),
-                    //         Text("Apply Coupon Code",style: font_style.black_600_16,),
-                    //         Spacer(),
-                    //         showcoupon==true?
-                    //         InkWell(
-                    //             onTap: (){
-                    //               setState(() {
-                    //                 showcoupon=false;
-                    //               });
-                    //             },
-                    //             child: Icon(Icons.keyboard_arrow_up_rounded)):
-                    //         InkWell(
-                    //             onTap: (){
-                    //               setState(() {
-                    //                 showcoupon=true;
-                    //               });
-                    //             },
-                    //             child: Icon(Icons.keyboard_arrow_down_outlined))
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    //
-                    // SizedBox(height: SizeConfig.screenHeight*0.015,),
-                    //
-                    // //APPLY TXTFORM
-                    // showcoupon==true?
-                    // Center(
-                    //   child: Container(
-                    //     width: SizeConfig.screenWidth*0.9,
-                    //     child: Row(
-                    //       children: [
-                    //         Container(
-                    //           padding: EdgeInsets.zero,
-                    //           height: SizeConfig.screenHeight*0.05,
-                    //           width: SizeConfig.screenWidth*0.6 ,
-                    //           child: TextFormField(
-                    //             style:  font_style.greyA1A1AA_400_16,
-                    //             controller: coupon,
-                    //             decoration: InputDecoration(
-                    //                 enabledBorder: OutlineInputBorder(
-                    //                   borderRadius: BorderRadius.circular(4),
-                    //                   borderSide: BorderSide(color: yellow_col),
-                    //                 ),
-                    //                 focusedBorder:OutlineInputBorder(
-                    //                   borderRadius: BorderRadius.circular(4),
-                    //                   borderSide: BorderSide(color: yellow_col),
-                    //                 ),
-                    //                 hintText: "XXXXXXX",
-                    //                 hintStyle: font_style.greyA1A1AA_400_16,
-                    //                 contentPadding: EdgeInsets.only(left: 6)
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         SizedBox(width: SizeConfig.screenWidth*0.03,),
-                    //         Expanded(
-                    //           child: Container(
-                    //             height: SizeConfig.screenHeight*0.05,
-                    //             alignment: Alignment.center,
-                    //             decoration: BoxDecoration(
-                    //               borderRadius:BorderRadius.circular(8),
-                    //               color: yellow_col,
-                    //             ),
-                    //             child: Text("APPLY",style: font_style.white_600_14,),
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ):Container(),
-
-                    // _get_copupon.response.value.status == "false"
-                    //     ? Container()
-                    //     : Center(
-                    //   child: SizedBox(
-                    //     width: SizeConfig.screenWidth * 0.9,
-                    //     child: Row(
-                    //       children: [
-                    //         Expanded(
-                    //           child: Container(
-                    //               child: Text(
-                    //                 "Use ${_get_copupon.response.value.data!.redeempercent}% Amount from your Wallet",
-                    //                 style: font_style.black_500_16,
-                    //               )),
-                    //         ),
-                    //         const SizedBox(
-                    //           width: 10,
-                    //         ),
-                    //         InkWell(
-                    //           onTap: () {
-                    //             if (iscoupapply == false) {
-                    //               setState(() {
-                    //                 iscoupapply = true;
-                    //               });
-                    //             } else {
-                    //               setState(() {
-                    //                 iscoupapply = false;
-                    //               });
-                    //             }
-                    //           },
-                    //           child: iscoupapply == false
-                    //               ? Container(
-                    //             alignment: Alignment.center,
-                    //             height:
-                    //             SizeConfig.screenHeight * 0.04,
-                    //             width:
-                    //             SizeConfig.screenWidth * 0.18,
-                    //             decoration: BoxDecoration(
-                    //                 borderRadius:
-                    //                 BorderRadius.circular(8),
-                    //                 color: common_color),
-                    //             child: Text(
-                    //               "Apply",
-                    //               style: font_style.white_500_16,
-                    //             ),
-                    //           )
-                    //               : Container(
-                    //             alignment: Alignment.center,
-                    //             height:
-                    //             SizeConfig.screenHeight * 0.04,
-                    //             padding: const EdgeInsets.symmetric(
-                    //                 horizontal: 10),
-                    //             decoration: BoxDecoration(
-                    //                 borderRadius:
-                    //                 BorderRadius.circular(8),
-                    //                 color: yellow_col),
-                    //             child: Row(
-                    //               children: [
-                    //                 const Icon(
-                    //                   Icons.close,
-                    //                   color: Colors.white,
-                    //                   size: 18,
-                    //                 ),
-                    //                 const SizedBox(
-                    //                   width: 5,
-                    //                 ),
-                    //                 Text(
-                    //                   "REMOVE",
-                    //                   style:
-                    //                   font_style.white_500_14,
-                    //                 ),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
 
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.036,
@@ -1269,24 +1071,33 @@ class _payment_pageState extends State<payment_page> {
                 width: SizeConfig.screenWidth,
                 child: InkWell(
                   onTap: () {
+                    print('1');
                     var totalPrice;
-                    if (iscoupapply == true && isTipSelected == true) {
+                    if (iscoupapply == true &&
+                        isTipSelected == true &&
+                        isWallet == true) {
                       totalPrice =
-                          '${int.parse(_get_cart.response.value.total.toString()) - (int.parse(selected_tip)) - int.parse(couponDiscountAmount ?? 0.toString())}';
+                          '${int.parse(_get_cart.response.value.total.toString()) - (int.parse(selected_tip)) - int.parse(couponDiscountAmount ?? 0.toString()) - (_get_cart.walletAMount.value > (int.parse(_get_cart.response.value.total.toString())) ? (int.parse(_get_cart.response.value.total.toString())) : (_get_cart.walletAMount.value))}';
                     } else if (iscoupapply == true) {
                       totalPrice =
                           '${int.parse(_get_cart.response.value.total.toString()) - int.parse(couponDiscountAmount ?? 0.toString())}';
                     } else if (isTipSelected == true) {
                       totalPrice =
                           '${(int.parse(_get_cart.response.value.total.toString()) - (int.parse(selected_tip)))}';
+                    } else if (isWallet == true) {
+                      totalPrice =
+                          '${(int.parse(_get_cart.response.value.total.toString()))}';
                     } else {
                       totalPrice =
                           '${int.parse(_get_cart.response.value.total.toString())}';
                     }
 
-                    if (_oneValue == 0) {
+                    if (_oneValue == 0 && isWallet == false) {
+                      print('3');
                       startInstamojo(double.parse(totalPrice.toString()));
-                    } else if (_oneValue == 1) {
+                    } else if (_oneValue == 1 || isWallet == true) {
+                      print('2');
+                      print('Total Price===${totalPrice}');
                       _book_service.book_service_cont(
                           iscoupapply == false
                               ? ""

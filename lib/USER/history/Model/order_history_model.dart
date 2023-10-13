@@ -11,13 +11,13 @@ class order_history_model {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['status'] = this.status;
     data['message'] = this.message;
     if (this.data != null) {
@@ -60,7 +60,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     paymentId = json['payment_id'].toString();
-    orderId = json['orderId'.toString()];
+    orderId = json['orderId'].toString();
     paymentType = json['paymentType'];
     paymentStatus = json['payment_status'];
     price = json['price'];
@@ -70,18 +70,18 @@ class Data {
     pincode = json['pincode'].toString();
     status = json['status'];
     staffdata = json['staffdata'] != null
-        ? new Staffdata.fromJson(json['staffdata'])
+        ? Staffdata.fromJson(json['staffdata'])
         : null;
     if (json['itemList'] != null) {
       itemList = <ItemList>[];
       json['itemList'].forEach((v) {
-        itemList!.add(new ItemList.fromJson(v));
+        itemList!.add(ItemList.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = this.id;
     data['payment_id'] = this.paymentId;
     data['orderId'] = this.orderId;
@@ -111,13 +111,13 @@ class Staffdata {
   Staffdata({this.staffId, this.staffName, this.profile});
 
   Staffdata.fromJson(Map<String, dynamic> json) {
-    staffId = json['staff_id'];
+    staffId = json['staff_id'].toString();
     staffName = json['staff_name'];
     profile = json['profile'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['staff_id'] = this.staffId;
     data['staff_name'] = this.staffName;
     data['profile'] = this.profile;
@@ -142,16 +142,16 @@ class ItemList {
         this.title});
 
   ItemList.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'].toString();
     bookingId = json['booking_id'];
     price = json['price'];
     finalPrice = json['final_price'];
-    qty = json['qty'];
+    qty = json['qty'].toString();
     title = json['title'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = this.id;
     data['booking_id'] = this.bookingId;
     data['price'] = this.price;

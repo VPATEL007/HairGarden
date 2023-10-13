@@ -682,8 +682,7 @@ class _newmapsState extends State<newmaps> {
                                                                                 getselectedaddress();
                                                                                 Get.back();
                                                                               }));
-                                                                      logger.i(
-                                                                          "uid${uid.toString()}--adddresss--${selectedPlace.formattedAddress.toString()}--old build-${buildname.text}-old locality-${localityName.text}--old lat-${lat}---old lag--${long}");
+
                                                                     }
                                                                   }
                                                                 } else {
