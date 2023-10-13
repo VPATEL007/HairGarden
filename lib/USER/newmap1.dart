@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
@@ -86,6 +88,7 @@ class _newmapsState extends State<newmaps> {
         lat = value.latitude;
         long = value.longitude;
         localityGet = locations[0].locality ?? '';
+        log("LOCALITY===${localityGet}");
         postalCode = locations[0].postalCode ?? '';
         center =
             LatLng(double.parse(lat.toString()), double.parse(long.toString()));
@@ -207,6 +210,7 @@ class _newmapsState extends State<newmaps> {
                             enableMyLocationButton: true,
                             selectedPlaceWidgetBuilder:
                                 (_, selectedPlace, state, isSearchBarFocused) {
+                              print("1");
                               if (state == SearchingState.Searching) {
                                 const CommonIndicator();
                               } else {
@@ -258,8 +262,6 @@ class _newmapsState extends State<newmaps> {
                                 }
                                 pincodestr = pincodes.join("");
 
-                                print(count);
-                                print(nu);
                               }
 
                               return isSearchBarFocused
@@ -317,15 +319,11 @@ class _newmapsState extends State<newmaps> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        InkWell(
-                                                            onTap: () {
-                                                              print("Pic");
-                                                            },
-                                                            child: Text(
-                                                              "Your Location",
-                                                              style: font_style
-                                                                  .green_600_14,
-                                                            )),
+                                                        Text(
+                                                          "Your Location",
+                                                          style: font_style
+                                                              .green_600_14,
+                                                        ),
                                                         SizedBox(
                                                           height: SizeConfig
                                                                   .screenHeight *
@@ -513,7 +511,8 @@ class _newmapsState extends State<newmaps> {
                                                         ? const CommonIndicator()
                                                         : InkWell(
                                                             onTap: () async {
-
+                                                              log("Home===${widget
+                                                                  .pname}");
                                                               if (widget
                                                                       .pname ==
                                                                   "home") {

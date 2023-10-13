@@ -478,7 +478,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                               indexAt) =>
                                                                           Padding(
                                                                             padding:
-                                                                                const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                                                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                                                                             child:
                                                                                 SizedBox(
                                                                               width: SizeConfig.screenWidth * 0.9,
@@ -678,7 +678,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                               ),
                                                                               const Spacer(),
                                                                               Text(
-                                                                                getOrderHistory.response.value.data![index].staffdata!.staffName.toString() == "" || getOrderHistory.response.value.data![index].staffdata!.staffName == null ? "Waiting for assign" : getOrderHistory.response.value.data![index].staffdata!.staffName.toString(),
+                                                                                getOrderHistory.response.value.data![index].staffdata?.staffName.toString() == "" || getOrderHistory.response.value.data![index].staffdata?.staffName == null ? "Waiting for assign" : getOrderHistory.response.value.data![index].staffdata?.staffName.toString()??"",
                                                                                 style: font_style.black_400_14_under,
                                                                               ),
                                                                               const Icon(Icons.keyboard_arrow_right_outlined)
@@ -802,7 +802,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                 ),
                                                 const Divider(
                                                     thickness: 1.0,
-                                                    color: Color(0xffE4E4E7)),
+                                                    color: Colors.black),
                                                 Column(
                                                   children: [
                                                     Center(
@@ -981,6 +981,189 @@ class _HistoryPageState extends State<HistoryPage> {
                                                           0.01,
                                                     ),
                                                   ],
+                                                ),
+                                                const Divider(
+                                                    thickness: 1.0,
+                                                    color: Colors.black),
+                                                Row(
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          'Write a Review*',
+                                                          style: font_style
+                                                              .black_400_14
+                                                              .copyWith(
+                                                              color:
+                                                              yellow_col),
+                                                        ),
+                                                        const SizedBox(height: 7),
+                                                        Text(
+                                                          'This help us Improve for you',
+                                                          style: font_style
+                                                              .black_400_12
+                                                              .copyWith(
+                                                              color:
+                                                              const Color(0xffA1A1AA)),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const Spacer(),
+                                                    InkWell(
+                                                      onTap:(){
+                                                        Get.bottomSheet(Container(
+                                                          decoration: const BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
+                                                          ),
+                                                          constraints:
+                                                          BoxConstraints(
+                                                              maxHeight:
+                                                              Get.height *
+                                                                  0.50,
+                                                              minHeight:
+                                                              Get.height *
+                                                                  0.35),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              SizedBox(height: SizeConfig
+                                                                  .screenHeight *0.05),
+                                                              Align(
+                                                                child: Text(
+                                                                  "Write a Review about the Service*",
+                                                                  style: font_style.black_600_14.copyWith(fontWeight: FontWeight.w400,color: yellow_col,decoration: TextDecoration.none,fontSize: 18),
+                                                                ),
+                                                              ),
+                                                              SizedBox(height: SizeConfig
+                                                                  .screenHeight *0.10),
+                                                              Padding(
+                                                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                                                child: Column(
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    Text(
+                                                                      "Write a Comment",
+                                                                      style: font_style.black_600_16.copyWith(fontWeight: FontWeight.w600,color: Colors.black),
+                                                                    ),
+                                                                    const SizedBox(height: 10),
+                                                                    Center(
+                                                                      child: SizedBox(
+                                                                        width: SizeConfig.screenWidth,
+                                                                        child: TextFormField(
+                                                                          keyboardType: TextInputType.text,
+                                                                          maxLines: 4,
+                                                                          // readOnly: isotp == true ? true : false,
+                                                                          style: font_style.white_400_16
+                                                                              .copyWith(color: Colors.black),
+                                                                          decoration: InputDecoration(
+                                                                            counterText: "",
+                                                                            hintText: "What did you like the most?",
+                                                                            hintStyle: font_style.white_400_16.copyWith(
+                                                                              color: const Color(0xff999999),
+                                                                            ),
+                                                                            enabledBorder: OutlineInputBorder(
+                                                                                borderSide: BorderSide(color: yellow_col)),
+                                                                            focusedBorder: OutlineInputBorder(
+                                                                                borderSide: BorderSide(color: yellow_col)),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(height: 10),
+                                                                    Row(
+                                                                      children: [
+                                                                        Expanded(
+                                                                          child: Container(
+                                                                            width: 80,
+                                                                            height: 40,
+                                                                            alignment:
+                                                                            Alignment.center,
+                                                                            padding: EdgeInsets.symmetric(
+                                                                                vertical: SizeConfig
+                                                                                    .screenHeight *
+                                                                                    0.01),
+                                                                            decoration:
+                                                                            BoxDecoration(
+                                                                                borderRadius:
+                                                                                BorderRadius
+                                                                                    .circular(
+                                                                                    8.0),
+                                                                                border: Border.all(
+                                                                                    color: yellow_col,
+                                                                                    width: 1
+                                                                                )
+                                                                            ),
+                                                                            // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
+                                                                            child: Text("Remind me Later",
+                                                                              style: font_style
+                                                                                  .white_600_16.copyWith(color: yellow_col),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        const SizedBox(width: 15),
+                                                                        Expanded(
+                                                                          child: Container(
+                                                                            width: 80,
+                                                                            height: 40,
+                                                                            alignment:
+                                                                            Alignment.center,
+                                                                            padding: EdgeInsets.symmetric(
+                                                                                vertical: SizeConfig
+                                                                                    .screenHeight *
+                                                                                    0.01),
+                                                                            decoration:
+                                                                            BoxDecoration(
+                                                                              borderRadius:
+                                                                              BorderRadius
+                                                                                  .circular(
+                                                                                  8.0),
+                                                                              color: yellow_col
+
+                                                                            ),
+                                                                            // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
+                                                                            child: Text("Submit",
+                                                                              style: font_style
+                                                                                  .white_600_16,
+                                                                            ),
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+
+                                                            ],
+                                                          ),
+                                                        ));
+                                                      },
+                                                      child: Container(
+                                                        width: 80,
+                                                        height: 32,
+                                                        alignment:
+                                                        Alignment.center,
+                                                        padding: EdgeInsets.symmetric(
+                                                            vertical: SizeConfig
+                                                                .screenHeight *
+                                                                0.01),
+                                                        decoration:
+                                                        BoxDecoration(
+                                                          borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                              8.0),
+                                                          color: yellow_col,
+                                                        ),
+                                                        // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
+                                                        child: Text("Review",
+                                                          style: font_style
+                                                              .white_600_16,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
                                                 )
                                               ],
                                             ),
@@ -1100,7 +1283,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                         itemBuilder: (context,
                                                                                 indexAt) =>
                                                                             Padding(
-                                                                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                                                                               child: SizedBox(
                                                                                 width: SizeConfig.screenWidth * 0.9,
                                                                                 child: Row(
@@ -1252,7 +1435,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                         });
                                                                       } else {
                                                                         commontoas(
-                                                                            "No Staff Found");
+                                                                            "No Staff Assign Yet");
                                                                       }
                                                                     },
                                                                     child: SizedBox(
