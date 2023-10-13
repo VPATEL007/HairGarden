@@ -30,13 +30,12 @@ class _HistoryPageState extends State<HistoryPage> {
     getOrderHistory.loading(true);
     getUpcomingOrderController.loading(true);
     SharedPreferences sf = await SharedPreferences.getInstance();
-    getOrderHistory.userID(sf.getString("stored_uid")??"");
-    print('ID==${ getOrderHistory.userID}');
+    getOrderHistory.userID(sf.getString("stored_uid") ?? "");
+    print('ID==${getOrderHistory.userID}');
     getOrderHistory.order_history_cont(getOrderHistory.userID.value);
-    getUpcomingOrderController.upcoming_order_contr(getOrderHistory.userID.value);
+    getUpcomingOrderController
+        .upcoming_order_contr(getOrderHistory.userID.value);
   }
-
-
 
   @override
   void initState() {
@@ -56,7 +55,7 @@ class _HistoryPageState extends State<HistoryPage> {
     border: Border.all(color: Colors.transparent, width: 0.3),
     borderRadius: BorderRadius.circular(32),
   );
-  int selectedValue=0;
+  int selectedValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +66,13 @@ class _HistoryPageState extends State<HistoryPage> {
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Obx(() => Text(
-          getOrderHistory.userID.value.isNotEmpty?selectedValue == 0 ? "Order History" : 'Upcoming Order':"",
-          style: font_style.green_600_20,
-        )),
+              getOrderHistory.userID.value.isNotEmpty
+                  ? selectedValue == 0
+                      ? "Order History"
+                      : 'Upcoming Order'
+                  : "",
+              style: font_style.green_600_20,
+            )),
       ),
       body: Obx(() {
         return getOrderHistory.loading.value &&
@@ -118,8 +121,7 @@ class _HistoryPageState extends State<HistoryPage> {
                             child: TabBarView(
                               physics: const NeverScrollableScrollPhysics(),
                               children: [
-                                (getOrderHistory
-                                            .response.value.data?.isEmpty ??
+                                (getOrderHistory.response.value.data?.isEmpty ??
                                         false)
                                     ? Container(
                                         height: SizeConfig.screenHeight,
@@ -419,76 +421,90 @@ class _HistoryPageState extends State<HistoryPage> {
                                                   onTap: () {
                                                     Get.bottomSheet(Container(
                                                       color: Colors.white,
-                                                      constraints: BoxConstraints(
-                                                          maxHeight: Get.height*0.65,
-                                                          minHeight: Get.height*0.35
-                                                      ),
+                                                      constraints:
+                                                          BoxConstraints(
+                                                              maxHeight:
+                                                                  Get.height *
+                                                                      0.65,
+                                                              minHeight:
+                                                                  Get.height *
+                                                                      0.35),
                                                       child: Stack(
                                                         children: [
                                                           Column(
                                                             crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             mainAxisSize:
-                                                            MainAxisSize.min,
+                                                                MainAxisSize
+                                                                    .min,
                                                             children: [
                                                               SizedBox(
                                                                 height: SizeConfig
-                                                                    .screenHeight *
+                                                                        .screenHeight *
                                                                     0.009,
                                                               ),
                                                               Align(
-                                                                child: Container(
+                                                                child:
+                                                                    Container(
                                                                   width: 100,
                                                                   height: 6,
                                                                   decoration: BoxDecoration(
                                                                       color: const Color(
                                                                           0xffA1A1AA),
                                                                       borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                          30)),
+                                                                          BorderRadius.circular(
+                                                                              30)),
                                                                 ),
                                                               ),
                                                               SizedBox(
                                                                 height: SizeConfig
-                                                                    .screenHeight *
+                                                                        .screenHeight *
                                                                     0.009,
                                                               ),
                                                               //SERVICES
                                                               ListView.builder(
-                                                                  shrinkWrap: true,
+                                                                  shrinkWrap:
+                                                                      true,
                                                                   itemCount: getOrderHistory
-                                                                      .response.value.data?[index].itemList?.length,
-                                                                  itemBuilder: (context, indexAt) => Padding(
-                                                                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                                                    child: SizedBox(
-                                                                      width: SizeConfig.screenWidth * 0.9,
-                                                                      child: Row(
-                                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Text(
-                                                                            getOrderHistory
-                                                                                .response.value.data?[index].itemList?[indexAt].title??"",
-                                                                            style: font_style.black_400_16,
-                                                                          ),
-                                                                          const Spacer(),
-                                                                          Text(
-                                                                            "₹ ${double.parse(getOrderHistory
-                                                                                .response.value.data?[index].itemList?[indexAt].price??"").toStringAsFixed(2)}",
-                                                                            style: font_style.black_500_14,
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  )),
+                                                                      .response
+                                                                      .value
+                                                                      .data?[
+                                                                          index]
+                                                                      .itemList
+                                                                      ?.length,
+                                                                  itemBuilder:
+                                                                      (context,
+                                                                              indexAt) =>
+                                                                          Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                                            child:
+                                                                                SizedBox(
+                                                                              width: SizeConfig.screenWidth * 0.9,
+                                                                              child: Row(
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: [
+                                                                                  Text(
+                                                                                    getOrderHistory.response.value.data?[index].itemList?[indexAt].title ?? "",
+                                                                                    style: font_style.black_400_16,
+                                                                                  ),
+                                                                                  const Spacer(),
+                                                                                  Text(
+                                                                                    "₹ ${double.parse(getOrderHistory.response.value.data?[index].itemList?[indexAt].price ?? "").toStringAsFixed(2)}",
+                                                                                    style: font_style.black_500_14,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          )),
                                                               const Divider(
                                                                   thickness: 1,
                                                                   color: Color(
                                                                       0xffE4E4E7)),
                                                               SizedBox(
                                                                 height: SizeConfig
-                                                                    .screenHeight *
+                                                                        .screenHeight *
                                                                     0.01,
                                                               ),
 
@@ -496,26 +512,25 @@ class _HistoryPageState extends State<HistoryPage> {
                                                               Center(
                                                                 child: SizedBox(
                                                                     width: SizeConfig
-                                                                        .screenWidth *
+                                                                            .screenWidth *
                                                                         0.9,
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
                                                                           "DATE",
-                                                                          style: font_style
-                                                                              .yell_400_16,
+                                                                          style:
+                                                                              font_style.yell_400_16,
                                                                         ),
                                                                         const Spacer(),
                                                                         Text(
                                                                           getOrderHistory
                                                                               .response
                                                                               .value
-                                                                              .data![
-                                                                          index]
+                                                                              .data![index]
                                                                               .bookingDate
                                                                               .toString(),
-                                                                          style: font_style
-                                                                              .black_400_16,
+                                                                          style:
+                                                                              font_style.black_400_16,
                                                                         ),
                                                                       ],
                                                                     )),
@@ -523,7 +538,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
                                                               SizedBox(
                                                                 height: SizeConfig
-                                                                    .screenHeight *
+                                                                        .screenHeight *
                                                                     0.01,
                                                               ),
 
@@ -531,33 +546,32 @@ class _HistoryPageState extends State<HistoryPage> {
                                                               Center(
                                                                 child: SizedBox(
                                                                     width: SizeConfig
-                                                                        .screenWidth *
+                                                                            .screenWidth *
                                                                         0.9,
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
                                                                           "ID ORDER",
-                                                                          style: font_style
-                                                                              .yell_400_16,
+                                                                          style:
+                                                                              font_style.yell_400_16,
                                                                         ),
                                                                         const Spacer(),
                                                                         Text(
                                                                           getOrderHistory
                                                                               .response
                                                                               .value
-                                                                              .data![
-                                                                          index]
+                                                                              .data![index]
                                                                               .bookingId
                                                                               .toString(),
-                                                                          style: font_style
-                                                                              .black_400_16,
+                                                                          style:
+                                                                              font_style.black_400_16,
                                                                         ),
                                                                       ],
                                                                     )),
                                                               ),
                                                               SizedBox(
                                                                 height: SizeConfig
-                                                                    .screenHeight *
+                                                                        .screenHeight *
                                                                     0.01,
                                                               ),
 
@@ -565,127 +579,116 @@ class _HistoryPageState extends State<HistoryPage> {
                                                               Center(
                                                                 child: SizedBox(
                                                                     width: SizeConfig
-                                                                        .screenWidth *
+                                                                            .screenWidth *
                                                                         0.9,
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
                                                                           "Total Amount",
-                                                                          style: font_style
-                                                                              .yell_400_16,
+                                                                          style:
+                                                                              font_style.yell_400_16,
                                                                         ),
                                                                         const Spacer(),
                                                                         Text(
                                                                           "₹ ${getOrderHistory.response.value.data![index].price.toString()}",
-                                                                          style: font_style
-                                                                              .black_400_16,
+                                                                          style:
+                                                                              font_style.black_400_16,
                                                                         ),
                                                                       ],
                                                                     )),
                                                               ),
                                                               SizedBox(
                                                                 height: SizeConfig
-                                                                    .screenHeight *
+                                                                        .screenHeight *
                                                                     0.01,
                                                               ),
 
                                                               //PROFESSONAL
                                                               Center(
-                                                                child:
-                                                                InkWell(
+                                                                child: InkWell(
                                                                   onTap: () {
                                                                     if (getOrderHistory
-                                                                        .response
-                                                                        .value
-                                                                        .data![
-                                                                    index]
-                                                                        .staffdata
-                                                                        ?.staffId !=
+                                                                            .response
+                                                                            .value
+                                                                            .data![index]
+                                                                            .staffdata
+                                                                            ?.staffId !=
                                                                         null) {
                                                                       getStaffDetailsController
                                                                           .get_staffs_details_cont(getOrderHistory
-                                                                          .response
-                                                                          .value
-                                                                          .data![
-                                                                      index]
-                                                                          .staffdata!
-                                                                          .staffId
-                                                                          .toString())
-                                                                          .then(
-                                                                              (value) {
-                                                                            Get.to(
-                                                                                your_reviews(
-                                                                                  staffid: getOrderHistory
-                                                                                      .response
-                                                                                      .value
-                                                                                      .data?[
-                                                                                  index]
-                                                                                      .staffdata!
-                                                                                      .staffId
-                                                                                      .toString(),
-                                                                                  frompage:
-                                                                                  "upcoming",
-                                                                                ));
-                                                                            // if (getStaffDetailsController
-                                                                            //     .response
-                                                                            //     .value
-                                                                            //     .status ==
-                                                                            //     false) {
-                                                                            //   Fluttertoast
-                                                                            //       .showToast(
-                                                                            //       msg:
-                                                                            //       "No Data Found");
-                                                                            // } else {
-                                                                            //   Get.to(
-                                                                            //       your_reviews(
-                                                                            //         staffid: getUpcomingOrderController
-                                                                            //             .response
-                                                                            //             .value
-                                                                            //             .data?[
-                                                                            //         index]
-                                                                            //             .staffdata!
-                                                                            //             .staffId
-                                                                            //             .toString(),
-                                                                            //         frompage:
-                                                                            //         "upcoming",
-                                                                            //       ));
-                                                                            // }
-                                                                          });
+                                                                              .response
+                                                                              .value
+                                                                              .data![index]
+                                                                              .staffdata!
+                                                                              .staffId
+                                                                              .toString())
+                                                                          .then((value) {
+                                                                        Get.to(
+                                                                            your_reviews(
+                                                                          staffid: getOrderHistory
+                                                                              .response
+                                                                              .value
+                                                                              .data?[index]
+                                                                              .staffdata!
+                                                                              .staffId
+                                                                              .toString(),
+                                                                          frompage:
+                                                                              "upcoming",
+                                                                        ));
+                                                                        // if (getStaffDetailsController
+                                                                        //     .response
+                                                                        //     .value
+                                                                        //     .status ==
+                                                                        //     false) {
+                                                                        //   Fluttertoast
+                                                                        //       .showToast(
+                                                                        //       msg:
+                                                                        //       "No Data Found");
+                                                                        // } else {
+                                                                        //   Get.to(
+                                                                        //       your_reviews(
+                                                                        //         staffid: getUpcomingOrderController
+                                                                        //             .response
+                                                                        //             .value
+                                                                        //             .data?[
+                                                                        //         index]
+                                                                        //             .staffdata!
+                                                                        //             .staffId
+                                                                        //             .toString(),
+                                                                        //         frompage:
+                                                                        //         "upcoming",
+                                                                        //       ));
+                                                                        // }
+                                                                      });
                                                                     } else {
                                                                       commontoas(
-                                                                          "No Staff Found");
+                                                                          "No Staff Assign Yet");
                                                                     }
                                                                   },
-                                                                  child: SizedBox(
-                                                                      width: SizeConfig
-                                                                          .screenWidth *
-                                                                          0.9,
-                                                                      child: Row(
-                                                                        children: [
-                                                                          Text(
-                                                                            "Professional",
-                                                                            style: font_style
-                                                                                .yell_400_16,
-                                                                          ),
-                                                                          const Spacer(),
-                                                                          Text(
-                                                                            getOrderHistory.response.value.data![index].staffdata!.staffName.toString() == "" ||
-                                                                                getOrderHistory.response.value.data![index].staffdata!.staffName == null
-                                                                                ? "Waiting for assign"
-                                                                                : getOrderHistory.response.value.data![index].staffdata!.staffName.toString(),
-                                                                            style: font_style
-                                                                                .black_400_14_under,
-                                                                          ),
-                                                                          const Icon(
-                                                                              Icons
-                                                                                  .keyboard_arrow_right_outlined)
-                                                                        ],
-                                                                      )),
+                                                                  child:
+                                                                      SizedBox(
+                                                                          width: SizeConfig.screenWidth *
+                                                                              0.9,
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              Text(
+                                                                                "Professional",
+                                                                                style: font_style.yell_400_16,
+                                                                              ),
+                                                                              const Spacer(),
+                                                                              Text(
+                                                                                getOrderHistory.response.value.data![index].staffdata!.staffName.toString() == "" || getOrderHistory.response.value.data![index].staffdata!.staffName == null ? "Waiting for assign" : getOrderHistory.response.value.data![index].staffdata!.staffName.toString(),
+                                                                                style: font_style.black_400_14_under,
+                                                                              ),
+                                                                              const Icon(Icons.keyboard_arrow_right_outlined)
+                                                                            ],
+                                                                          )),
                                                                 ),
                                                               ),
                                                               SizedBox(
                                                                 height: SizeConfig
-                                                                    .screenHeight *
+                                                                        .screenHeight *
                                                                     0.01,
                                                               ),
 
@@ -693,39 +696,29 @@ class _HistoryPageState extends State<HistoryPage> {
                                                               Center(
                                                                 child: SizedBox(
                                                                     width: SizeConfig
-                                                                        .screenWidth *
+                                                                            .screenWidth *
                                                                         0.9,
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
                                                                           "Payment Method",
-                                                                          style: font_style
-                                                                              .yell_400_16,
+                                                                          style:
+                                                                              font_style.yell_400_16,
                                                                         ),
                                                                         const Spacer(),
                                                                         Text(
-                                                                          getOrderHistory
-                                                                              .response
-                                                                              .value
-                                                                              .data![
-                                                                          index]
-                                                                              .paymentType
-                                                                              .toString()=="cod"?"Pay After Service":getOrderHistory
-                                                                              .response
-                                                                              .value
-                                                                              .data![
-                                                                          index]
-                                                                              .paymentType
-                                                                              .toString(),
-                                                                          style: font_style
-                                                                              .black_400_16,
+                                                                          getOrderHistory.response.value.data![index].paymentType.toString() == "cod"
+                                                                              ? "Pay After Service"
+                                                                              : getOrderHistory.response.value.data![index].paymentType.toString(),
+                                                                          style:
+                                                                              font_style.black_400_16,
                                                                         ),
                                                                       ],
                                                                     )),
                                                               ),
                                                               SizedBox(
                                                                 height: SizeConfig
-                                                                    .screenHeight *
+                                                                        .screenHeight *
                                                                     0.01,
                                                               ),
 
@@ -733,52 +726,49 @@ class _HistoryPageState extends State<HistoryPage> {
                                                               Center(
                                                                 child: SizedBox(
                                                                     width: SizeConfig
-                                                                        .screenWidth *
+                                                                            .screenWidth *
                                                                         0.9,
                                                                     child: Row(
                                                                       children: [
                                                                         Text(
                                                                           "Booking Status",
-                                                                          style: font_style
-                                                                              .yell_400_16,
+                                                                          style:
+                                                                              font_style.yell_400_16,
                                                                         ),
                                                                         const Spacer(),
                                                                         Text(
                                                                           getOrderHistory
                                                                               .response
                                                                               .value
-                                                                              .data![
-                                                                          index]
+                                                                              .data![index]
                                                                               .status
                                                                               .toString(),
                                                                           style: font_style
                                                                               .blue_600_14
-                                                                              .copyWith(
-                                                                              color: const Color(0xff22C55E)),
+                                                                              .copyWith(color: const Color(0xff22C55E)),
                                                                         ),
                                                                       ],
                                                                     )),
                                                               ),
                                                               SizedBox(
                                                                 height: SizeConfig
-                                                                    .screenHeight *
+                                                                        .screenHeight *
                                                                     0.01,
                                                               ),
                                                             ],
                                                           ),
                                                           Positioned(
                                                               left: SizeConfig
-                                                                  .screenWidth *
+                                                                      .screenWidth *
                                                                   0.40,
                                                               top: 50,
                                                               child: Image.asset(
                                                                   getOrderHistory
-                                                                      .response
-                                                                      .value
-                                                                      .data![
-                                                                  index]
-                                                                      .status ==
-                                                                      'Confirmed'
+                                                                              .response
+                                                                              .value
+                                                                              .data![index]
+                                                                              .status ==
+                                                                          'Confirmed'
                                                                       ? 'assets/images/success.png'
                                                                       : 'assets/images/cancel.png',
                                                                   width: 100,
@@ -795,8 +785,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                           height: 40),
                                                       const SizedBox(width: 10),
                                                       Text(
-                                                        '${getOrderHistory
-                                                            .response.value.data?[index].itemList?[0].title}',
+                                                        '${getOrderHistory.response.value.data?[index].itemList?[0].title}',
                                                         style: font_style
                                                             .black_600_18
                                                             .copyWith(
@@ -814,183 +803,185 @@ class _HistoryPageState extends State<HistoryPage> {
                                                 const Divider(
                                                     thickness: 1.0,
                                                     color: Color(0xffE4E4E7)),
-                                               Column(
-                                                 children: [
-                                                   Center(
-                                                     child: SizedBox(
-                                                         width: SizeConfig
-                                                             .screenWidth *
-                                                             0.9,
-                                                         child: Row(
-                                                           children: [
-                                                             Text(
-                                                               "DATE",
-                                                               style: font_style
-                                                                   .yell_400_16,
-                                                             ),
-                                                             const Spacer(),
-                                                             Text(
-                                                               getOrderHistory
-                                                                   .response
-                                                                   .value
-                                                                   .data![
-                                                               index]
-                                                                   .bookingDate
-                                                                   .toString(),
-                                                               style: font_style
-                                                                   .black_400_16,
-                                                             ),
-                                                           ],
-                                                         )),
-                                                   ),
+                                                Column(
+                                                  children: [
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                                  .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "DATE",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                getOrderHistory
+                                                                    .response
+                                                                    .value
+                                                                    .data![
+                                                                        index]
+                                                                    .bookingDate
+                                                                    .toString(),
+                                                                style: font_style
+                                                                    .black_400_16,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
 
-                                                   SizedBox(
-                                                     height: SizeConfig
-                                                         .screenHeight *
-                                                         0.01,
-                                                   ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                              .screenHeight *
+                                                          0.01,
+                                                    ),
 
-                                                   //ID ORDER
-                                                   Center(
-                                                     child: SizedBox(
-                                                         width: SizeConfig
-                                                             .screenWidth *
-                                                             0.9,
-                                                         child: Row(
-                                                           children: [
-                                                             Text(
-                                                               "ID ORDER",
-                                                               style: font_style
-                                                                   .yell_400_16,
-                                                             ),
-                                                             const Spacer(),
-                                                             Text(
-                                                               getOrderHistory
-                                                                   .response
-                                                                   .value
-                                                                   .data![
-                                                               index]
-                                                                   .bookingId
-                                                                   .toString(),
-                                                               style: font_style
-                                                                   .black_400_16,
-                                                             ),
-                                                           ],
-                                                         )),
-                                                   ),
-                                                   SizedBox(
-                                                     height: SizeConfig
-                                                         .screenHeight *
-                                                         0.01,
-                                                   ),
+                                                    //ID ORDER
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                                  .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "ID ORDER",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                getOrderHistory
+                                                                    .response
+                                                                    .value
+                                                                    .data![
+                                                                        index]
+                                                                    .bookingId
+                                                                    .toString(),
+                                                                style: font_style
+                                                                    .black_400_16,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                              .screenHeight *
+                                                          0.01,
+                                                    ),
 
-                                                   //SUB TOTAL
-                                                   Center(
-                                                     child: SizedBox(
-                                                         width: SizeConfig
-                                                             .screenWidth *
-                                                             0.9,
-                                                         child: Row(
-                                                           children: [
-                                                             Text(
-                                                               "Total Amount",
-                                                               style: font_style
-                                                                   .yell_400_16,
-                                                             ),
-                                                             const Spacer(),
-                                                             Text(
-                                                               "₹ ${getOrderHistory.response.value.data![index].price.toString()}",
-                                                               style: font_style
-                                                                   .black_400_16,
-                                                             ),
-                                                           ],
-                                                         )),
-                                                   ),
-                                                   SizedBox(
-                                                     height: SizeConfig
-                                                         .screenHeight *
-                                                         0.01,
-                                                   ),
+                                                    //SUB TOTAL
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                                  .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "Total Amount",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                "₹ ${getOrderHistory.response.value.data![index].price.toString()}",
+                                                                style: font_style
+                                                                    .black_400_16,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                              .screenHeight *
+                                                          0.01,
+                                                    ),
 
+                                                    //PAYMENT METHOD
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                                  .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "Payment Method",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                getOrderHistory
+                                                                            .response
+                                                                            .value
+                                                                            .data![
+                                                                                index]
+                                                                            .paymentType
+                                                                            .toString() ==
+                                                                        "cod"
+                                                                    ? "Pay After Service"
+                                                                    : getOrderHistory
+                                                                        .response
+                                                                        .value
+                                                                        .data![
+                                                                            index]
+                                                                        .paymentType
+                                                                        .toString(),
+                                                                style: font_style
+                                                                    .black_400_16,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                              .screenHeight *
+                                                          0.01,
+                                                    ),
 
-
-                                                   //PAYMENT METHOD
-                                                   Center(
-                                                     child: SizedBox(
-                                                         width: SizeConfig
-                                                             .screenWidth *
-                                                             0.9,
-                                                         child: Row(
-                                                           children: [
-                                                             Text(
-                                                               "Payment Method",
-                                                               style: font_style
-                                                                   .yell_400_16,
-                                                             ),
-                                                             const Spacer(),
-                                                             Text(
-                                                               getOrderHistory
-                                                                   .response
-                                                                   .value
-                                                                   .data![
-                                                               index]
-                                                                   .paymentType
-                                                                   .toString()=="cod"?"Pay After Service":getOrderHistory
-                                                                   .response
-                                                                   .value
-                                                                   .data![
-                                                               index]
-                                                                   .paymentType
-                                                                   .toString(),
-                                                               style: font_style
-                                                                   .black_400_16,
-                                                             ),
-                                                           ],
-                                                         )),
-                                                   ),
-                                                   SizedBox(
-                                                     height: SizeConfig
-                                                         .screenHeight *
-                                                         0.01,
-                                                   ),
-
-                                                   //STATUS
-                                                   Center(
-                                                     child: SizedBox(
-                                                         width: SizeConfig
-                                                             .screenWidth *
-                                                             0.9,
-                                                         child: Row(
-                                                           children: [
-                                                             Text(
-                                                               "Booking Status",
-                                                               style: font_style
-                                                                   .yell_400_16,
-                                                             ),
-                                                             const Spacer(),
-                                                             Text(
-                                                               getOrderHistory
-                                                                   .response
-                                                                   .value
-                                                                   .data![
-                                                               index]
-                                                                   .status
-                                                                   .toString(),
-                                                               style: font_style
-                                                                   .blue_600_14
-                                                                   .copyWith(
-                                                                   color: const Color(0xff22C55E)),
-                                                             ),
-                                                           ],
-                                                         )),
-                                                   ),
-                                                   SizedBox(
-                                                     height: SizeConfig
-                                                         .screenHeight *
-                                                         0.01,
-                                                   ),
-                                                 ],
-                                               )
+                                                    //STATUS
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                                  .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "Booking Status",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                getOrderHistory
+                                                                    .response
+                                                                    .value
+                                                                    .data![
+                                                                        index]
+                                                                    .status
+                                                                    .toString(),
+                                                                style: font_style
+                                                                    .blue_600_14
+                                                                    .copyWith(
+                                                                        color: const Color(
+                                                                            0xff22C55E)),
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                              .screenHeight *
+                                                          0.01,
+                                                    ),
+                                                  ],
+                                                )
                                               ],
                                             ),
                                           );
@@ -1029,229 +1020,211 @@ class _HistoryPageState extends State<HistoryPage> {
                                                   onTap: () {
                                                     Get.bottomSheet(
                                                         Container(
-                                                      color: Colors.white,
-                                                      constraints: BoxConstraints(
-                                                        maxHeight: Get.height*0.65,
-                                                        minHeight: Get.height*0.35
-                                                      ),
-                                                      child: SingleChildScrollView(
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                          mainAxisSize:
-                                                          MainAxisSize.min,
-                                                          children: [
-                                                            SizedBox(
-                                                              height: SizeConfig
-                                                                  .screenHeight *
-                                                                  0.009,
-                                                            ),
-                                                            Align(
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 6,
-                                                                decoration: BoxDecoration(
-                                                                    color: const Color(
-                                                                        0xffA1A1AA),
-                                                                    borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                        30)),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: SizeConfig
-                                                                  .screenHeight *
-                                                                  0.009,
-                                                            ),
-                                                            //SERVICES
-                                                            // Padding(
-                                                            //   padding:
-                                                            //       const EdgeInsets
-                                                            //               .symmetric(
-                                                            //           horizontal:
-                                                            //               15),
-                                                            //   child: Text(
-                                                            //     "Service name",
-                                                            //     style: font_style
-                                                            //         .black_600_18,
-                                                            //   ),
-                                                            // ),
-                                                            const Divider(
-                                                                thickness: 1,
-                                                                color: Color(
-                                                                    0xffE4E4E7)),
-                                                            SizedBox(
-                                                              height: SizeConfig
-                                                                  .screenHeight *
-                                                                  0.01,
-                                                            ),
-                                                            ListView.builder(
-                                                                physics: const NeverScrollableScrollPhysics(),
-                                                                shrinkWrap: true,
-                                                                itemCount: getUpcomingOrderController
-                                                                    .response.value.data?[index].itemList?.length,
-                                                                itemBuilder: (context, indexAt) => Padding(
-                                                                  padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                                                  child: SizedBox(
-                                                                    width: SizeConfig.screenWidth * 0.9,
-                                                                    child: Row(
-                                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                                      children: [
-                                                                        Text(
-                                                                          getUpcomingOrderController
-                                                                              .response.value.data?[index].itemList?[indexAt].title??"",
-                                                                          style: font_style.black_400_16,
-                                                                        ),
-                                                                        const Spacer(),
-                                                                        Text(
-                                                                          "₹ ${double.parse(getUpcomingOrderController
-                                                                              .response.value.data?[index].itemList?[indexAt].price??"").toStringAsFixed(2)}",
-                                                                          style: font_style.black_500_14,
-                                                                        ),
-                                                                      ],
-                                                                    ),
+                                                          color: Colors.white,
+                                                          constraints:
+                                                              BoxConstraints(
+                                                                  maxHeight: Get
+                                                                          .height *
+                                                                      0.65,
+                                                                  minHeight:
+                                                                      Get.height *
+                                                                          0.35),
+                                                          child:
+                                                              SingleChildScrollView(
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.009,
+                                                                ),
+                                                                Align(
+                                                                  child:
+                                                                      Container(
+                                                                    width: 100,
+                                                                    height: 6,
+                                                                    decoration: BoxDecoration(
+                                                                        color: const Color(
+                                                                            0xffA1A1AA),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(30)),
                                                                   ),
-                                                                )),
-                                                            const Divider(
-                                                                thickness: 1,
-                                                                color: Color(
-                                                                    0xffE4E4E7)),
-                                                            //DATE
-                                                            Center(
-                                                              child: SizedBox(
-                                                                  width: SizeConfig
-                                                                      .screenWidth *
-                                                                      0.9,
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "DATE",
-                                                                        style: font_style
-                                                                            .yell_400_16,
-                                                                      ),
-                                                                      const Spacer(),
-                                                                      Text(
-                                                                        getUpcomingOrderController
+                                                                ),
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.009,
+                                                                ),
+                                                                //SERVICES
+                                                                // Padding(
+                                                                //   padding:
+                                                                //       const EdgeInsets
+                                                                //               .symmetric(
+                                                                //           horizontal:
+                                                                //               15),
+                                                                //   child: Text(
+                                                                //     "Service name",
+                                                                //     style: font_style
+                                                                //         .black_600_18,
+                                                                //   ),
+                                                                // ),
+                                                                const Divider(
+                                                                    thickness:
+                                                                        1,
+                                                                    color: Color(
+                                                                        0xffE4E4E7)),
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.01,
+                                                                ),
+                                                                ListView
+                                                                    .builder(
+                                                                        physics:
+                                                                            const NeverScrollableScrollPhysics(),
+                                                                        shrinkWrap:
+                                                                            true,
+                                                                        itemCount: getUpcomingOrderController
                                                                             .response
                                                                             .value
-                                                                            .data![
-                                                                        index]
-                                                                            .bookingDate
-                                                                            .toString(),
-                                                                        style: font_style
-                                                                            .black_400_16,
-                                                                      ),
-                                                                    ],
-                                                                  )),
-                                                            ),
+                                                                            .data?[
+                                                                                index]
+                                                                            .itemList
+                                                                            ?.length,
+                                                                        itemBuilder: (context,
+                                                                                indexAt) =>
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                                              child: SizedBox(
+                                                                                width: SizeConfig.screenWidth * 0.9,
+                                                                                child: Row(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      getUpcomingOrderController.response.value.data?[index].itemList?[indexAt].title ?? "",
+                                                                                      style: font_style.black_400_16,
+                                                                                    ),
+                                                                                    const Spacer(),
+                                                                                    Text(
+                                                                                      "₹ ${double.parse(getUpcomingOrderController.response.value.data?[index].itemList?[indexAt].price ?? "").toStringAsFixed(2)}",
+                                                                                      style: font_style.black_500_14,
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            )),
+                                                                const Divider(
+                                                                    thickness:
+                                                                        1,
+                                                                    color: Color(
+                                                                        0xffE4E4E7)),
+                                                                //DATE
+                                                                Center(
+                                                                  child: SizedBox(
+                                                                      width: SizeConfig.screenWidth * 0.9,
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            "DATE",
+                                                                            style:
+                                                                                font_style.yell_400_16,
+                                                                          ),
+                                                                          const Spacer(),
+                                                                          Text(
+                                                                            getUpcomingOrderController.response.value.data![index].bookingDate.toString(),
+                                                                            style:
+                                                                                font_style.black_400_16,
+                                                                          ),
+                                                                        ],
+                                                                      )),
+                                                                ),
 
-                                                            SizedBox(
-                                                              height: SizeConfig
-                                                                  .screenHeight *
-                                                                  0.01,
-                                                            ),
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.01,
+                                                                ),
 
-                                                            //ID ORDER
-                                                            Center(
-                                                              child: SizedBox(
-                                                                  width: SizeConfig
-                                                                      .screenWidth *
-                                                                      0.9,
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "ID ORDER",
-                                                                        style: font_style
-                                                                            .yell_400_16,
-                                                                      ),
-                                                                      const Spacer(),
-                                                                      Text(
-                                                                        getUpcomingOrderController
-                                                                            .response
-                                                                            .value
-                                                                            .data![
-                                                                        index]
-                                                                            .bookingId
-                                                                            .toString(),
-                                                                        style: font_style
-                                                                            .black_400_16,
-                                                                      ),
-                                                                    ],
-                                                                  )),
-                                                            ),
-                                                            SizedBox(
-                                                              height: SizeConfig
-                                                                  .screenHeight *
-                                                                  0.01,
-                                                            ),
+                                                                //ID ORDER
+                                                                Center(
+                                                                  child: SizedBox(
+                                                                      width: SizeConfig.screenWidth * 0.9,
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            "ID ORDER",
+                                                                            style:
+                                                                                font_style.yell_400_16,
+                                                                          ),
+                                                                          const Spacer(),
+                                                                          Text(
+                                                                            getUpcomingOrderController.response.value.data![index].bookingId.toString(),
+                                                                            style:
+                                                                                font_style.black_400_16,
+                                                                          ),
+                                                                        ],
+                                                                      )),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.01,
+                                                                ),
 
-                                                            //SUB TOTAL
-                                                            Center(
-                                                              child: SizedBox(
-                                                                  width: SizeConfig
-                                                                      .screenWidth *
-                                                                      0.9,
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "Total Amount",
-                                                                        style: font_style
-                                                                            .yell_400_16,
-                                                                      ),
-                                                                      const Spacer(),
-                                                                      Text(
-                                                                        "₹ ${getUpcomingOrderController.response.value.data![index].price.toString()}",
-                                                                        style: font_style
-                                                                            .black_400_16,
-                                                                      ),
-                                                                    ],
-                                                                  )),
-                                                            ),
-                                                            SizedBox(
-                                                              height: SizeConfig
-                                                                  .screenHeight *
-                                                                  0.01,
-                                                            ),
+                                                                //SUB TOTAL
+                                                                Center(
+                                                                  child: SizedBox(
+                                                                      width: SizeConfig.screenWidth * 0.9,
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            "Total Amount",
+                                                                            style:
+                                                                                font_style.yell_400_16,
+                                                                          ),
+                                                                          const Spacer(),
+                                                                          Text(
+                                                                            "₹ ${getUpcomingOrderController.response.value.data![index].price.toString()}",
+                                                                            style:
+                                                                                font_style.black_400_16,
+                                                                          ),
+                                                                        ],
+                                                                      )),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.01,
+                                                                ),
 
-                                                            //PROFESSONAL
-                                                            Center(
-                                                              child:
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  if (getUpcomingOrderController
-                                                                      .response
-                                                                      .value
-                                                                      .data![
-                                                                  index]
-                                                                      .staffdata
-                                                                      ?.staffId !=
-                                                                      null) {
-                                                                    getStaffDetailsController
-                                                                        .get_staffs_details_cont(getUpcomingOrderController
-                                                                        .response
-                                                                        .value
-                                                                        .data![
-                                                                    index]
-                                                                        .staffdata!
-                                                                        .staffId
-                                                                        .toString())
-                                                                        .then(
-                                                                            (value) {
+                                                                //PROFESSONAL
+                                                                Center(
+                                                                  child:
+                                                                      InkWell(
+                                                                    onTap: () {
+                                                                      if (getUpcomingOrderController
+                                                                              .response
+                                                                              .value
+                                                                              .data![index]
+                                                                              .staffdata
+                                                                              ?.staffId !=
+                                                                          null) {
+                                                                        getStaffDetailsController
+                                                                            .get_staffs_details_cont(getUpcomingOrderController.response.value.data![index].staffdata!.staffId.toString())
+                                                                            .then((value) {
                                                                           Get.to(
                                                                               your_reviews(
-                                                                                staffid: getUpcomingOrderController
-                                                                                    .response
-                                                                                    .value
-                                                                                    .data?[
-                                                                                index]
-                                                                                    .staffdata!
-                                                                                    .staffId
-                                                                                    .toString(),
-                                                                                frompage:
+                                                                            staffid:
+                                                                                getUpcomingOrderController.response.value.data?[index].staffdata!.staffId.toString(),
+                                                                            frompage:
                                                                                 "upcoming",
-                                                                              ));
+                                                                          ));
                                                                           // if (getStaffDetailsController
                                                                           //     .response
                                                                           //     .value
@@ -1277,125 +1250,94 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                           //       ));
                                                                           // }
                                                                         });
-                                                                  } else {
-                                                                    commontoas(
-                                                                        "No Staff Found");
-                                                                  }
-                                                                },
-                                                                child: SizedBox(
-                                                                    width: SizeConfig
-                                                                        .screenWidth *
-                                                                        0.9,
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Text(
-                                                                          "Professional",
-                                                                          style: font_style
-                                                                              .yell_400_16,
-                                                                        ),
-                                                                        const Spacer(),
-                                                                        Text(
-                                                                          getUpcomingOrderController.response.value.data![index].staffdata!.staffName.toString() == "" ||
-                                                                              getUpcomingOrderController.response.value.data![index].staffdata!.staffName == null
-                                                                              ? "Waiting for assign"
-                                                                              : getUpcomingOrderController.response.value.data![index].staffdata!.staffName.toString(),
-                                                                          style: font_style
-                                                                              .black_400_14_under,
-                                                                        ),
-                                                                        const Icon(
-                                                                            Icons
-                                                                                .keyboard_arrow_right_outlined)
-                                                                      ],
-                                                                    )),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: SizeConfig
-                                                                  .screenHeight *
-                                                                  0.01,
-                                                            ),
+                                                                      } else {
+                                                                        commontoas(
+                                                                            "No Staff Found");
+                                                                      }
+                                                                    },
+                                                                    child: SizedBox(
+                                                                        width: SizeConfig.screenWidth * 0.9,
+                                                                        child: Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              "Professional",
+                                                                              style: font_style.yell_400_16,
+                                                                            ),
+                                                                            const Spacer(),
+                                                                            Text(
+                                                                              getUpcomingOrderController.response.value.data![index].staffdata!.staffName.toString() == "" || getUpcomingOrderController.response.value.data![index].staffdata!.staffName == null ? "Waiting for assign" : getUpcomingOrderController.response.value.data![index].staffdata!.staffName.toString(),
+                                                                              style: font_style.black_400_14_under,
+                                                                            ),
+                                                                            const Icon(Icons.keyboard_arrow_right_outlined)
+                                                                          ],
+                                                                        )),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.01,
+                                                                ),
 
-                                                            //PAYMENT METHOD
-                                                            Center(
-                                                              child: SizedBox(
-                                                                  width: SizeConfig
-                                                                      .screenWidth *
-                                                                      0.9,
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "Payment Method",
-                                                                        style: font_style
-                                                                            .yell_400_16,
-                                                                      ),
-                                                                      const Spacer(),
-                                                                      Text(
-                                                                        getUpcomingOrderController
-                                                                            .response
-                                                                            .value
-                                                                            .data![
-                                                                        index]
-                                                                            .paymentType
-                                                                            .toString()=="cod"?"Pay After Service":getUpcomingOrderController
-                                                                            .response
-                                                                            .value
-                                                                            .data![
-                                                                        index]
-                                                                            .paymentType
-                                                                            .toString(),
-                                                                        style: font_style
-                                                                            .black_400_16,
-                                                                      ),
-                                                                    ],
-                                                                  )),
-                                                            ),
-                                                            SizedBox(
-                                                              height: SizeConfig
-                                                                  .screenHeight *
-                                                                  0.01,
-                                                            ),
+                                                                //PAYMENT METHOD
+                                                                Center(
+                                                                  child: SizedBox(
+                                                                      width: SizeConfig.screenWidth * 0.9,
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            "Payment Method",
+                                                                            style:
+                                                                                font_style.yell_400_16,
+                                                                          ),
+                                                                          const Spacer(),
+                                                                          Text(
+                                                                            getUpcomingOrderController.response.value.data![index].paymentType.toString() == "cod"
+                                                                                ? "Pay After Service"
+                                                                                : getUpcomingOrderController.response.value.data![index].paymentType.toString(),
+                                                                            style:
+                                                                                font_style.black_400_16,
+                                                                          ),
+                                                                        ],
+                                                                      )),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.01,
+                                                                ),
 
-                                                            //STATUS
-                                                            Center(
-                                                              child: SizedBox(
-                                                                  width: SizeConfig
-                                                                      .screenWidth *
-                                                                      0.9,
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Text(
-                                                                        "Booking Status",
-                                                                        style: font_style
-                                                                            .yell_400_16,
-                                                                      ),
-                                                                      const Spacer(),
-                                                                      Text(
-                                                                        getUpcomingOrderController
-                                                                            .response
-                                                                            .value
-                                                                            .data![
-                                                                        index]
-                                                                            .status
-                                                                            .toString(),
-                                                                        style: font_style
-                                                                            .blue_600_14
-                                                                            .copyWith(
-                                                                            color: const Color(0xff22C55E)),
-                                                                      ),
-                                                                    ],
-                                                                  )),
+                                                                //STATUS
+                                                                Center(
+                                                                  child: SizedBox(
+                                                                      width: SizeConfig.screenWidth * 0.9,
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            "Booking Status",
+                                                                            style:
+                                                                                font_style.yell_400_16,
+                                                                          ),
+                                                                          const Spacer(),
+                                                                          Text(
+                                                                            getUpcomingOrderController.response.value.data![index].status.toString(),
+                                                                            style:
+                                                                                font_style.blue_600_14.copyWith(color: const Color(0xff22C55E)),
+                                                                          ),
+                                                                        ],
+                                                                      )),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.01,
+                                                                ),
+                                                              ],
                                                             ),
-                                                            SizedBox(
-                                                              height: SizeConfig
-                                                                  .screenHeight *
-                                                                  0.01,
-                                                            ),
-                                                          ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
-                                                        isScrollControlled: true
-                                                    );
+                                                        isScrollControlled:
+                                                            true);
                                                   },
                                                   child: Row(
                                                     children: [
@@ -1406,7 +1348,14 @@ class _HistoryPageState extends State<HistoryPage> {
                                                       const SizedBox(width: 10),
                                                       Text(
                                                         getUpcomingOrderController
-                                                            .response.value.data?[index].itemList?[0].title.toString().capitalizeFirst??"",
+                                                                .response
+                                                                .value
+                                                                .data?[index]
+                                                                .itemList?[0]
+                                                                .title
+                                                                .toString()
+                                                                .capitalizeFirst ??
+                                                            "",
                                                         style: font_style
                                                             .black_600_18
                                                             .copyWith(
@@ -1429,7 +1378,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     Center(
                                                       child: SizedBox(
                                                           width: SizeConfig
-                                                              .screenWidth *
+                                                                  .screenWidth *
                                                               0.9,
                                                           child: Row(
                                                             children: [
@@ -1444,7 +1393,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                     .response
                                                                     .value
                                                                     .data![
-                                                                index]
+                                                                        index]
                                                                     .bookingDate
                                                                     .toString(),
                                                                 style: font_style
@@ -1456,7 +1405,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
                                                     SizedBox(
                                                       height: SizeConfig
-                                                          .screenHeight *
+                                                              .screenHeight *
                                                           0.01,
                                                     ),
 
@@ -1464,7 +1413,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     Center(
                                                       child: SizedBox(
                                                           width: SizeConfig
-                                                              .screenWidth *
+                                                                  .screenWidth *
                                                               0.9,
                                                           child: Row(
                                                             children: [
@@ -1479,7 +1428,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                     .response
                                                                     .value
                                                                     .data![
-                                                                index]
+                                                                        index]
                                                                     .bookingId
                                                                     .toString(),
                                                                 style: font_style
@@ -1490,7 +1439,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     ),
                                                     SizedBox(
                                                       height: SizeConfig
-                                                          .screenHeight *
+                                                              .screenHeight *
                                                           0.01,
                                                     ),
 
@@ -1498,7 +1447,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     Center(
                                                       child: SizedBox(
                                                           width: SizeConfig
-                                                              .screenWidth *
+                                                                  .screenWidth *
                                                               0.9,
                                                           child: Row(
                                                             children: [
@@ -1518,17 +1467,15 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     ),
                                                     SizedBox(
                                                       height: SizeConfig
-                                                          .screenHeight *
+                                                              .screenHeight *
                                                           0.01,
                                                     ),
-
-
 
                                                     //PAYMENT METHOD
                                                     Center(
                                                       child: SizedBox(
                                                           width: SizeConfig
-                                                              .screenWidth *
+                                                                  .screenWidth *
                                                               0.9,
                                                           child: Row(
                                                             children: [
@@ -1540,18 +1487,21 @@ class _HistoryPageState extends State<HistoryPage> {
                                                               const Spacer(),
                                                               Text(
                                                                 getUpcomingOrderController
-                                                                    .response
-                                                                    .value
-                                                                    .data![
-                                                                index]
-                                                                    .paymentType
-                                                                    .toString()=="cod"?"Pay After Service":getUpcomingOrderController
-                                              .response
-                                              .value
-                                              .data![
-                                          index]
-                                              .paymentType
-                                              .toString(),
+                                                                            .response
+                                                                            .value
+                                                                            .data![
+                                                                                index]
+                                                                            .paymentType
+                                                                            .toString() ==
+                                                                        "cod"
+                                                                    ? "Pay After Service"
+                                                                    : getUpcomingOrderController
+                                                                        .response
+                                                                        .value
+                                                                        .data![
+                                                                            index]
+                                                                        .paymentType
+                                                                        .toString(),
                                                                 style: font_style
                                                                     .black_400_16,
                                                               ),
@@ -1560,7 +1510,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     ),
                                                     SizedBox(
                                                       height: SizeConfig
-                                                          .screenHeight *
+                                                              .screenHeight *
                                                           0.01,
                                                     ),
 
@@ -1568,7 +1518,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     Center(
                                                       child: SizedBox(
                                                           width: SizeConfig
-                                                              .screenWidth *
+                                                                  .screenWidth *
                                                               0.9,
                                                           child: Row(
                                                             children: [
@@ -1583,20 +1533,21 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                     .response
                                                                     .value
                                                                     .data![
-                                                                index]
+                                                                        index]
                                                                     .status
                                                                     .toString(),
                                                                 style: font_style
                                                                     .blue_600_14
                                                                     .copyWith(
-                                                                    color: const Color(0xff22C55E)),
+                                                                        color: const Color(
+                                                                            0xff22C55E)),
                                                               ),
                                                             ],
                                                           )),
                                                     ),
                                                     SizedBox(
                                                       height: SizeConfig
-                                                          .screenHeight *
+                                                              .screenHeight *
                                                           0.01,
                                                     ),
                                                   ],
@@ -1622,54 +1573,54 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                     ))
                 : SizedBox(
-          height: SizeConfig.screenHeight,
-          width: SizeConfig.screenWidth,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                height: SizeConfig.screenHeight * 0.3,
-                width: SizeConfig.screenWidth * 0.8,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image:
-                        AssetImage("assets/images/HG_logo.png"))),
-              ),
-              Text("PLEASE LOGIN TO CONTINUE",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Lato',
-                    color: common_color,
-                    fontWeight: FontWeight.w800,
-                    // foreground: Paint()..shader = linear_600_16
-                  )),
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: InkWell(
-                  onTap: () {
-                    Get.offAll(login_page(
-                      frompage: 'skip',
+                    height: SizeConfig.screenHeight,
+                    width: SizeConfig.screenWidth,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: SizeConfig.screenHeight * 0.3,
+                          width: SizeConfig.screenWidth * 0.8,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage("assets/images/HG_logo.png"))),
+                        ),
+                        Text("PLEASE LOGIN TO CONTINUE",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Lato',
+                              color: common_color,
+                              fontWeight: FontWeight.w800,
+                              // foreground: Paint()..shader = linear_600_16
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: InkWell(
+                            onTap: () {
+                              Get.offAll(
+                                  login_page(
+                                    frompage: 'skip',
+                                  ),
+                                  transition: Transition.downToUp);
+                            },
+                            child: Container(
+                              width: SizeConfig.screenWidth * 0.9,
+                              height: SizeConfig.screenHeight * 0.06,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: common_color,
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                              child: Text("LOGIN / SIGNUP",
+                                  style: font_style.grad_600_16
+                                      .copyWith(color: Colors.white)),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                        transition: Transition.downToUp
-                    );
-                  },
-                  child: Container(
-                    width: SizeConfig.screenWidth * 0.9,
-                    height: SizeConfig.screenHeight * 0.06,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: common_color,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: Text("LOGIN / SIGNUP",
-                        style: font_style.grad_600_16
-                            .copyWith(color: Colors.white)),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
+                  );
       }),
     );
   }
