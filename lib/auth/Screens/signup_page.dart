@@ -629,7 +629,7 @@ class _signup_pageState extends State<signup_page> {
                                   }
                                   else {
                                     _registrationOtp
-                                        .send_otp_cont(smno.text, "Singup","")
+                                        .send_otp_cont(smno.text, "Singup")
                                         .then((value) {
                                       setState(() {
                                         isotp = true;

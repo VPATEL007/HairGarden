@@ -98,12 +98,11 @@ class api_service {
   }
 
   //REGISTRATION OTP
-  Future<send_otp_model> send_otp(mobile, type,AppSignature) async {
+  Future<send_otp_model> send_otp(mobile, type) async {
     final user_form = FormData();
 
     user_form.fields.add(MapEntry("mobile", mobile));
     user_form.fields.add(MapEntry("type", type));
-    user_form.fields.add(MapEntry("AppSignature", AppSignature));
     log("FIELD===${user_form.fields}");
     final value_user = await dio.post("$baseurl/generate-otp", data: user_form);
     if (value_user.statusCode == 200) {
