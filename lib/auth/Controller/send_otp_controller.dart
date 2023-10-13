@@ -8,10 +8,10 @@ class send_otp_controller extends GetxController {
   var loading = false.obs;
   var response = send_otp_model().obs;
 
-  Future<void> send_otp_cont(mobile, type) async {
+  Future<void> send_otp_cont(mobile, type,AppSignature) async {
     try {
       loading(true);
-      final respo = await api_service().send_otp(mobile, type);
+      final respo = await api_service().send_otp(mobile, type,AppSignature);
       print('OTP REsponse===${respo.message}');
       if (respo.status == true) {
         response = respo.obs;

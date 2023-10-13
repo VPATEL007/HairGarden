@@ -20,6 +20,7 @@ import 'package:hairgarden/auth/Screens/signup_page.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class login_page extends StatefulWidget {
   String? frompage;
@@ -92,7 +93,13 @@ class _login_pageState extends State<login_page> {
   @override
   void initState() {
     initPlatformState();
+    listenr();
     super.initState();
+  }
+
+  listenr()
+  async {
+    await SmsAutoFill().listenForCode();
   }
 
   @override
@@ -328,57 +335,81 @@ class _login_pageState extends State<login_page> {
                         : SizedBox(
                             height: SizeConfig.screenHeight * 0.02,
                           ),
-                    isotp == false
-                        ? Container()
-                        : Center(
-                            child: SizedBox(
-                              width: SizeConfig.screenWidth * 0.9,
-                              child: OtpTextField(
-                                numberOfFields: 6,
-                                fillColor: yellow_col,
-                                cursorColor: common_color,
-                                autoFocus: true,
-                                borderColor: yellow_col,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                styles: [
-                                  font_style.otp_txtstyl
-                                      .copyWith(color: Colors.black),
-                                  font_style.otp_txtstyl
-                                      .copyWith(color: Colors.black),
-                                  font_style.otp_txtstyl
-                                      .copyWith(color: Colors.black),
-                                  font_style.otp_txtstyl
-                                      .copyWith(color: Colors.black),
-                                  font_style.otp_txtstyl
-                                      .copyWith(color: Colors.black),
-                                  font_style.otp_txtstyl
-                                      .copyWith(color: Colors.black),
-                                ],
-                                enabledBorderColor: Colors.black,
-                                keyboardType: TextInputType.phone,
-                                focusedBorderColor: Colors.black,
-
-                                //set to true to show as box or false to show as dash
-                                showFieldAsBox: false,
-                                //runs when a code is typed in
-                                onCodeChanged: (String code) {
-                                  // FocusScope.of(context).nextFocus();
-                                  setState(() {
-                                    // otp_controller = code.toString() ;
-                                  });
-                                },
-                                //runs when every textfield is filled
-                                onSubmit: (String verificationCode) {
-                                  setState(() {
-                                    lentered_otp = verificationCode;
-                                  });
-                                }, // end onSubmit
-                              ),
-                            ),
-                          ),
+                    // isotp == false
+                    //     ? Container()
+                    //     : Center(
+                    //         child: SizedBox(
+                    //           width: SizeConfig.screenWidth * 0.9,
+                    //           child: OtpTextField(
+                    //             numberOfFields: 6,
+                    //             fillColor: yellow_col,
+                    //             cursorColor: common_color,
+                    //             autoFocus: true,
+                    //             borderColor: yellow_col,
+                    //             mainAxisAlignment:
+                    //                 MainAxisAlignment.spaceBetween,
+                    //             styles: [
+                    //               font_style.otp_txtstyl
+                    //                   .copyWith(color: Colors.black),
+                    //               font_style.otp_txtstyl
+                    //                   .copyWith(color: Colors.black),
+                    //               font_style.otp_txtstyl
+                    //                   .copyWith(color: Colors.black),
+                    //               font_style.otp_txtstyl
+                    //                   .copyWith(color: Colors.black),
+                    //               font_style.otp_txtstyl
+                    //                   .copyWith(color: Colors.black),
+                    //               font_style.otp_txtstyl
+                    //                   .copyWith(color: Colors.black),
+                    //             ],
+                    //             enabledBorderColor: Colors.black,
+                    //             keyboardType: TextInputType.phone,
+                    //             focusedBorderColor: Colors.black,
+                    //
+                    //             //set to true to show as box or false to show as dash
+                    //             showFieldAsBox: false,
+                    //             //runs when a code is typed in
+                    //             onCodeChanged: (String code) {
+                    //               // FocusScope.of(context).nextFocus();
+                    //               setState(() {
+                    //                 // otp_controller = code.toString() ;
+                    //               });
+                    //             },
+                    //             //runs when every textfield is filled
+                    //             onSubmit: (String verificationCode) {
+                    //               setState(() {
+                    //                 lentered_otp = verificationCode;
+                    //               });
+                    //             }, // end onSubmit
+                    //           ),
+                    //         ),
+                    //       ),
 
                     //OTP BTN
+          isotp == false
+              ? Container()
+              : Center(
+                      child: SizedBox(
+                        width: SizeConfig.screenWidth * 0.9,
+                        child: PinFieldAutoFill(
+                            decoration: UnderlineDecoration(
+                              textStyle: const TextStyle(fontSize: 20, color: Colors.black),
+                              colorBuilder: const FixedColorBuilder(Colors.black),
+
+                            ), // UnderlineDecoration, BoxLooseDecoration or BoxTightDecoration see https://github.com/TinoGuo/pin_input_text_field for more info,
+                            // currentCode: lentered_otp,// prefill with a code
+                            onCodeSubmitted:(p0) {
+
+                            }, //code submitted callback
+                            onCodeChanged: (code) {
+                              if (code!.length == 6) {
+                                FocusScope.of(context).requestFocus(FocusNode());
+                              }
+                            }, //code changed callback
+                            codeLength: 6//code length, default 6
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 25, vertical: 15),
@@ -400,7 +431,7 @@ class _login_pageState extends State<login_page> {
                               onTap: () {
                                 if (isotp) {
                                   _send_login_otp_obj.send_otp_cont(
-                                      lmno.text.toString(), "login");
+                                      lmno.text.toString(), "login","");
                                   _send_otp.startTimer();
                                 } else {
                                   commontoas('Please enter mobile number');
@@ -424,7 +455,9 @@ class _login_pageState extends State<login_page> {
                     isotp == false
                         ? Center(
                             child: InkWell(
-                                onTap: () {
+                                onTap: () async {
+                                  String signature =await SmsAutoFill().getAppSignature;
+                                  print("Signature===${signature}");
                                   if (lmno.text.isEmpty) {
                                     commontoas(
                                         "Please Enter Your Mobile Number");
@@ -437,8 +470,9 @@ class _login_pageState extends State<login_page> {
                                   else {
                                     _send_login_otp_obj
                                         .send_otp_cont(
-                                            lmno.text.toString(), "login")
-                                        .then((value) {
+                                            lmno.text.toString(), "login",signature)
+                                        .then((value) async {
+                                      await SmsAutoFill().listenForCode();
                                       Get.focusScope?.unfocus();
                                       _send_otp.startTimer();
                                       if (_send_otp.checkRegister.value ==
@@ -452,22 +486,6 @@ class _login_pageState extends State<login_page> {
                                         });
                                       }
                                     });
-                                    // setState(() {
-
-                                    // _send_otp.signin_send_otp_cont(lmno.text,lfname.text).then((value) {
-                                    //   if(_send_otp.checkregister==false){
-                                    //     setState(() {
-                                    //       isotp=false;
-                                    //     });
-                                    //   }
-                                    //   else{
-                                    //     setState(() {
-                                    //       isotp=true;
-                                    //     });
-                                    //   }
-                                    //
-                                    // });
-                                    // });
                                   }
                                 },
                                 child: Padding(
