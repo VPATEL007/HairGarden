@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -196,6 +197,9 @@ class _login_pageState extends State<login_page> {
                             style: font_style.white_400_16.copyWith(color: Colors.black),
                             controller: mobile,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             decoration: InputDecoration(
                               counterText: "",
                               hintText: "Enter Your Mobile Number",
@@ -284,7 +288,9 @@ class _login_pageState extends State<login_page> {
                             GestureDetector(
                                 onTap: () {
                                   if (_send_otp.isotp() == true) {
-                                    _staff_login.startTimer();
+                                    _send_otp
+                                        .send_login_otp_cont(mobile.text.toString())
+                                        .then((value) => _staff_login.startTimer());
                                   } else {
                                     commonToast('Please enter mobile number');
                                   }

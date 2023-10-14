@@ -16,14 +16,12 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   LocalNotification()
       .showNotification(message, message.data['title'], message.data['body']);
 }
-
 
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
@@ -58,7 +56,7 @@ Future<void> main() async {
   }
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen(
-        (RemoteMessage message) async {
+    (RemoteMessage message) async {
       LocalNotification().showNotification(
           message, message.notification?.title, message.notification?.body);
     },
@@ -67,17 +65,14 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Hair Garden Employee',
+      title: 'Parlour Wali Partner',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: newLightColor
-      ),
+      theme: ThemeData(scaffoldBackgroundColor: newLightColor),
       home: splash_screen(),
     );
   }

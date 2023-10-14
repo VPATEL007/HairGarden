@@ -115,9 +115,9 @@ class _your_reviewsState extends State<your_reviews> {
               height: SizeConfig.screenHeight * 0.01,
             ),
             Text(
-              "${reviewController
+              reviewController
                   .allRatingModel()
-                  .name}",
+                  .name??"",
               style: font_style.black_600_14,
             ),
             SizedBox(
@@ -140,8 +140,7 @@ class _your_reviewsState extends State<your_reviews> {
                 Text(
                   double.parse(reviewController
                       .allRatingModel()
-                      .average
-                      .toString())
+                      .average??"0")
                       .toStringAsFixed(2),
                   style: font_style.black_400_20,
                 ),
@@ -184,7 +183,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.excellent ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,
@@ -224,7 +223,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.good ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,
@@ -264,7 +263,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.average ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,
@@ -304,7 +303,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.notGood ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,
@@ -344,7 +343,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.poor ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,
