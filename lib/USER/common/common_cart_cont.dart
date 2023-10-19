@@ -150,391 +150,180 @@ class _common_cart_contState extends State<common_cart_cont> {
                           return Obx(() {
                             return Container(
                               constraints: BoxConstraints(
-                                  maxHeight: Get.height*0.65,
-                                  minHeight: Get.height*0.40
+                                  maxHeight: Get.height,
+                                  minHeight: Get.height*0.20
                               ),
                               padding: EdgeInsets.symmetric(
                                   horizontal: SizeConfig.screenWidth * 0.05,
                                   vertical: SizeConfig.screenHeight * 0.01),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  //GREY LINE
-                                  Center(
-                                    child: Container(
-                                      height: 5,
-                                      color: Colors.grey,
-                                      width: SizeConfig.screenWidth * 0.1,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    //GREY LINE
+                                    Center(
+                                      child: Container(
+                                        height: 5,
+                                        color: Colors.grey,
+                                        width: SizeConfig.screenWidth * 0.1,
+                                      ),
                                     ),
-                                  ),
 
-                                  SizedBox(
-                                    height: SizeConfig.screenHeight * 0.01,
-                                  ),
+                                    SizedBox(
+                                      height: SizeConfig.screenHeight * 0.01,
+                                    ),
 
-                                  //CART
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          "assets/images/cart.svg"),
-                                      SizedBox(
-                                        width: SizeConfig.screenWidth * 0.02,
-                                      ),
-                                      Text(
-                                        "Cart",
-                                        style: font_style.black_600_20,
-                                      ),
-                                      _get_cart.loading.value
-                                          ? Container()
-                                          : Container()
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.screenHeight * 0.015,
-                                  ),
+                                    //CART
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            "assets/images/cart.svg"),
+                                        SizedBox(
+                                          width: SizeConfig.screenWidth * 0.02,
+                                        ),
+                                        Text(
+                                          "Cart",
+                                          style: font_style.black_600_20,
+                                        ),
+                                        _get_cart.loading.value
+                                            ? Container()
+                                            : Container()
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: SizeConfig.screenHeight * 0.015,
+                                    ),
 
-                                  //LINE
-                                  Container(
-                                    height: 1,
-                                    width: SizeConfig.screenWidth,
-                                    color: Colors.grey,
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.screenHeight * 0.015,
-                                  ),
+                                    //LINE
+                                    Container(
+                                      height: 1,
+                                      width: SizeConfig.screenWidth,
+                                      color: Colors.grey,
+                                    ),
+                                    SizedBox(
+                                      height: SizeConfig.screenHeight * 0.015,
+                                    ),
 
-                                  SizedBox(
-                                    height: (_get_cart.response.value.data
-                                                    ?.length ??
-                                                0) >=
-                                            11
-                                        ? SizeConfig.screenHeight * 0.055 * 11
-                                        : SizeConfig.screenHeight *
-                                            0.080 *
-                                            _get_cart
-                                                .response.value.data!.length,
-                                    child: ListView.separated(
-                                      shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      scrollDirection: Axis.vertical,
-                                      itemCount:
-                                          _get_cart.response.value.data!.length,
-                                      itemBuilder: (context, bottomindex) {
-                                        return Obx(() {
-                                          return Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    _get_cart
-                                                        .response
-                                                        .value
-                                                        .data![bottomindex]
-                                                        .title
-                                                        .toString(),
-                                                    style:
-                                                        font_style.black_500_16,
-                                                  ),
-                                                  SizedBox(
-                                                    height: SizeConfig
-                                                            .screenHeight *
-                                                        0.008,
-                                                  ),
+                                    SizedBox(
+                                      height: (_get_cart.response.value.data
+                                                      ?.length ??
+                                                  0) >=
+                                              11
+                                          ? SizeConfig.screenHeight * 0.055 * 11
+                                          : SizeConfig.screenHeight *
+                                              0.080 *
+                                              _get_cart
+                                                  .response.value.data!.length,
+                                      child: ListView.separated(
+                                        shrinkWrap: true,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        scrollDirection: Axis.vertical,
+                                        itemCount:
+                                            _get_cart.response.value.data!.length,
+                                        itemBuilder: (context, bottomindex) {
+                                          return Obx(() {
+                                            return Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      _get_cart
+                                                          .response
+                                                          .value
+                                                          .data![bottomindex]
+                                                          .title
+                                                          .toString(),
+                                                      style:
+                                                          font_style.black_500_16,
+                                                    ),
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                              .screenHeight *
+                                                          0.008,
+                                                    ),
 
-                                                  //Rs. DISCOUNT
-                                                  Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        _get_cart
-                                                            .response
-                                                            .value
-                                                            .data![bottomindex]
-                                                            .finalPrice
-                                                            .toString(),
-                                                        style: font_style
-                                                            .greyA1A1AA_400_14,
-                                                      ),
-                                                      SizedBox(
-                                                        width: SizeConfig
-                                                                .screenWidth *
-                                                            0.02,
-                                                      ),
-                                                      // Text("₹${_get_cart.response.value.data![bottomindex].finalPrice.toString()}",style: font_style.yell_400_10,),
-                                                      Text(
-                                                        "₹${int.parse(_get_cart.response.value.data![bottomindex].price.toString()) * int.parse(_get_cart.response.value.data![bottomindex].qty.toString())}",
-                                                        style: font_style
-                                                            .yell_400_14,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              const Spacer(),
-                                              selectedind == bottomindex
-                                                  ? Container(
-                                                      width: SizeConfig
-                                                              .screenWidth *
-                                                          0.18,
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 8,
-                                                          horizontal: 5),
-                                                      decoration: BoxDecoration(
-                                                          color: yellow_col,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      44)),
-                                                      child:
-                                                          const CupertinoActivityIndicator(
-                                                              color:
-                                                                  Colors.white,
-                                                              radius: 8.2),
-                                                    )
-                                                  : _get_cart
+                                                    //Rs. DISCOUNT
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          _get_cart
                                                               .response
                                                               .value
-                                                              .data![
-                                                                  bottomindex]
-                                                              .type
-                                                              .toString() ==
-                                                          "service"
-                                                      ? Container(
+                                                              .data![bottomindex]
+                                                              .finalPrice
+                                                              .toString(),
+                                                          style: font_style
+                                                              .greyA1A1AA_400_14,
+                                                        ),
+                                                        SizedBox(
                                                           width: SizeConfig
                                                                   .screenWidth *
-                                                              0.18,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  vertical: 8,
-                                                                  horizontal:
-                                                                      5),
-                                                          decoration: BoxDecoration(
-                                                              color: yellow_col,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          44)),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceAround,
-                                                            children: [
-                                                              //SUBTRACT
-                                                              Flexible(
-                                                                child: InkWell(
-                                                                    onTap: () {
-                                                                      setState(
-                                                                          () {
-                                                                        sState(
-                                                                            () {
-                                                                          if (_get_cart.response.value.data![bottomindex].qty.toString() ==
-                                                                              '1') {
-                                                                            print('1');
-                                                                            sState(() {
-                                                                              selectedind = bottomindex;
-                                                                            });
-                                                                            log('CAT ID====${_get_cart.response.value.data![bottomindex].id}');
-                                                                            _remove_from_cart
-                                                                                .remove_fromcart_cont(
-                                                                                    // _get_cart.response.value.data![bottomindex].serviceCateId.toString(),
-                                                                                    widget.uid.toString(),
-                                                                                    widget.deviceId.toString(),
-                                                                                    _get_cart.response.value.data![bottomindex].id.toString()
-                                                                                    // "service"
-                                                                                    )
-                                                                                .then((value) {
-                                                                              sState(() {
-                                                                                selectedind = null;
-                                                                              });
-                                                                              print('2');
-                                                                              if (_get_cart.prodid.length == 1) {
-                                                                                print('3');
-                                                                                Get.back();
-                                                                                _get_cart.prodid.clear();
-                                                                                _get_cart.get_cart_cont(widget.uid.toString() == "" || widget.uid == null ? "" : widget.uid.toString(), widget.deviceId.toString());
-                                                                              }
-                                                                             else
-                                                                             {
-                                                                               print('7');
-                                                                               Get.back();
-                                                                               _get_cart.get_cart_cont(widget.uid.toString() == "" || widget.uid == null ? "" : widget.uid.toString(), widget.deviceId.toString());
-                                                                             }
-                                                                            });
-                                                                          } else {
-                                                                            print('4');
-                                                                            print(selectedind);
-                                                                            print(bottomindex);
-                                                                            sState(() {
-                                                                              selectedind = bottomindex;
-                                                                            });
-                                                                            _decrease_cart.decrease_cart_cont(_get_cart.response.value.data![bottomindex].serviceCateId.toString(), widget.uid, widget.deviceId, "${int.parse(_get_cart.response.value.data![bottomindex].qty.toString()) - 1}").then((value) {
-                                                                              sState(() {
-                                                                                selectedind = null;
-                                                                              });
-                                                                              _get_cart.get_cart_cont(widget.uid.toString() == "" || widget.uid == null ? "" : widget.uid.toString(), widget.deviceId.toString());
-                                                                            });
-                                                                          }
-                                                                        });
-                                                                      });
-                                                                    },
-                                                                    child: Container(
-                                                                        child: const Icon(
-                                                                      Icons
-                                                                          .remove,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      size: 16,
-                                                                    ))),
-                                                              ),
-
-                                                              //TOTAL
-                                                              Text(
-                                                                _get_cart
-                                                                    .response
-                                                                    .value
-                                                                    .data![
-                                                                        bottomindex]
-                                                                    .qty
-                                                                    .toString(),
-                                                                style: font_style
-                                                                    .white_400_10,
-                                                              ),
-
-                                                              //ADD
-                                                              Flexible(
-                                                                child: InkWell(
-                                                                    onTap: () {
-                                                                      setState(
-                                                                          () {
-                                                                        sState(
-                                                                            () {
-                                                                          sState(
-                                                                              () {
-                                                                            selectedind =
-                                                                                bottomindex;
-                                                                          });
-                                                                          _decrease_cart
-                                                                              .decrease_cart_cont(_get_cart.response.value.data![bottomindex].serviceCateId.toString(), widget.uid, widget.deviceId, "${int.parse(_get_cart.response.value.data![bottomindex].qty.toString()) + 1}")
-                                                                              .then((value) {
-                                                                            sState(() {
-                                                                              selectedind = null;
-                                                                            });
-                                                                            _get_cart.get_cart_cont(widget.uid.toString() == "" || widget.uid == null ? "" : widget.uid.toString(),
-                                                                                widget.deviceId.toString());
-                                                                          });
-                                                                        });
-                                                                      });
-                                                                    },
-                                                                    child: Container(
-                                                                        child: const Icon(
-                                                                      Icons.add,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      size: 16,
-                                                                    ))),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )
-                                                      : InkWell(
-                                                          onTap: () {
-                                                            print('1');
-                                                            setState(() {
-                                                              sState(() {
-                                                                sState(() {
-                                                                  selectedind =
-                                                                      bottomindex;
-                                                                });
-                                                                print('2');
-                                                                _remove_from_cart
-                                                                    .remove_fromcart_cont(
-                                                                        // _get_cart.response.value.data![bottomindex].serviceCateId.toString(),
-                                                                        widget
-                                                                            .uid
-                                                                            .toString(),
-                                                                        widget
-                                                                            .deviceId
-                                                                            .toString(),
-                                                                        _get_cart
-                                                                            .response
-                                                                            .value
-                                                                            .data![
-                                                                                bottomindex]
-                                                                            .id
-                                                                            .toString()
-                                                                        // "service"
-                                                                        )
-                                                                    .then(
-                                                                        (value) {
-                                                                          print('3');
-                                                                  sState(() {
-                                                                    selectedind =
-                                                                        null;
-                                                                  });
-                                                                          print('4');
-                                                                  if (_get_cart
-                                                                          .prodid
-                                                                          .length ==
-                                                                      1) {
-                                                                    print('5');
-                                                                    _get_cart
-                                                                        .prodid
-                                                                        .clear();
-                                                                    Get.back();
-                                                                    _get_cart.get_cart_cont(
-                                                                        widget.uid.toString() == "" || widget.uid == null
-                                                                            ? ""
-                                                                            : widget.uid
-                                                                                .toString(),
-                                                                        widget
-                                                                            .deviceId
-                                                                            .toString());
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                    print('6');
-                                                                    Get.back();
-                                                                    _get_cart.get_cart_cont(
-                                                                        widget.uid.toString() == "" ||
-                                                                            widget.uid ==
-                                                                                null
-                                                                            ? ""
-                                                                            : widget
-                                                                            .uid
-                                                                            .toString(),
-                                                                        widget
-                                                                            .deviceId
-                                                                            .toString());
-                                                                  }
-
-                                                                });
-                                                              });
-                                                            });
-                                                          },
-                                                          child: Container(
+                                                              0.02,
+                                                        ),
+                                                        // Text("₹${_get_cart.response.value.data![bottomindex].finalPrice.toString()}",style: font_style.yell_400_10,),
+                                                        Text(
+                                                          "₹${int.parse(_get_cart.response.value.data![bottomindex].price.toString()) * int.parse(_get_cart.response.value.data![bottomindex].qty.toString())}",
+                                                          style: font_style
+                                                              .yell_400_14,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Spacer(),
+                                                selectedind == bottomindex
+                                                    ? Container(
+                                                        width: SizeConfig
+                                                                .screenWidth *
+                                                            0.18,
+                                                        padding:  EdgeInsets
+                                                                .symmetric(
+                                                            vertical: 8,
+                                                            horizontal: SizeConfig
+                                                                .screenWidth*0.02),
+                                                        decoration: BoxDecoration(
+                                                            color: yellow_col,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        44)),
+                                                        child:
+                                                            const CupertinoActivityIndicator(
+                                                                color:
+                                                                    Colors.white,
+                                                                radius: 8.2),
+                                                      )
+                                                    : _get_cart
+                                                                .response
+                                                                .value
+                                                                .data![
+                                                                    bottomindex]
+                                                                .type
+                                                                .toString() ==
+                                                            "service"
+                                                        ? Container(
                                                             width: SizeConfig
                                                                     .screenWidth *
                                                                 0.18,
                                                             padding:
-                                                                const EdgeInsets
+                                                                 EdgeInsets
                                                                         .symmetric(
                                                                     vertical: 8,
                                                                     horizontal:
-                                                                        5),
+                                                                    SizeConfig
+                                                                        .screenWidth*0.02),
                                                             decoration: BoxDecoration(
-                                                                color:
-                                                                    yellow_col,
+                                                                color: yellow_col,
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
@@ -544,192 +333,408 @@ class _common_cart_contState extends State<common_cart_cont> {
                                                                   MainAxisAlignment
                                                                       .spaceAround,
                                                               children: [
+                                                                //SUBTRACT
+                                                                Flexible(
+                                                                  child: InkWell(
+                                                                      onTap: () {
+                                                                        setState(
+                                                                            () {
+                                                                          sState(
+                                                                              () {
+                                                                            if (_get_cart.response.value.data![bottomindex].qty.toString() ==
+                                                                                '1') {
+                                                                              print('1');
+                                                                              sState(() {
+                                                                                selectedind = bottomindex;
+                                                                              });
+                                                                              log('CAT ID====${_get_cart.response.value.data![bottomindex].id}');
+                                                                              _remove_from_cart
+                                                                                  .remove_fromcart_cont(
+                                                                                      // _get_cart.response.value.data![bottomindex].serviceCateId.toString(),
+                                                                                      widget.uid.toString(),
+                                                                                      widget.deviceId.toString(),
+                                                                                      _get_cart.response.value.data![bottomindex].id.toString()
+                                                                                      // "service"
+                                                                                      )
+                                                                                  .then((value) {
+                                                                                sState(() {
+                                                                                  selectedind = null;
+                                                                                });
+                                                                                print('2');
+                                                                                if (_get_cart.prodid.length == 1) {
+                                                                                  print('3');
+                                                                                  Get.back();
+                                                                                  _get_cart.prodid.clear();
+                                                                                  _get_cart.get_cart_cont(widget.uid.toString() == "" || widget.uid == null ? "" : widget.uid.toString(), widget.deviceId.toString());
+                                                                                }
+                                                                               else
+                                                                               {
+                                                                                 print('7');
+                                                                                 Get.back();
+                                                                                 _get_cart.get_cart_cont(widget.uid.toString() == "" || widget.uid == null ? "" : widget.uid.toString(), widget.deviceId.toString());
+                                                                               }
+                                                                              });
+                                                                            } else {
+                                                                              print('4');
+                                                                              print(selectedind);
+                                                                              print(bottomindex);
+                                                                              sState(() {
+                                                                                selectedind = bottomindex;
+                                                                              });
+                                                                              _decrease_cart.decrease_cart_cont(_get_cart.response.value.data![bottomindex].serviceCateId.toString(), widget.uid, widget.deviceId, "${int.parse(_get_cart.response.value.data![bottomindex].qty.toString()) - 1}").then((value) {
+                                                                                sState(() {
+                                                                                  selectedind = null;
+                                                                                });
+                                                                                _get_cart.get_cart_cont(widget.uid.toString() == "" || widget.uid == null ? "" : widget.uid.toString(), widget.deviceId.toString());
+                                                                              });
+                                                                            }
+                                                                          });
+                                                                        });
+                                                                      },
+                                                                      child: Container(
+                                                                          child: const Icon(
+                                                                        Icons
+                                                                            .remove,
+                                                                        color: Colors
+                                                                            .white,
+                                                                        size: 16,
+                                                                      ))),
+                                                                ),
+
                                                                 //TOTAL
                                                                 Text(
-                                                                  "Remove",
+                                                                  _get_cart
+                                                                      .response
+                                                                      .value
+                                                                      .data![
+                                                                          bottomindex]
+                                                                      .qty
+                                                                      .toString(),
                                                                   style: font_style
                                                                       .white_400_10,
                                                                 ),
+
+                                                                //ADD
+                                                                Flexible(
+                                                                  child: InkWell(
+                                                                      onTap: () {
+                                                                        setState(
+                                                                            () {
+                                                                          sState(
+                                                                              () {
+                                                                            sState(
+                                                                                () {
+                                                                              selectedind =
+                                                                                  bottomindex;
+                                                                            });
+                                                                            _decrease_cart
+                                                                                .decrease_cart_cont(_get_cart.response.value.data![bottomindex].serviceCateId.toString(), widget.uid, widget.deviceId, "${int.parse(_get_cart.response.value.data![bottomindex].qty.toString()) + 1}")
+                                                                                .then((value) {
+                                                                              sState(() {
+                                                                                selectedind = null;
+                                                                              });
+                                                                              _get_cart.get_cart_cont(widget.uid.toString() == "" || widget.uid == null ? "" : widget.uid.toString(),
+                                                                                  widget.deviceId.toString());
+                                                                            });
+                                                                          });
+                                                                        });
+                                                                      },
+                                                                      child: Container(
+                                                                          child: const Icon(
+                                                                        Icons.add,
+                                                                        color: Colors
+                                                                            .white,
+                                                                        size: 16,
+                                                                      ))),
+                                                                ),
                                                               ],
                                                             ),
+                                                          )
+                                                        : InkWell(
+                                                            onTap: () {
+                                                              print('1');
+                                                              setState(() {
+                                                                sState(() {
+                                                                  sState(() {
+                                                                    selectedind =
+                                                                        bottomindex;
+                                                                  });
+                                                                  print('2');
+                                                                  _remove_from_cart
+                                                                      .remove_fromcart_cont(
+                                                                          // _get_cart.response.value.data![bottomindex].serviceCateId.toString(),
+                                                                          widget
+                                                                              .uid
+                                                                              .toString(),
+                                                                          widget
+                                                                              .deviceId
+                                                                              .toString(),
+                                                                          _get_cart
+                                                                              .response
+                                                                              .value
+                                                                              .data![
+                                                                                  bottomindex]
+                                                                              .id
+                                                                              .toString()
+                                                                          // "service"
+                                                                          )
+                                                                      .then(
+                                                                          (value) {
+                                                                            print('3');
+                                                                    sState(() {
+                                                                      selectedind =
+                                                                          null;
+                                                                    });
+                                                                            print('4');
+                                                                    if (_get_cart
+                                                                            .prodid
+                                                                            .length ==
+                                                                        1) {
+                                                                      print('5');
+                                                                      _get_cart
+                                                                          .prodid
+                                                                          .clear();
+                                                                      Get.back();
+                                                                      _get_cart.get_cart_cont(
+                                                                          widget.uid.toString() == "" || widget.uid == null
+                                                                              ? ""
+                                                                              : widget.uid
+                                                                                  .toString(),
+                                                                          widget
+                                                                              .deviceId
+                                                                              .toString());
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                      print('6');
+                                                                      Get.back();
+                                                                      _get_cart.get_cart_cont(
+                                                                          widget.uid.toString() == "" ||
+                                                                              widget.uid ==
+                                                                                  null
+                                                                              ? ""
+                                                                              : widget
+                                                                              .uid
+                                                                              .toString(),
+                                                                          widget
+                                                                              .deviceId
+                                                                              .toString());
+                                                                    }
+
+                                                                  });
+                                                                });
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                              width: SizeConfig
+                                                                      .screenWidth *
+                                                                  0.18,
+                                                              padding:
+                                                                   EdgeInsets
+                                                                          .symmetric(
+                                                                      vertical: 8,
+                                                                      horizontal:
+                                                                      SizeConfig
+                                                                          .screenWidth*0.02),
+                                                              decoration: BoxDecoration(
+                                                                  color:
+                                                                      yellow_col,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              44)),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceAround,
+                                                                children: [
+                                                                  //TOTAL
+                                                                  Text(
+                                                                    "Remove",
+                                                                    style: font_style
+                                                                        .white_400_10,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
                                                           ),
-                                                        ),
-                                            ],
-                                          );
-                                        });
-                                      },
-                                      separatorBuilder: (context, bottomindex) {
-                                        return Container(
-                                          margin: EdgeInsets.symmetric(
-                                            vertical:
-                                                SizeConfig.screenHeight * 0.01,
-                                          ),
-                                          height: 1,
-                                          width: SizeConfig.screenWidth,
-                                          color: Colors.grey,
-                                        );
-                                      },
-                                    ),
-                                  ),
-
-                                  // SizedBox(height: SizeConfig.screenHeight*0.015,),
-
-                                  //LINE
-                                  Container(
-                                    height: 1,
-                                    width: SizeConfig.screenWidth,
-                                    color: Colors.grey,
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.screenHeight * 0.015,
-                                  ),
-
-                                  // Row(
-                                  //   mainAxisAlignment:
-                                  //       MainAxisAlignment.spaceBetween,
-                                  //   children: [
-                                  //     Text(
-                                  //       "Service Cost",
-                                  //       style: font_style.black_500_14,
-                                  //     ),
-                                  //     Text(
-                                  //       "₹${_get_cart.response.value.total.toString()}",
-                                  //       style: font_style.black_500_14,
-                                  //     ),
-                                  //   ],
-                                  // ),
-                                  //
-                                  // SizedBox(
-                                  //   height: SizeConfig.screenHeight * 0.015,
-                                  // ),
-
-                                  //LINE
-                                  // Container(
-                                  //   height: 1,
-                                  //   width: SizeConfig.screenWidth,
-                                  //   color: Colors.grey,
-                                  // ),
-                                  // SizedBox(
-                                  //   height: SizeConfig.screenHeight * 0.015,
-                                  // ),
-
-                                  SizedBox(
-                                    width: SizeConfig.screenWidth * 0.02,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Total",
-                                            style: font_style.greyA1A1AA_400_18,
-                                          ),
-                                          Text(
-                                            "₹${_get_cart.response.value.total.toString()}",
-                                            style: font_style.black_500_16,
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      InkWell(
-                                        onTap: () {
-                                          if (widget.pagename.toString() ==
-                                              "recom") {
-                                            print("DSDDSSSD");
-                                            // Get.to(bookslot_page());
-                                            if (widget.uid.toString() == "" ||
-                                                widget.uid == null) {
-                                              // commontoas(msg: "Please Login to book now");
-                                              Get.offAll(
-                                                  login_page(
-                                                    frompage: 'skip',
-                                                  ),
-                                                  transition:
-                                                      Transition.downToUp);
-                                            } else {
-                                              getselectedaddress();
-                                              print(
-                                                  "SELECTEDIND: $selectedind");
-                                              print(
-                                                  "SELECTEDIND: ${_get_address.defaultaddid.toString()}");
-                                              // getseladdindx==""||getseladdindx==null && _get_address.defaultaddid.toString()==""||_get_address.defaultaddid==null?
-                                              // _get_address.get_address_cont(uid).then((value) => _get_staffs.get_staffs_cont("",_get_cart.response.value.data![0].categoryId)).then((value) =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>bookslot_page()))):
-                                              getseladdindx == "" || getseladdindx == null
-                                                  ? _get_address
-                                                      .get_address_cont(uid)
-                                                      .then((value) =>
-                                                          _get_staffs.get_staffs_cont(
-                                                              _get_address.defaultaddid
-                                                                  .toString(),
-                                                              _get_cart
-                                                                  .response
-                                                                  .value
-                                                                  .data![0]
-                                                                  .categoryId))
-                                                      .then((value) => Get.to(
-                                                          const bookslot_page()))
-                                                  : _get_address
-                                                      .get_address_cont(uid)
-                                                      .then((value) =>
-                                                          _get_staffs.get_staffs_cont(
-                                                              getseladdindx,
-                                                              _get_cart
-                                                                  .response
-                                                                  .value
-                                                                  .data![0]
-                                                                  .categoryId))
-                                                      .then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => const bookslot_page())));
-                                            }
-                                          } else {
-                                            _get_addons
-                                                .get_addons_cont(
-                                                    uid.toString() == "" ||
-                                                            uid == null
-                                                        ? ""
-                                                        : uid.toString(),
-                                                    _deviceId.toString())
-                                                .then((value) => Get.to(
-                                                    our_recomendation_page()));
-                                          }
+                                              ],
+                                            );
+                                          });
                                         },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          width: SizeConfig.screenWidth * 0.25,
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          decoration: BoxDecoration(
-                                              color: yellow_col,
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          child: Obx(() {
-                                            return _get_addons.loading.value ||
-                                                    _get_address
-                                                        .loading.value ||
-                                                    _get_staffs.loading.value
-                                                ? const CupertinoActivityIndicator(
-                                                    color: Colors.white,
-                                                  )
-                                                : Text(
-                                                    widget.pagename.toString() ==
-                                                                "recom" &&
-                                                            _get_cart.addonid
-                                                                    .length ==
-                                                                0
-                                                        ? "SKIP"
-                                                        : "BOOK NOW",
-                                                    style:
-                                                        font_style.white_600_14,
-                                                  );
-                                          }),
-                                        ),
+                                        separatorBuilder: (context, bottomindex) {
+                                          return Container(
+                                            margin: EdgeInsets.symmetric(
+                                              vertical:
+                                                  SizeConfig.screenHeight * 0.01,
+                                            ),
+                                            height: 1,
+                                            width: SizeConfig.screenWidth,
+                                            color: Colors.grey,
+                                          );
+                                        },
                                       ),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+
+                                    // SizedBox(height: SizeConfig.screenHeight*0.015,),
+
+                                    //LINE
+                                    Container(
+                                      height: 1,
+                                      width: SizeConfig.screenWidth,
+                                      color: Colors.grey,
+                                    ),
+                                    SizedBox(
+                                      height: SizeConfig.screenHeight * 0.015,
+                                    ),
+
+                                    // Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     Text(
+                                    //       "Service Cost",
+                                    //       style: font_style.black_500_14,
+                                    //     ),
+                                    //     Text(
+                                    //       "₹${_get_cart.response.value.total.toString()}",
+                                    //       style: font_style.black_500_14,
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                    //
+                                    // SizedBox(
+                                    //   height: SizeConfig.screenHeight * 0.015,
+                                    // ),
+
+                                    //LINE
+                                    // Container(
+                                    //   height: 1,
+                                    //   width: SizeConfig.screenWidth,
+                                    //   color: Colors.grey,
+                                    // ),
+                                    // SizedBox(
+                                    //   height: SizeConfig.screenHeight * 0.015,
+                                    // ),
+
+                                    SizedBox(
+                                      width: SizeConfig.screenWidth * 0.02,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Total",
+                                              style: font_style.greyA1A1AA_400_18,
+                                            ),
+                                            Text(
+                                              "₹${_get_cart.response.value.total.toString()}",
+                                              style: font_style.black_500_16,
+                                            ),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        InkWell(
+                                          onTap: () {
+                                            if (widget.pagename.toString() ==
+                                                "recom") {
+                                              print("DSDDSSSD");
+                                              // Get.to(bookslot_page());
+                                              if (widget.uid.toString() == "" ||
+                                                  widget.uid == null) {
+                                                // commontoas(msg: "Please Login to book now");
+                                                Get.offAll(
+                                                    login_page(
+                                                      frompage: 'skip',
+                                                    ),
+                                                    transition:
+                                                        Transition.downToUp);
+                                              } else {
+                                                getselectedaddress();
+                                                print(
+                                                    "SELECTEDIND: $selectedind");
+                                                print(
+                                                    "SELECTEDIND: ${_get_address.defaultaddid.toString()}");
+                                                // getseladdindx==""||getseladdindx==null && _get_address.defaultaddid.toString()==""||_get_address.defaultaddid==null?
+                                                // _get_address.get_address_cont(uid).then((value) => _get_staffs.get_staffs_cont("",_get_cart.response.value.data![0].categoryId)).then((value) =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>bookslot_page()))):
+                                                getseladdindx == "" || getseladdindx == null
+                                                    ? _get_address
+                                                        .get_address_cont(uid)
+                                                        .then((value) =>
+                                                            _get_staffs.get_staffs_cont(
+                                                                _get_address.defaultaddid
+                                                                    .toString(),
+                                                                _get_cart
+                                                                    .response
+                                                                    .value
+                                                                    .data![0]
+                                                                    .categoryId))
+                                                        .then((value) => Get.to(
+                                                            const bookslot_page()))
+                                                    : _get_address
+                                                        .get_address_cont(uid)
+                                                        .then((value) =>
+                                                            _get_staffs.get_staffs_cont(
+                                                                getseladdindx,
+                                                                _get_cart
+                                                                    .response
+                                                                    .value
+                                                                    .data![0]
+                                                                    .categoryId))
+                                                        .then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => const bookslot_page())));
+                                              }
+                                            } else {
+                                              _get_addons
+                                                  .get_addons_cont(
+                                                      uid.toString() == "" ||
+                                                              uid == null
+                                                          ? ""
+                                                          : uid.toString(),
+                                                      _deviceId.toString())
+                                                  .then((value) => Get.to(
+                                                      our_recomendation_page()));
+                                            }
+                                          },
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            width: SizeConfig.screenWidth * 0.25,
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            decoration: BoxDecoration(
+                                                color: yellow_col,
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            child: Obx(() {
+                                              return _get_addons.loading.value ||
+                                                      _get_address
+                                                          .loading.value ||
+                                                      _get_staffs.loading.value
+                                                  ? const CupertinoActivityIndicator(
+                                                      color: Colors.white,
+                                                    )
+                                                  : Text(
+                                                      widget.pagename.toString() ==
+                                                                  "recom" &&
+                                                              _get_cart.addonid
+                                                                      .length ==
+                                                                  0
+                                                          ? "SKIP"
+                                                          : "BOOK NOW",
+                                                      style:
+                                                          font_style.white_600_14,
+                                                    );
+                                            }),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           });

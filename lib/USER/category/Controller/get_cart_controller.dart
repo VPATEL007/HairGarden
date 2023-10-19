@@ -21,7 +21,7 @@ class get_cart_controller extends GetxController {
   Future<void> get_cart_cont(user_id, device_id) async {
     try{
       loading(true);
-      final respo = await api_service().get_cart(user_id, device_id);
+      final respo = await api_service().get_cart(user_id??"", device_id);
       print('Response Vijay==${respo?.status}');
       if (respo?.status ?? false) {
         response = respo!.obs;

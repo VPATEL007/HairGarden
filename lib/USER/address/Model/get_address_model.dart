@@ -1,85 +1,93 @@
+// To parse this JSON data, do
+//
+//     final get_address_model = get_address_modelFromJson(jsonString);
+
+import 'dart:convert';
+
+get_address_model get_address_modelFromJson(String str) => get_address_model.fromJson(json.decode(str));
+
+String get_address_modelToJson(get_address_model data) => json.encode(data.toJson());
+
 class get_address_model {
   bool? status;
   String? message;
-  List<Data>? data;
+  List<Datum>? data;
 
-  get_address_model({this.status, this.message, this.data});
+  get_address_model({
+    this.status,
+    this.message,
+    this.data,
+  });
 
-  get_address_model.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
-  }
+  factory get_address_model.fromJson(Map<String, dynamic> json) => get_address_model(
+    status: json["status"],
+    message: json["message"],
+    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "status": status,
+    "message": message,
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+  };
 }
 
-class Data {
+class Datum {
   String? id;
   String? userId;
   String? location;
   String? pincode;
   String? buildingName;
+  String? area;
   String? locality;
   String? latitude;
   String? longitude;
   String? isDefault;
-  String? createAt;
-  String? updateAt;
+  DateTime? createAt;
+  DateTime? updateAt;
 
-  Data(
-      {this.id,
-        this.userId,
-        this.location,
-        this.pincode,
-        this.buildingName,
-        this.locality,
-        this.latitude,
-        this.longitude,
-        this.isDefault,
-        this.createAt,
-        this.updateAt});
+  Datum({
+    this.id,
+    this.userId,
+    this.location,
+    this.pincode,
+    this.buildingName,
+    this.area,
+    this.locality,
+    this.latitude,
+    this.longitude,
+    this.isDefault,
+    this.createAt,
+    this.updateAt,
+  });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
-    userId = json['user_id'].toString();
-    location = json['location'];
-    pincode = json['pincode'];
-    buildingName = json['building_name'];
-    locality = json['locality'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
-    isDefault = json['isDefault'];
-    createAt = json['create_at'];
-    updateAt = json['update_at'];
-  }
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    id: json["id"].toString(),
+    userId: json["user_id"].toString(),
+    location: json["location"],
+    pincode: json["pincode"],
+    buildingName: json["building_name"],
+    area: json["area"],
+    locality: json["locality"],
+    latitude: json["latitude"],
+    longitude: json["longitude"],
+    isDefault: json["isDefault"],
+    createAt: json["create_at"] == null ? null : DateTime.parse(json["create_at"]),
+    updateAt: json["update_at"] == null ? null : DateTime.parse(json["update_at"]),
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['location'] = this.location;
-    data['pincode'] = this.pincode;
-    data['building_name'] = this.buildingName;
-    data['locality'] = this.locality;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['isDefault'] = this.isDefault;
-    data['create_at'] = this.createAt;
-    data['update_at'] = this.updateAt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "user_id": userId,
+    "location": location,
+    "pincode": pincode,
+    "building_name": buildingName,
+    "area": area,
+    "locality": locality,
+    "latitude": latitude,
+    "longitude": longitude,
+    "isDefault": isDefault,
+    "create_at": createAt?.toIso8601String(),
+    "update_at": updateAt?.toIso8601String(),
+  };
 }

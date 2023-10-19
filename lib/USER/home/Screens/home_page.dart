@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -84,7 +85,11 @@ class _home_pageState extends State<home_page> {
 
   @override
   void initState() {
-    _get_banner.get_banner_cont();
+    _get_banner.get_banner_cont().then((value)
+    {
+      log("BOTTOM BANNER===${_get_banner.bottombannerimg.length}");
+    });
+
     _get_allprod.get_all_cat_products_cont().then((value) {
       print('Vijay Count Cart====${_get_allprod.response().data?.length}');
     });
@@ -262,7 +267,6 @@ class _home_pageState extends State<home_page> {
     });
   }
 
-  bool _showPlacePickerInContainer = false;
   TextEditingController buildname = TextEditingController();
   TextEditingController locaname = TextEditingController();
   TextEditingController pincode = TextEditingController();
@@ -288,7 +292,6 @@ class _home_pageState extends State<home_page> {
         leading: InkWell(
             onTap: () {
               scaffoldKey.currentState?.openDrawer();
-              // getwallet();
             },
             child: SvgPicture.asset(
               "assets/images/home_menu.svg",
@@ -296,630 +299,631 @@ class _home_pageState extends State<home_page> {
             )),
 
         //ADDRESS
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-                height: SizeConfig.screenHeight * 0.025,
-                child: SvgPicture.asset(
-                  "assets/images/loca_green.svg",
-                  fit: BoxFit.scaleDown,
-                  color: common_color,
-                )),
-            InkWell(
-                onTap: () async {
-                  _get_cart.prodid.clear();
-                  fillYTLists();
-                  getuserid()
-                      .then((value) => _get_address.get_address_cont(uid));
+        title: InkWell(
+          onTap: () async {
+            _get_cart.prodid.clear();
+            fillYTLists();
+            getuserid()
+                .then((value) => _get_address.get_address_cont(uid));
 
-                  if (uid == "" || uid == null) {
-                    Get.offAll(
-                        login_page(
-                          frompage: 'skip',
-                        ),
-                        transition: Transition.downToUp);
-                  } else {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              color: bg_col,
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(18),
-                                  topRight: Radius.circular(18))),
-                          child: StatefulBuilder(
-                            builder: (context, seState) {
-                              var selcindx = null;
-                              return Obx(() {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                      top: SizeConfig.screenHeight * 0.02,
-                                      left: SizeConfig.screenWidth * 0.025,
-                                      right: SizeConfig.screenWidth * 0.025),
-                                  child: Column(
+            if (uid == "" || uid == null) {
+              Get.offAll(
+                  login_page(
+                    frompage: 'skip',
+                  ),
+                  transition: Transition.downToUp);
+            } else {
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: bg_col,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(18),
+                            topRight: Radius.circular(18))),
+                    child: StatefulBuilder(
+                      builder: (context, seState) {
+                        var selcindx = null;
+                        return Obx(() {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                                top: SizeConfig.screenHeight * 0.02,
+                                left: SizeConfig.screenWidth * 0.025,
+                                right: SizeConfig.screenWidth * 0.025),
+                            child: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                //GREEN COLOR CONT
+                                Center(
+                                  child: Container(
+                                    height: 4,
+                                    width: SizeConfig.screenWidth * 0.2,
+                                    decoration: BoxDecoration(
+                                        color: common_color,
+                                        borderRadius:
+                                        BorderRadius.circular(2)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: SizeConfig.screenHeight * 0.015,
+                                ),
+
+                                Center(
+                                    child: Text(
+                                      "SELECT LOCATION",
+                                      style: font_style.black_600_20,
+                                    )),
+                                SizedBox(
+                                  height: SizeConfig.screenHeight * 0.03,
+                                ),
+
+                                //ADD ADDRESSES ROW
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(newmaps(
+                                      pname: "home",
+                                    ));
+                                  },
+                                  child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
+                                    CrossAxisAlignment.center,
                                     children: [
-                                      //GREEN COLOR CONT
-                                      Center(
-                                        child: Container(
-                                          height: 4,
-                                          width: SizeConfig.screenWidth * 0.2,
-                                          decoration: BoxDecoration(
-                                              color: common_color,
-                                              borderRadius:
-                                                  BorderRadius.circular(2)),
-                                        ),
+                                      Icon(
+                                        Icons.add,
+                                        color: common_color,
                                       ),
-                                      SizedBox(
-                                        height: SizeConfig.screenHeight * 0.015,
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-
-                                      Center(
-                                          child: Text(
-                                        "SELECT LOCATION",
-                                        style: font_style.black_600_20,
-                                      )),
-                                      SizedBox(
-                                        height: SizeConfig.screenHeight * 0.03,
-                                      ),
-
-                                      //ADD ADDRESSES ROW
-                                      InkWell(
-                                        onTap: () {
-                                          Get.to(newmaps(
-                                            pname: "home",
-                                          ));
-                                        },
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.add,
-                                              color: common_color,
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              "Add Address",
-                                              style: font_style.green_600_15,
-                                            ),
-                                            const Spacer(),
-                                            Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: common_color,
-                                              size: SizeConfig.screenHeight *
-                                                  0.02,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: SizeConfig.screenHeight * 0.01,
-                                      ),
-
-                                      //LINE
-                                      Container(
-                                        height: 1,
-                                        width: SizeConfig.screenWidth,
-                                        color: line_cont_col,
-                                      ),
-                                      SizedBox(
-                                        height: SizeConfig.screenHeight * 0.01,
-                                      ),
-
-                                      //SAVED ADDRESS TEXT
                                       Text(
-                                        "Saved Addresses ",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'Lato',
-                                          color: common_color,
-                                          fontWeight: FontWeight.w500,
-                                          // foreground: Paint()..shader = linear_600_16
-                                        ),
+                                        "Add Address",
+                                        style: font_style.green_600_15,
                                       ),
-                                      SizedBox(
-                                        height: SizeConfig.screenHeight * 0.01,
-                                      ),
+                                      const Spacer(),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: common_color,
+                                        size: SizeConfig.screenHeight *
+                                            0.02,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: SizeConfig.screenHeight * 0.01,
+                                ),
 
-                                      SizedBox(
-                                        height: SizeConfig.screenHeight * 0.01,
-                                      ),
+                                //LINE
+                                Container(
+                                  height: 1,
+                                  width: SizeConfig.screenWidth,
+                                  color: line_cont_col,
+                                ),
+                                SizedBox(
+                                  height: SizeConfig.screenHeight * 0.01,
+                                ),
 
-                                      //LISTVIEW ADRESS
-                                      _get_address.response.value.data!.isEmpty
-                                          ? const Center(
-                                              child: Padding(
-                                              padding:
-                                                  EdgeInsets.only(bottom: 18.0),
-                                              child: Text("No Addresses Found"),
-                                            ))
-                                          : SizedBox(
-                                              height:
-                                                  SizeConfig.screenHeight * 0.6,
-                                              child: ListView.separated(
-                                                shrinkWrap: true,
-                                                physics:
-                                                    const BouncingScrollPhysics(),
-                                                itemCount: _get_address.response
-                                                    .value.data!.length,
-                                                itemBuilder: (context, index) {
-                                                  return Obx(() {
-                                                    return Slidable(
-                                                      key: const ValueKey(0),
-                                                      endActionPane: ActionPane(
-                                                        motion:
-                                                            const DrawerMotion(),
-                                                        children: [
-                                                          SlidableAction(
-                                                            onPressed:
-                                                                (context) async {
-                                                              var locations = await locationFromAddress(
-                                                                  _get_address
-                                                                      .response
-                                                                      .value
-                                                                      .data![
-                                                                          index]
-                                                                      .location
-                                                                      .toString()
-                                                                      .replaceAll(
-                                                                          "\n",
-                                                                          ""));
-                                                              Get.to(
-                                                                  updateaddress(
-                                                                passlat: double.parse(
-                                                                    _get_address
-                                                                        .response
-                                                                        .value
-                                                                        .data![
-                                                                            index]
-                                                                        .latitude
-                                                                        .toString()),
-                                                                passlong: double.parse(
-                                                                    _get_address
-                                                                        .response
-                                                                        .value
-                                                                        .data![
-                                                                            index]
-                                                                        .longitude
-                                                                        .toString()),
+                                //SAVED ADDRESS TEXT
+                                Text(
+                                  "Saved Addresses ",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'Lato',
+                                    color: common_color,
+                                    fontWeight: FontWeight.w500,
+                                    // foreground: Paint()..shader = linear_600_16
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: SizeConfig.screenHeight * 0.01,
+                                ),
 
-                                                                //     passlat: double.parse(locations.toString().replaceAll("\n", "").substring(locations.toString().replaceAll("\n", "").indexOf("Latitude:")+9,locations.toString().indexOf(",")).trim()),
-                                                                // passlong: double.parse(locations.toString().replaceAll("\n", "").toString().substring(locations.toString().replaceAll("\n", "").indexOf("Longitude:")+10,locations.toString().replaceAll("\n", "").indexOf("Ti")).replaceAll(",", "").trim()),
-                                                                // addid:_get_address.response.value.data![index].id,
-                                                                addid: _get_address
+                                SizedBox(
+                                  height: SizeConfig.screenHeight * 0.01,
+                                ),
+
+                                //LISTVIEW ADRESS
+                                _get_address.response.value.data!.isEmpty
+                                    ? const Center(
+                                    child: Padding(
+                                      padding:
+                                      EdgeInsets.only(bottom: 18.0),
+                                      child: Text("No Addresses Found"),
+                                    ))
+                                    : SizedBox(
+                                  height:
+                                  SizeConfig.screenHeight * 0.6,
+                                  child: ListView.separated(
+                                    shrinkWrap: true,
+                                    physics:
+                                    const BouncingScrollPhysics(),
+                                    itemCount: _get_address.response
+                                        .value.data!.length,
+                                    itemBuilder: (context, index) {
+                                      return Obx(() {
+                                        return Slidable(
+                                          key: const ValueKey(0),
+                                          endActionPane: ActionPane(
+                                            motion:
+                                            const DrawerMotion(),
+                                            children: [
+                                              SlidableAction(
+                                                onPressed:
+                                                    (context) async {
+                                                  // var locations = await locationFromAddress(
+                                                  //     _get_address
+                                                  //         .response
+                                                  //         .value
+                                                  //         .data![
+                                                  //     index]
+                                                  //         .location
+                                                  //         .toString()
+                                                  //         .replaceAll(
+                                                  //         "\n",
+                                                  //         ""));
+                                                  Get.to(
+                                                      updateaddress(
+                                                        passlat: double.parse(
+                                                            _get_address
+                                                                .response
+                                                                .value
+                                                                .data![
+                                                            index]
+                                                                .latitude
+                                                                .toString()),
+                                                        passlong: double.parse(
+                                                            _get_address
+                                                                .response
+                                                                .value
+                                                                .data![
+                                                            index]
+                                                                .longitude
+                                                                .toString()),
+
+                                                        //     passlat: double.parse(locations.toString().replaceAll("\n", "").substring(locations.toString().replaceAll("\n", "").indexOf("Latitude:")+9,locations.toString().indexOf(",")).trim()),
+                                                        // passlong: double.parse(locations.toString().replaceAll("\n", "").toString().substring(locations.toString().replaceAll("\n", "").indexOf("Longitude:")+10,locations.toString().replaceAll("\n", "").indexOf("Ti")).replaceAll(",", "").trim()),
+                                                        // addid:_get_address.response.value.data![index].id,
+                                                        addid: _get_address
+                                                            .response
+                                                            .value
+                                                            .data![
+                                                        index]
+                                                            .userId,
+                                                        buildname: _get_address
+                                                            .response
+                                                            .value
+                                                            .data![
+                                                        index]
+                                                            .buildingName,
+                                                        locname: _get_address
+                                                            .response
+                                                            .value
+                                                            .data![
+                                                        index]
+                                                            .locality,
+                                                        pagename:
+                                                        'common',
+                                                      ));
+
+                                                  logger.i(
+                                                      "homepage page data : below data");
+                                                  logger.i(
+                                                      "passLattitude--${double.parse(_get_address.response.value.data![index].latitude.toString())}");
+                                                  logger.i(
+                                                      "passLattitude--${double.parse(_get_address.response.value.data![index].longitude.toString())}");
+                                                  // logger.i("addid--${_get_address.response.value.data![index].id}");
+                                                  logger.i(
+                                                      "addid--${_get_address.response.value.data![index].userId}");
+                                                  logger.i(
+                                                      "building name--${_get_address.response.value.data![index].buildingName}");
+                                                  logger.i(
+                                                      "locality--${_get_address.response.value.data![index].locality}");
+                                                },
+                                                backgroundColor:
+                                                common_color
+                                                    .withOpacity(
+                                                    0.7),
+                                                foregroundColor:
+                                                Colors.white,
+                                                icon: Icons.edit,
+                                                label: 'Edit',
+                                              ),
+                                              SlidableAction(
+                                                onPressed:
+                                                    (context) async {
+                                                  SharedPreferences
+                                                  sf =
+                                                  await SharedPreferences
+                                                      .getInstance();
+                                                  setState(() {
+                                                    seState(() {
+                                                      selcindx =
+                                                          index;
+                                                      uid = sf.getString(
+                                                          "stored_uid");
+                                                      print(
+                                                          "USER ID ID ${uid.toString()}");
+                                                    });
+                                                  });
+
+                                                  if (_get_address
+                                                      .response
+                                                      .value
+                                                      .data![
+                                                  index]
+                                                      .isDefault ==
+                                                      "yes") {
+                                                    _del_address
+                                                        .delete_address_cont(_get_address
+                                                        .response
+                                                        .value
+                                                        .data![
+                                                    index]
+                                                        .id)
+                                                        .then(
+                                                            (value) {
+                                                          _get_address
+                                                              .get_address_cont(
+                                                              uid)
+                                                              .then(
+                                                                  (value) {
+                                                                if (_get_address
                                                                     .response
                                                                     .value
-                                                                    .data![
-                                                                        index]
-                                                                    .userId,
-                                                                buildname: _get_address
-                                                                    .response
-                                                                    .value
-                                                                    .data![
-                                                                        index]
-                                                                    .buildingName,
-                                                                locname: _get_address
-                                                                    .response
-                                                                    .value
-                                                                    .data![
-                                                                        index]
-                                                                    .locality,
-                                                                pagename:
-                                                                    'common',
-                                                              ));
+                                                                    .data!
+                                                                    .isEmpty) {
+                                                                  setState(
+                                                                          () {
+                                                                        seState(
+                                                                                () {
+                                                                              sf.setString(
+                                                                                  "selectedaddressid",
+                                                                                  "");
+                                                                              selectedadd =
+                                                                              "";
+                                                                            });
+                                                                      });
+                                                                } else {
+                                                                  setState(
+                                                                          () {
+                                                                        seState(
+                                                                                () {
+                                                                              sf.setString(
+                                                                                  "selectedaddressid",
+                                                                                  _get_address.response.value.data![0].id.toString());
+                                                                              selectedadd =
+                                                                                  index;
+                                                                              _add_default_address.add_default_address(
+                                                                                  uid.toString(),
+                                                                                  _get_address.addsidlst[0].toString());
+                                                                            });
+                                                                      });
+                                                                }
 
-                                                              logger.i(
-                                                                  "homepage page data : below data");
-                                                              logger.i(
-                                                                  "passLattitude--${double.parse(_get_address.response.value.data![index].latitude.toString())}");
-                                                              logger.i(
-                                                                  "passLattitude--${double.parse(_get_address.response.value.data![index].longitude.toString())}");
-                                                              // logger.i("addid--${_get_address.response.value.data![index].id}");
-                                                              logger.i(
-                                                                  "addid--${_get_address.response.value.data![index].userId}");
-                                                              logger.i(
-                                                                  "building name--${_get_address.response.value.data![index].buildingName}");
-                                                              logger.i(
-                                                                  "locality--${_get_address.response.value.data![index].locality}");
-                                                            },
-                                                            backgroundColor:
-                                                                common_color
-                                                                    .withOpacity(
-                                                                        0.7),
-                                                            foregroundColor:
-                                                                Colors.white,
-                                                            icon: Icons.edit,
-                                                            label: 'Edit',
-                                                          ),
-                                                          SlidableAction(
-                                                            onPressed:
-                                                                (context) async {
-                                                              SharedPreferences
-                                                                  sf =
-                                                                  await SharedPreferences
-                                                                      .getInstance();
-                                                              setState(() {
                                                                 seState(() {
                                                                   selcindx =
-                                                                      index;
-                                                                  uid = sf.getString(
-                                                                      "stored_uid");
-                                                                  print(
-                                                                      "USER ID ID ${uid.toString()}");
+                                                                  null;
                                                                 });
                                                               });
-
-                                                              if (_get_address
-                                                                      .response
-                                                                      .value
-                                                                      .data![
-                                                                          index]
-                                                                      .isDefault ==
-                                                                  "yes") {
-                                                                _del_address
-                                                                    .delete_address_cont(_get_address
-                                                                        .response
-                                                                        .value
-                                                                        .data![
-                                                                            index]
-                                                                        .id)
-                                                                    .then(
-                                                                        (value) {
-                                                                  _get_address
-                                                                      .get_address_cont(
-                                                                          uid)
-                                                                      .then(
-                                                                          (value) {
-                                                                    if (_get_address
-                                                                        .response
-                                                                        .value
-                                                                        .data!
-                                                                        .isEmpty) {
-                                                                      setState(
+                                                        });
+                                                  } else {
+                                                    _del_address
+                                                        .delete_address_cont(_get_address
+                                                        .response
+                                                        .value
+                                                        .data![
+                                                    index]
+                                                        .id)
+                                                        .then(
+                                                            (value) {
+                                                          _get_address
+                                                              .get_address_cont(
+                                                              uid)
+                                                              .then(
+                                                                  (value) {
+                                                                if (_get_address
+                                                                    .response
+                                                                    .value
+                                                                    .data!
+                                                                    .isEmpty) {
+                                                                  setState(
                                                                           () {
                                                                         seState(
-                                                                            () {
-                                                                          sf.setString(
-                                                                              "selectedaddressid",
-                                                                              "");
-                                                                          selectedadd =
+                                                                                () {
+                                                                              sf.setString(
+                                                                                  "selectedaddressid",
+                                                                                  "");
+                                                                              selectedadd =
                                                                               "";
-                                                                        });
+                                                                            });
                                                                       });
-                                                                    } else {
-                                                                      setState(
+                                                                } else {
+                                                                  setState(
                                                                           () {
                                                                         seState(
-                                                                            () {
-                                                                          sf.setString(
-                                                                              "selectedaddressid",
-                                                                              _get_address.response.value.data![0].id.toString());
-                                                                          selectedadd =
-                                                                              index;
-                                                                          _add_default_address.add_default_address(
-                                                                              uid.toString(),
-                                                                              _get_address.addsidlst[0].toString());
-                                                                        });
+                                                                                () {
+                                                                              sf.setString(
+                                                                                  "selectedaddressid",
+                                                                                  _get_address.response.value.data![0].id.toString());
+                                                                              selectedadd =
+                                                                                  index;
+                                                                            });
                                                                       });
-                                                                    }
+                                                                }
 
-                                                                    seState(() {
-                                                                      selcindx =
-                                                                          null;
-                                                                    });
-                                                                  });
+                                                                seState(() {
+                                                                  selcindx =
+                                                                  null;
                                                                 });
-                                                              } else {
-                                                                _del_address
-                                                                    .delete_address_cont(_get_address
-                                                                        .response
-                                                                        .value
-                                                                        .data![
-                                                                            index]
-                                                                        .id)
-                                                                    .then(
-                                                                        (value) {
-                                                                  _get_address
-                                                                      .get_address_cont(
-                                                                          uid)
-                                                                      .then(
-                                                                          (value) {
-                                                                    if (_get_address
-                                                                        .response
-                                                                        .value
-                                                                        .data!
-                                                                        .isEmpty) {
-                                                                      setState(
-                                                                          () {
-                                                                        seState(
-                                                                            () {
-                                                                          sf.setString(
-                                                                              "selectedaddressid",
-                                                                              "");
-                                                                          selectedadd =
-                                                                              "";
-                                                                        });
-                                                                      });
-                                                                    } else {
-                                                                      setState(
-                                                                          () {
-                                                                        seState(
-                                                                            () {
-                                                                          sf.setString(
-                                                                              "selectedaddressid",
-                                                                              _get_address.response.value.data![0].id.toString());
-                                                                          selectedadd =
-                                                                              index;
-                                                                        });
-                                                                      });
-                                                                    }
-
-                                                                    seState(() {
-                                                                      selcindx =
-                                                                          null;
-                                                                    });
-                                                                  });
-                                                                });
-                                                              }
-                                                            },
-                                                            backgroundColor:
-                                                                Colors.red
-                                                                    .withOpacity(
-                                                                        0.7),
-                                                            foregroundColor:
-                                                                Colors.white,
-                                                            icon: Icons.delete,
-                                                            label: 'Delete',
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      child: selcindx ==
-                                                                  index &&
-                                                              _get_address
-                                                                  .loading.value
-                                                          ? const CommonIndicator()
-                                                          : InkWell(
-                                                              onTap: () async {
-                                                                SharedPreferences
-                                                                    sf =
-                                                                    await SharedPreferences
-                                                                        .getInstance();
-                                                                setState(() {
-                                                                  seState(() {
-                                                                    sf.setString(
-                                                                        "selectedaddressid",
-                                                                        _get_address
-                                                                            .response
-                                                                            .value
-                                                                            .data![index]
-                                                                            .id
-                                                                            .toString());
-                                                                    selectedadd =
-                                                                        index;
-                                                                  });
-                                                                });
-                                                                // Navigator.pop(context);
-                                                              },
-                                                              child: Container(
-                                                                padding: const EdgeInsets
-                                                                    .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  border: Border.all(
-                                                                      color: selectedadd ==
-                                                                              index
-                                                                          ? yellow_col.withOpacity(
-                                                                              0.8)
-                                                                          : Colors
-                                                                              .transparent),
-                                                                  color: selectedadd ==
-                                                                          index
-                                                                      ? yellow_col
-                                                                          .withOpacity(
-                                                                              0.2)
-                                                                      : Colors
-                                                                          .transparent,
-                                                                ),
-                                                                child: Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    SizedBox(
-                                                                        width: SizeConfig.screenWidth *
-                                                                            0.9,
-                                                                        child:
-                                                                            Text(
-                                                                          _get_address
-                                                                              .response
-                                                                              .value
-                                                                              .data![index]
-                                                                              .location
-                                                                              .toString(),
-                                                                          style:
-                                                                              const TextStyle(
-                                                                            fontSize:
-                                                                                15,
-                                                                            fontFamily:
-                                                                                'Lato',
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight:
-                                                                                FontWeight.w400,
-                                                                            // foreground: Paint()..shader = linear_600_16
-                                                                          ),
-                                                                        )),
-                                                                    SizedBox(
-                                                                      height: SizeConfig
-                                                                              .screenHeight *
-                                                                          0.01,
-                                                                    ),
-                                                                    Row(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .start,
-                                                                      children: [
-                                                                        const Text(
-                                                                          "Building Name: ",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                13,
-                                                                            fontFamily:
-                                                                                'Lato',
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            // foreground: Paint()..shader = linear_600_16
-                                                                          ),
-                                                                        ),
-                                                                        SizedBox(
-                                                                            width:
-                                                                                SizeConfig.screenWidth * 0.6,
-                                                                            child: Text(_get_address.response.value.data![index].buildingName.toString(),
-                                                                                style: const TextStyle(
-                                                                                  fontSize: 13,
-                                                                                  fontFamily: 'Lato',
-                                                                                  color: Colors.black,
-                                                                                  fontWeight: FontWeight.w400,
-                                                                                  // foreground: Paint()..shader = linear_600_16
-                                                                                ))),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .start,
-                                                                      children: [
-                                                                        Text(
-                                                                          "Locality Name: ",
-                                                                          style:
-                                                                              font_style.black_600_12,
-                                                                        ),
-                                                                        SizedBox(
-                                                                            width:
-                                                                                SizeConfig.screenWidth * 0.6,
-                                                                            child: Text(_get_address.response.value.data![index].locality.toString(),
-                                                                                style: const TextStyle(
-                                                                                  fontSize: 13,
-                                                                                  fontFamily: 'Lato',
-                                                                                  color: Colors.black,
-                                                                                  fontWeight: FontWeight.w400,
-                                                                                  // foreground: Paint()..shader = linear_600_16
-                                                                                ))),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                    );
-                                                  });
+                                                              });
+                                                        });
+                                                  }
                                                 },
-                                                separatorBuilder:
-                                                    (context, index) {
-                                                  return Container(
-                                                    margin: EdgeInsets.symmetric(
-                                                        vertical: SizeConfig
-                                                                .screenHeight *
-                                                            0.01),
-                                                    height: 1,
-                                                    width:
-                                                        SizeConfig.screenWidth,
-                                                    color: line_cont_col,
-                                                  );
-                                                },
+                                                backgroundColor:
+                                                Colors.red
+                                                    .withOpacity(
+                                                    0.7),
+                                                foregroundColor:
+                                                Colors.white,
+                                                icon: Icons.delete,
+                                                label: 'Delete',
                                               ),
-                                            ),
-
-                                      //NOTE
-                                      _get_address.response.value.data!.isEmpty
-                                          ? Container()
-                                          : Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 8.0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                            ],
+                                          ),
+                                          child: selcindx ==
+                                              index &&
+                                              _get_address
+                                                  .loading.value
+                                              ? const CommonIndicator()
+                                              : InkWell(
+                                            onTap: () async {
+                                              SharedPreferences
+                                              sf =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                              setState(() {
+                                                seState(() {
+                                                  sf.setString(
+                                                      "selectedaddressid",
+                                                      _get_address
+                                                          .response
+                                                          .value
+                                                          .data![index]
+                                                          .id
+                                                          .toString());
+                                                  selectedadd = index;
+                                                  Get.back();
+                                                });
+                                              });
+                                              // Navigator.pop(context);
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets
+                                                  .symmetric(
+                                                  horizontal:
+                                                  10,
+                                                  vertical:
+                                                  10),
+                                              decoration:
+                                              BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(
+                                                    5),
+                                                border: Border.all(
+                                                    color: selectedadd ==
+                                                        index
+                                                        ? yellow_col.withOpacity(
+                                                        0.8)
+                                                        : Colors
+                                                        .transparent),
+                                                color: selectedadd ==
+                                                    index
+                                                    ? yellow_col
+                                                    .withOpacity(
+                                                    0.2)
+                                                    : Colors
+                                                    .transparent,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
                                                 children: [
-                                                  Icon(
-                                                    Icons.event_note_rounded,
-                                                    color: yellow_col,
+                                                  SizedBox(
+                                                      width: SizeConfig.screenWidth *
+                                                          0.9,
+                                                      child:
+                                                      Text(
+                                                        _get_address
+                                                            .response
+                                                            .value
+                                                            .data![index]
+                                                            .location
+                                                            .toString(),
+                                                        style:
+                                                        const TextStyle(
+                                                          fontSize:
+                                                          15,
+                                                          fontFamily:
+                                                          'Lato',
+                                                          color:
+                                                          Colors.black,
+                                                          fontWeight:
+                                                          FontWeight.w400,
+                                                          // foreground: Paint()..shader = linear_600_16
+                                                        ),
+                                                      )),
+                                                  SizedBox(
+                                                    height: SizeConfig
+                                                        .screenHeight *
+                                                        0.01,
                                                   ),
-                                                  const SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    "Note: For Edit/Delete your Address Swipe Left..",
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontFamily: 'Lato',
-                                                      color: yellow_col,
-                                                      fontWeight:
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      const Text(
+                                                        "Building Name: ",
+                                                        style:
+                                                        TextStyle(
+                                                          fontSize:
+                                                          13,
+                                                          fontFamily:
+                                                          'Lato',
+                                                          color:
+                                                          Colors.black,
+                                                          fontWeight:
                                                           FontWeight.w500,
-                                                    ),
+                                                          // foreground: Paint()..shader = linear_600_16
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                          width:
+                                                          SizeConfig.screenWidth * 0.6,
+                                                          child: Text(_get_address.response.value.data![index].buildingName.toString(),
+                                                              style: const TextStyle(
+                                                                fontSize: 13,
+                                                                fontFamily: 'Lato',
+                                                                color: Colors.black,
+                                                                fontWeight: FontWeight.w400,
+                                                                // foreground: Paint()..shader = linear_600_16
+                                                              ))),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      Text(
+                                                        "Locality Name: ",
+                                                        style:
+                                                        font_style.black_600_12,
+                                                      ),
+                                                      SizedBox(
+                                                          width:
+                                                          SizeConfig.screenWidth * 0.6,
+                                                          child: Text(_get_address.response.value.data![index].locality.toString(),
+                                                              style: const TextStyle(
+                                                                fontSize: 13,
+                                                                fontFamily: 'Lato',
+                                                                color: Colors.black,
+                                                                fontWeight: FontWeight.w400,
+                                                                // foreground: Paint()..shader = linear_600_16
+                                                              ))),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
                                             ),
+                                          ),
+                                        );
+                                      });
+                                    },
+                                    separatorBuilder:
+                                        (context, index) {
+                                      return Container(
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: SizeConfig
+                                                .screenHeight *
+                                                0.01),
+                                        height: 1,
+                                        width:
+                                        SizeConfig.screenWidth,
+                                        color: line_cont_col,
+                                      );
+                                    },
+                                  ),
+                                ),
+
+                                //NOTE
+                                _get_address.response.value.data!.isEmpty
+                                    ? Container()
+                                    : Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.event_note_rounded,
+                                        color: yellow_col,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Note: For Edit/Delete your Address Swipe Left..",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'Lato',
+                                          color: yellow_col,
+                                          fontWeight:
+                                          FontWeight.w500,
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                );
-                              });
-                            },
-                          ),
-                        );
+                                ),
+                              ],
+                            ),
+                          );
+                        });
                       },
-                    );
-                  }
+                    ),
+                  );
                 },
-                child: Container(
-                    constraints:
-                        BoxConstraints(maxWidth: SizeConfig.screenWidth * 0.5),
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        child: uid == null || uid.toString() == ""
-                            ? Text(
-                                nouseraddress.toString() == "" ||
-                                        nouseraddress == null
-                                    ? "Add address"
-                                    : nouseraddress.toString(),
-                                style: font_style.gr27272A_400_14,
-                              )
-                            : Text(
-                                selectedadd == "" || selectedadd == null
-                                    ? "Add Address"
-                                    : _get_address.response.value
-                                            .data?[selectedadd].location ??
-                                        '',
-                                style: font_style.gr27272A_400_14,
-                              ))
-                    // Text(_get_address.response.value.data!.isEmpty?"Add Your Address":_get_address.response.value.data![selectedadd].buildingName.toString(),style: font_style.gr27272A_400_14,))
-                    )),
-            const Icon(
-              Icons.arrow_drop_down,
-              color: Colors.black,
-            )
-          ],
+              );
+            }
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                  height: SizeConfig.screenHeight * 0.025,
+                  child: SvgPicture.asset(
+                    "assets/images/loca_green.svg",
+                    fit: BoxFit.scaleDown,
+                    color: common_color,
+                  )),
+              Container(
+                  constraints:
+                      BoxConstraints(maxWidth: SizeConfig.screenWidth * 0.5),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      child: uid == null || uid.toString() == ""
+                          ? Text(
+                              nouseraddress.toString() == "" ||
+                                      nouseraddress == null
+                                  ? "Add address"
+                                  : nouseraddress.toString(),
+                              style: font_style.gr27272A_400_14,
+                            )
+                          : Text(
+                              selectedadd == "" || selectedadd == null
+                                  ? "Add Address"
+                                  : _get_address.response.value
+                                          .data?[selectedadd].location ??
+                                      '',
+                              style: font_style.gr27272A_400_14,
+                            ))
+                  // Text(_get_address.response.value.data!.isEmpty?"Add Your Address":_get_address.response.value.data![selectedadd].buildingName.toString(),style: font_style.gr27272A_400_14,))
+                  ),
+              const Icon(
+                Icons.arrow_drop_down,
+                color: Colors.black,
+              )
+            ],
+          ),
         ),
 
         //NOTIFICATION ICON
@@ -1005,7 +1009,7 @@ class _home_pageState extends State<home_page> {
                     ),
                     (searchtxt.text.isEmpty)
                         ? Container()
-                        : Center(
+                        : books.isNotEmpty?Center(
                             child: Container(
                               height: books.length >= 4
                                   ? SizeConfig.screenHeight * 0.25
@@ -1050,7 +1054,11 @@ class _home_pageState extends State<home_page> {
                                   },
                                   itemCount: books.length),
                             ),
-                          ),
+                          ):Container(
+                        alignment: Alignment.center,
+                        height: SizeConfig.screenHeight * 0.18,
+                        width: SizeConfig.screenWidth,
+                        child: const Text("Apologies, no services found")),
 
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.03,
@@ -1095,7 +1103,7 @@ class _home_pageState extends State<home_page> {
                               }),
                               carouselController: _controller,
                               options: CarouselOptions(
-                                  autoPlay: true,
+                                  autoPlay: _get_banner.topbannerimg.length>1?true:false,
                                   viewportFraction: 0.9,
                                   enlargeCenterPage: true,
                                   scrollDirection: Axis.horizontal,
@@ -1107,7 +1115,7 @@ class _home_pageState extends State<home_page> {
                                   }),
                             ),
                           ),
-                    Row(
+                    _get_banner.topbannerimg.length>1?Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children:
                           _get_banner.topbannerimg.asMap().entries.map((entry) {
@@ -1128,7 +1136,7 @@ class _home_pageState extends State<home_page> {
                           ),
                         );
                       }).toList(),
-                    ),
+                    ):SizedBox(),
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.014,
                     ),
@@ -1300,10 +1308,14 @@ class _home_pageState extends State<home_page> {
                             Container(),
                             InkWell(
                               onTap: () {
+
                                 Get.offAll(const BottomBar(
                                   pasindx: 2,
                                 ));
-                                // Get.to(payment_method());
+                                // _get_testimonials.get_testimonials_cont(uid.toString()).then((value) {
+                                //   _get_testimonials.yturl;
+                                // });
+                                // _get_banner.get_banner_cont();
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
@@ -1374,7 +1386,7 @@ class _home_pageState extends State<home_page> {
                               }),
                               carouselController: _middlecontroller,
                               options: CarouselOptions(
-                                  autoPlay: true,
+                                  autoPlay: _get_banner.middlebannerimg.length>1?true:false,
                                   viewportFraction: 0.9,
                                   enlargeCenterPage: true,
                                   scrollDirection: Axis.horizontal,
@@ -1386,7 +1398,7 @@ class _home_pageState extends State<home_page> {
                                   }),
                             ),
                           ),
-                    Row(
+                    _get_banner.middlebannerimg.length>1?Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: _get_banner.middlebannerimg
                           .asMap()
@@ -1410,7 +1422,7 @@ class _home_pageState extends State<home_page> {
                           ),
                         );
                       }).toList(),
-                    ),
+                    ):SizedBox(),
 
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.02,
@@ -1588,7 +1600,7 @@ class _home_pageState extends State<home_page> {
                                     }),
                                     carouselController: _offercontroller,
                                     options: CarouselOptions(
-                                        autoPlay: true,
+                                        autoPlay: _get_banner.offerbannerimg.length>1?true:false,
                                         viewportFraction: 0.9,
                                         enlargeCenterPage: true,
                                         scrollDirection: Axis.horizontal,
@@ -1600,7 +1612,7 @@ class _home_pageState extends State<home_page> {
                                         }),
                                   ),
                           ),
-                    Row(
+                    _get_banner.offerbannerimg.length>1?Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: _get_banner.offerbannerimg
                           .asMap()
@@ -1624,7 +1636,7 @@ class _home_pageState extends State<home_page> {
                           ),
                         );
                       }).toList(),
-                    ),
+                    ):SizedBox(),
                     // Padding(
                     //   padding:  EdgeInsets.only(left: SizeConfig.screenWidth*0.05),
                     //   child: Container(
@@ -1871,7 +1883,7 @@ class _home_pageState extends State<home_page> {
                               }),
                               carouselController: _bottomcontroller,
                               options: CarouselOptions(
-                                  autoPlay: true,
+                                  autoPlay: _get_banner.bottombannerimg.length>1?true:false,
                                   viewportFraction: 0.9,
                                   enlargeCenterPage: true,
                                   scrollDirection: Axis.horizontal,
@@ -1883,37 +1895,34 @@ class _home_pageState extends State<home_page> {
                                   }),
                             ),
                           ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: _get_banner.bottombannerimg
-                            .asMap()
-                            .entries
-                            .map((entry) {
-                          return InkWell(
-                            onTap: () =>
-                                _bottomcontroller.animateToPage(entry.key),
-                            child: Container(
-                              width: _bottombannercurrent == entry.key
-                                  ? Get.width * 0.05
-                                  : Get.width * 0.02,
-                              height: 7.0,
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 8.0, horizontal: 4.0),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      _bottombannercurrent == entry.key
-                                          ? BorderRadius.circular(20)
-                                          : BorderRadius.circular(100),
-                                  color: _bottombannercurrent == entry.key
-                                      ? yellow_col
-                                      : Colors.grey),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ).paddingSymmetric(horizontal: Get.width * 0.05),
+                    _get_banner.bottombannerimg.length>1?Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _get_banner.bottombannerimg
+                          .asMap()
+                          .entries
+                          .map((entry) {
+                        return InkWell(
+                          onTap: () =>
+                              _bottomcontroller.animateToPage(entry.key),
+                          child: Container(
+                            width: _bottombannercurrent == entry.key
+                                ? Get.width * 0.05
+                                : Get.width * 0.02,
+                            height: 7.0,
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 4.0),
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    _bottombannercurrent == entry.key
+                                        ? BorderRadius.circular(20)
+                                        : BorderRadius.circular(100),
+                                color: _bottombannercurrent == entry.key
+                                    ? yellow_col
+                                    : Colors.grey),
+                          ),
+                        );
+                      }).toList(),
+                    ).paddingSymmetric(horizontal: Get.width * 0.05):SizedBox(),
 
                     // Center(
                     //   child: ClipRRect(

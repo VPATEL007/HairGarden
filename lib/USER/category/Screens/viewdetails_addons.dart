@@ -123,7 +123,7 @@ class _ViewDetailAddOnViewState extends State<ViewDetailAddOnView> {
                         width: SizeConfig.screenWidth * 0.9,
                         child: Text(
                           "Service Detail",
-                          style: font_style.black_600_20,
+                          style: font_style.black_600_18,
                         ),
                       ),
                     ),
@@ -158,7 +158,7 @@ class _ViewDetailAddOnViewState extends State<ViewDetailAddOnView> {
                                 Text(
                                   viewDetailController.response.value.data!.title
                                       .toString(),
-                                  style: font_style.black_500_18,
+                                  style: font_style.black_500_15,
                                 ),
                                 SizedBox(
                                   height: SizeConfig.screenHeight * 0.008,
@@ -168,17 +168,19 @@ class _ViewDetailAddOnViewState extends State<ViewDetailAddOnView> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      viewDetailController.response.value.data!.price
-                                          .toString(),
-                                      style: font_style.greyA1A1AA_400_14,
+                                      "₹${viewDetailController.response.value.data!.sellPrice.toString()}",
+                                      style: font_style.yell_400_14,
                                     ),
                                     SizedBox(
                                       width: SizeConfig.screenWidth * 0.02,
                                     ),
                                     Text(
-                                      "₹${viewDetailController.response.value.data!.sellPrice.toString()}",
-                                      style: font_style.yell_400_14,
+                                      viewDetailController.response.value.data!.price
+                                          .toString(),
+                                      style: font_style.greyA1A1AA_400_14,
                                     ),
+
+
                                   ],
                                 ),
                               ],
@@ -334,18 +336,18 @@ class _ViewDetailAddOnViewState extends State<ViewDetailAddOnView> {
                                     children: [
                                       Text(
                                         "Duration",
-                                        style: font_style.black_600_20,
+                                        style: font_style.black_500_15,
                                       ),
                                       const Spacer(),
                                       SvgPicture.asset(
                                           "assets/images/duration.svg",
-                                          color: common_color),
+                                          color: common_color,width: SizeConfig.screenWidth * 0.04),
                                       SizedBox(
                                           width: SizeConfig.screenWidth * 0.01),
                                       Text(
                                         viewDetailController.response.value.data!.duration
                                             .toString(),
-                                        style: font_style.green_600_12,
+                                        style: font_style.yell_400_14,
                                       )
                                     ],
                                   ),
@@ -378,7 +380,7 @@ class _ViewDetailAddOnViewState extends State<ViewDetailAddOnView> {
                                   width: SizeConfig.screenWidth * 0.9,
                                   child: Text(
                                     "Description",
-                                    style: font_style.black_600_20,
+                                    style: font_style.black_500_15,
                                   ),
                                 ),
                               ),

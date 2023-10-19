@@ -189,7 +189,7 @@ class api_service {
 
   //ADD ADDRESS
   Future<add_address_model> add_address(user_id, location, building_name,
-      locality, latitude, longitude, pincode) async {
+      locality, latitude, longitude, pincode,area) async {
     final user_form = FormData();
 
     user_form.fields.add(MapEntry("user_id", user_id.toString()));
@@ -199,6 +199,7 @@ class api_service {
     user_form.fields.add(MapEntry("latitude", latitude));
     user_form.fields.add(MapEntry("longitude", longitude));
     user_form.fields.add(MapEntry("pincode", pincode));
+    user_form.fields.add(MapEntry("area", area));
     final value_user = await dio.post("$baseurl/addAddress", data: user_form);
     if (value_user.statusCode == 200) {
       final result_user = add_address_model.fromJson(value_user.data);
@@ -451,7 +452,7 @@ class api_service {
 
   //EDIT ADDRESS
   Future<edit_address_model> edit_address(id, location, building_name, locality,
-      latitude, longitude, pincode) async {
+      latitude, longitude, pincode,area) async {
     final user_form = FormData();
 
     user_form.fields.add(MapEntry("user_id", id));
@@ -461,6 +462,7 @@ class api_service {
     user_form.fields.add(MapEntry("latitude", latitude));
     user_form.fields.add(MapEntry("longitude", longitude));
     user_form.fields.add(MapEntry("pincode", pincode));
+    user_form.fields.add(MapEntry("area", area));
     final value_user = await dio.post("$baseurl/editAddress", data: user_form);
     if (value_user.statusCode == 200) {
       final result_user = edit_address_model.fromJson(value_user.data);
@@ -653,7 +655,7 @@ class api_service {
     final user_form = FormData();
     user_form.fields.add(MapEntry("user_id", user_id));
     final value_user =
-        await dio.post("$baseurl/getwallethistory", data: user_form);
+        await dio.post("$baseurl/GetReward", data: user_form);
     print('User Response===${value_user.data}');
     if (value_user.statusCode == 200) {
       final result_user = get_rewards_model.fromJson(value_user.data);
@@ -722,6 +724,7 @@ class api_service {
   Future<WalletDataModel> getWalletHistory(userId) async {
     final user_form = FormData();
     user_form.fields.add(MapEntry("user_id", userId));
+    log("USER ID++++${userId}");
     final value_user =
         await dio.post("$baseurl/addAmountHistoryListing", data: user_form);
     print('Ticket Response==${value_user.data}');

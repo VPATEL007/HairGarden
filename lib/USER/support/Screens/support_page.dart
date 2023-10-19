@@ -248,13 +248,6 @@ class _support_pageState extends State<support_page> {
                         controller: attachment,
                         style: font_style.greyA1A1AA_400_16.copyWith(color: Colors.black),
                         readOnly: true,
-                        validator: (value) {
-                          if(value!.isEmpty)
-                          {
-                            return "Please select attachment";
-                          }
-                          return null;
-                        },
                         decoration: InputDecoration(
 
                             enabledBorder: UnderlineInputBorder(

@@ -36,7 +36,7 @@ class Datum {
   final String? userId;
   final String? amount;
   final String? remark;
-  final dynamic amountStatus;
+  final String? amountStatus;
   final DateTime? date;
 
   Datum({

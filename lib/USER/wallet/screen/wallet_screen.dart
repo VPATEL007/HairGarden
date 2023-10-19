@@ -6,6 +6,7 @@ import 'package:hairgarden/COMMON/font_style.dart';
 import 'package:hairgarden/COMMON/size_config.dart';
 import 'package:hairgarden/USER/wallet/controller/wallet_controller.dart';
 import 'package:hairgarden/USER/wallet/screen/add_money_screen.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hairgarden/COMMON/font_style.dart';
 
@@ -62,21 +63,21 @@ class _WallerScreenState extends State<WallerScreen> {
       body: Obx(() => walletController.loading()
           ? const CommonIndicator()
           : SingleChildScrollView(
-            child: Column(
+              child: Column(
                 children: [
                   const SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: yellow_col, width: 1.0),
                         borderRadius: BorderRadius.circular(4)),
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 10),
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       children: [
                         Icon(
                           Icons.account_balance_wallet,
-                          color:common_color,
+                          color: common_color,
                         ),
                         const SizedBox(width: 15),
                         Text(
@@ -85,9 +86,9 @@ class _WallerScreenState extends State<WallerScreen> {
                         ),
                         const Spacer(),
                         Obx(() => Text(
-                          "₹${walletController.walletAMount().toStringAsFixed(2)}",
-                          style: font_style.black_600_16,
-                        )),
+                              "₹${walletController.walletAMount().toStringAsFixed(2)}",
+                              style: font_style.black_600_16,
+                            )),
                         SizedBox(
                           width: SizeConfig.screenWidth * 0.020,
                         ),
@@ -154,17 +155,26 @@ class _WallerScreenState extends State<WallerScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              walletController
-                                                      .walletHistoryModel()
-                                                      .data?[index]
-                                                      .remark.toString().capitalizeFirst ??
-                                                  "",
-                                              style: font_style.black_600_16,
+                                            SizedBox(
+                                              width: Get.width * 0.76,
+                                              child: Text(
+                                                walletController
+                                                        .walletHistoryModel()
+                                                        .data?[index]
+                                                        .remark
+                                                        .toString()
+                                                        .capitalizeFirst ??
+                                                    "",
+                                                style: font_style.black_600_16,
+                                              ),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  vertical: 3),
+                                            (walletController
+                                                .walletHistoryModel()
+                                                .data?[index]
+                                                .amountStatus.toString().isNotEmpty??false)?Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 3),
                                               child: Text(
                                                 walletController
                                                         .walletHistoryModel()
@@ -177,13 +187,14 @@ class _WallerScreenState extends State<WallerScreen> {
                                                         fontWeight:
                                                             FontWeight.w400),
                                               ),
-                                            ),
+                                            ):SizedBox(),
                                             Text(
-                                              '${walletController.walletHistoryModel().data?[index].date ?? DateTime.now()}',
+                                              DateFormat("dd-MM-yyyy").format(walletController.walletHistoryModel().data?[index].date ?? DateTime.now()),
                                               style: font_style.black_600_16
                                                   .copyWith(
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       color: const Color(
                                                           0xff3F3F46)),
                                             ),
@@ -204,7 +215,8 @@ class _WallerScreenState extends State<WallerScreen> {
                                               style: font_style.black_600_16
                                                   .copyWith(
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                       color: const Color(
                                                           0xff15803D)),
                                             ),
@@ -232,7 +244,7 @@ class _WallerScreenState extends State<WallerScreen> {
                   )
                 ],
               ),
-          )),
+            )),
     );
   }
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:hairgarden/COMMON/common_circular_indicator.dart';
 import 'package:hairgarden/COMMON/comontoast.dart';
 import 'package:hairgarden/COMMON/font_style.dart';
+import 'package:hairgarden/USER/review/Controller/give_rating_controller.dart';
 import 'package:hairgarden/USER/review/Screens/your_reviews.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../COMMON/common_color.dart';
@@ -56,6 +58,8 @@ class _HistoryPageState extends State<HistoryPage> {
     borderRadius: BorderRadius.circular(32),
   );
   int selectedValue = 0;
+  double _rating = 0.0;
+  final _give_rating = Get.put(give_rating_controller());
 
   @override
   Widget build(BuildContext context) {
@@ -138,280 +142,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                 .response.value.data?.length ??
                                             0,
                                         itemBuilder: (context, index) {
-                                          // return Column(
-                                          //   crossAxisAlignment:
-                                          //       CrossAxisAlignment.start,
-                                          //   mainAxisSize:
-                                          //       MainAxisSize.min,
-                                          //   children: [
-                                          //     //PRODUCT NAME
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Text(
-                                          //             getOrderHistory
-                                          //                 .response
-                                          //                 .value
-                                          //                 .data![index]
-                                          //                 .bookingId
-                                          //                 .toString(),
-                                          //             style: font_style
-                                          //                 .black_600_18,
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.009,
-                                          //     ),
-                                          //
-                                          //     //DATE
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "DATE",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getOrderHistory
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![
-                                          //                         index]
-                                          //                     .bookingDate
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .black_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //               .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "Payment Status",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getOrderHistory
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![
-                                          //                 index]
-                                          //                     .paymentStatus
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .black_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //           .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //ID ORDER
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "ID ORDER",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getOrderHistory
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![
-                                          //                         index]
-                                          //                     .bookingId
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .black_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //SUB TOTAL
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "Sub Total",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 "₹ ${getOrderHistory.response.value.data![index].price.toString()}",
-                                          //                 style: font_style
-                                          //                     .black_400_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //ORDER HISTORY PROFESSONAL
-                                          //     Center(
-                                          //       child: InkWell(
-                                          //         onTap: () {
-                                          //           getStaffDetailsController
-                                          //               .get_staffs_details_cont(
-                                          //                   28);
-                                          //           Get.to(your_reviews(
-                                          //             staffid: "28",
-                                          //             frompage: "order",
-                                          //           ));
-                                          //         },
-                                          //         child: SizedBox(
-                                          //             width: SizeConfig
-                                          //                     .screenWidth *
-                                          //                 0.9,
-                                          //             child: Row(
-                                          //               children: [
-                                          //                 Text(
-                                          //                   "Professional",
-                                          //                   style: font_style
-                                          //                       .yellow_400_14,
-                                          //                 ),
-                                          //                 const Spacer(),
-                                          //                 Text(
-                                          //                   getOrderHistory
-                                          //                       .response
-                                          //                       .value
-                                          //                       .data![
-                                          //                           index]
-                                          //                       .staffdata!
-                                          //                       .staffName
-                                          //                       .toString(),
-                                          //                   style: font_style
-                                          //                       .black_400_14_under,
-                                          //                 ),
-                                          //                 const Icon(Icons
-                                          //                     .keyboard_arrow_right_outlined)
-                                          //               ],
-                                          //             )),
-                                          //       ),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //PAYMENT METHOD
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "Payment Method",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getOrderHistory
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![
-                                          //                         index]
-                                          //                     .paymentType
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .black_600_14_nounderline,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //
-                                          //     //STATUS
-                                          //     Center(
-                                          //       child: SizedBox(
-                                          //           width: SizeConfig
-                                          //                   .screenWidth *
-                                          //               0.9,
-                                          //           child: Row(
-                                          //             children: [
-                                          //               Text(
-                                          //                 "Status",
-                                          //                 style: font_style
-                                          //                     .yellow_400_14,
-                                          //               ),
-                                          //               const Spacer(),
-                                          //               Text(
-                                          //                 getOrderHistory
-                                          //                     .response
-                                          //                     .value
-                                          //                     .data![
-                                          //                         index]
-                                          //                     .status
-                                          //                     .toString(),
-                                          //                 style: font_style
-                                          //                     .lightgeen_600_14,
-                                          //               ),
-                                          //             ],
-                                          //           )),
-                                          //     ),
-                                          //     SizedBox(
-                                          //       height: SizeConfig
-                                          //               .screenHeight *
-                                          //           0.01,
-                                          //     ),
-                                          //   ],
-                                          // );
+
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 15),
@@ -679,7 +410,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                               const Spacer(),
                                                                               Text(
                                                                                 getOrderHistory.response.value.data![index].staffdata?.staffName.toString() == "" || getOrderHistory.response.value.data![index].staffdata?.staffName == null ? "Waiting for assign" : getOrderHistory.response.value.data![index].staffdata?.staffName.toString()??"",
-                                                                                style: font_style.black_400_14_under,
+                                                                                style: font_style.black_400_14_under.copyWith(fontSize: 16),
                                                                               ),
                                                                               const Icon(Icons.keyboard_arrow_right_outlined)
                                                                             ],
@@ -768,7 +499,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                               .value
                                                                               .data![index]
                                                                               .status ==
-                                                                          'Confirmed'
+                                                                          'Completed'
                                                                       ? 'assets/images/success.png'
                                                                       : 'assets/images/cancel.png',
                                                                   width: 100,
@@ -1037,7 +768,43 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                 ),
                                                               ),
                                                               SizedBox(height: SizeConfig
-                                                                  .screenHeight *0.10),
+                                                                  .screenHeight *0.03),
+                                                              Center(
+                                                                child: RatingBar(
+                                                                  initialRating:_rating,
+                                                                  minRating: 1,
+                                                                  direction: Axis.horizontal,
+                                                                  allowHalfRating: true,
+                                                                  unratedColor: yellow_col
+                                                                      .withOpacity(0.5),
+                                                                  itemCount: 5,
+                                                                  glow: false,
+                                                                  itemSize: SizeConfig
+                                                                      .screenHeight *
+                                                                      0.040,
+
+                                                                  itemPadding:
+                                                                  const EdgeInsets.symmetric(
+                                                                      horizontal: 4.0),
+                                                                  ratingWidget: RatingWidget(
+                                                                    full: Image.asset("assets/images/full_rating.png"),
+                                                                    empty: Image.asset("assets/images/empty_rating.png"), half: Image.asset("assets/images/empty_rating.png"),
+                                                                  ),
+                                                                  // itemBuilder: (context, _) =>
+                                                                  //     Icon(Icons.star,
+                                                                  //       color: yellow_col,
+                                                                  //     ),
+                                                                  onRatingUpdate: (rating) {
+                                                                    setState(() {
+                                                                      _rating = rating;
+                                                                    });
+
+                                                                  },
+                                                                  updateOnDrag: true,
+                                                                ),
+                                                              ),
+                                                              SizedBox(height: SizeConfig
+                                                                  .screenHeight *0.03),
                                                               Padding(
                                                                 padding: const EdgeInsets.symmetric(horizontal: 15),
                                                                 child: Column(
@@ -1045,7 +812,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                   children: [
                                                                     Text(
                                                                       "Write a Comment",
-                                                                      style: font_style.black_600_16.copyWith(fontWeight: FontWeight.w600,color: Colors.black),
+                                                                      style: font_style.black_600_16.copyWith(fontWeight: FontWeight.w600,color: const Color(0xff27272A)),
                                                                     ),
                                                                     const SizedBox(height: 10),
                                                                     Center(
@@ -1075,57 +842,73 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                     Row(
                                                                       children: [
                                                                         Expanded(
-                                                                          child: Container(
-                                                                            width: 80,
-                                                                            height: 40,
-                                                                            alignment:
-                                                                            Alignment.center,
-                                                                            padding: EdgeInsets.symmetric(
-                                                                                vertical: SizeConfig
-                                                                                    .screenHeight *
-                                                                                    0.01),
-                                                                            decoration:
-                                                                            BoxDecoration(
-                                                                                borderRadius:
-                                                                                BorderRadius
-                                                                                    .circular(
-                                                                                    8.0),
-                                                                                border: Border.all(
-                                                                                    color: yellow_col,
-                                                                                    width: 1
-                                                                                )
-                                                                            ),
-                                                                            // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
-                                                                            child: Text("Remind me Later",
-                                                                              style: font_style
-                                                                                  .white_600_16.copyWith(color: yellow_col),
+                                                                          child: InkWell(
+                                                                            onTap:(){
+                                                                              Get.back();
+                                                                            },
+                                                                            child: Container(
+                                                                              width: 80,
+                                                                              height: 40,
+                                                                              alignment:
+                                                                              Alignment.center,
+                                                                              padding: EdgeInsets.symmetric(
+                                                                                  vertical: SizeConfig
+                                                                                      .screenHeight *
+                                                                                      0.01),
+                                                                              decoration:
+                                                                              BoxDecoration(
+                                                                                  borderRadius:
+                                                                                  BorderRadius
+                                                                                      .circular(
+                                                                                      8.0),
+                                                                                  border: Border.all(
+                                                                                      color: yellow_col,
+                                                                                      width: 1
+                                                                                  )
+                                                                              ),
+                                                                              // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
+                                                                              child: Text("Remind me Later",
+                                                                                style: font_style
+                                                                                    .white_600_16.copyWith(color: yellow_col),
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
                                                                         const SizedBox(width: 15),
                                                                         Expanded(
-                                                                          child: Container(
-                                                                            width: 80,
-                                                                            height: 40,
-                                                                            alignment:
-                                                                            Alignment.center,
-                                                                            padding: EdgeInsets.symmetric(
-                                                                                vertical: SizeConfig
-                                                                                    .screenHeight *
-                                                                                    0.01),
-                                                                            decoration:
-                                                                            BoxDecoration(
-                                                                              borderRadius:
-                                                                              BorderRadius
-                                                                                  .circular(
-                                                                                  8.0),
-                                                                              color: yellow_col
+                                                                          child: InkWell(
+                                                                            onTap: () {
+                                                                              // _give_rating
+                                                                              //     .give_rating_cont(
+                                                                              //     widget.staffid,
+                                                                              //     uid,
+                                                                              //     _rating
+                                                                              //         .toString(),
+                                                                              //     comment.text);
+                                                                            },
+                                                                            child: Container(
+                                                                              width: 80,
+                                                                              height: 40,
+                                                                              alignment:
+                                                                              Alignment.center,
+                                                                              padding: EdgeInsets.symmetric(
+                                                                                  vertical: SizeConfig
+                                                                                      .screenHeight *
+                                                                                      0.01),
+                                                                              decoration:
+                                                                              BoxDecoration(
+                                                                                borderRadius:
+                                                                                BorderRadius
+                                                                                    .circular(
+                                                                                    8.0),
+                                                                                color: yellow_col
 
-                                                                            ),
-                                                                            // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
-                                                                            child: Text("Submit",
-                                                                              style: font_style
-                                                                                  .white_600_16,
+                                                                              ),
+                                                                              // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
+                                                                              child: Text("Submit",
+                                                                                style: font_style
+                                                                                    .white_600_16,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         )

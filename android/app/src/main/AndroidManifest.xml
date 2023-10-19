@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hairgarden">
+    package="com.parlourwali.user">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -35,6 +35,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyCNlG7IWvqOeMtAyIXURo0WiDiPaEtIq5g"/>
+           android:value="AIzaSyDKX-OUoO-PE053N5bjifQX9qnVp2jmatk"/>
     </application>
 </manifest>

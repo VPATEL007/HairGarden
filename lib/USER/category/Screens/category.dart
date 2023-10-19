@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -138,8 +140,9 @@ class _categoryState extends State<category> {
 
   @override
   void initState() {
+    log("ENTER 1");
     _get_banner.get_banner_cont();
-    // _get_allprod.get_all_cat_products_cont();
+    _get_allprod.get_all_cat_products_cont();
     getuserid();
     getplatform();
     getselectedaddress();
@@ -851,9 +854,9 @@ class _categoryState extends State<category> {
                         ),
                       ),
                     ),
-                    searchtxt.text.length == 0
+                    searchtxt.text.isEmpty
                         ? Container()
-                        : Center(
+                        : books.isNotEmpty?Center(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -904,7 +907,11 @@ class _categoryState extends State<category> {
                                 ),
                               ],
                             ),
-                          ),
+                          ):Container(
+                        alignment: Alignment.center,
+                        height: SizeConfig.screenHeight * 0.18,
+                        width: SizeConfig.screenWidth,
+                        child: const Text("Apologies, no services found")),
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.03,
                     ),
@@ -998,7 +1005,10 @@ class _categoryState extends State<category> {
                                                                     6)),
                                                     color: common_color),
                                                 child: Text(
-                                                  "35% OFF",
+                                                  _get_allprod
+                                                      .response
+                                                      .value
+                                                      .data![index].blades??"",
                                                   style:
                                                       font_style.white_400_10,
                                                 ),
@@ -1107,7 +1117,7 @@ class _categoryState extends State<category> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     height: SizeConfig.screenHeight * 0.05,
                                     width: SizeConfig.screenWidth * 0.18,
                                     child: Image.asset(safety_img[index],
@@ -1142,11 +1152,7 @@ class _categoryState extends State<category> {
                     //PROFESSIONAL CONT
 
                     _get_banner.catbottombannerimg.isEmpty
-                        ? Container(
-                            alignment: Alignment.center,
-                            height: SizeConfig.screenHeight * 0.18,
-                            width: SizeConfig.screenWidth,
-                            child: const Text("No Banners Found"))
+                        ? SizedBox()
                         : Container(
                             height: SizeConfig.screenHeight * 0.18,
                             width: SizeConfig.screenWidth,
@@ -1167,7 +1173,7 @@ class _categoryState extends State<category> {
                                         borderRadius: BorderRadius.circular(20),
                                         image: DecorationImage(
                                             image: NetworkImage(_get_banner
-                                                .catbottombannerimg![index]
+                                                .catbottombannerimg[index]
                                                 .toString()),
                                             fit: BoxFit.cover
                                             // image: AssetImage(swiper_img[index].toString()),fit: BoxFit.cover
@@ -1177,7 +1183,7 @@ class _categoryState extends State<category> {
                               }),
                               carouselController: _controller,
                               options: CarouselOptions(
-                                  autoPlay: true,
+                                  autoPlay: _get_banner.catbottombannerimg.length>1?true:false,
                                   viewportFraction: 0.9,
                                   enlargeCenterPage: true,
                                   scrollDirection: Axis.horizontal,
@@ -1189,7 +1195,7 @@ class _categoryState extends State<category> {
                                   }),
                             ),
                           ),
-                    Row(
+                    _get_banner.catbottombannerimg.length>1?Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: _get_banner.catbottombannerimg
                           .asMap()
@@ -1212,87 +1218,7 @@ class _categoryState extends State<category> {
                           ),
                         );
                       }).toList(),
-                    ),
-                    // Center(
-                    //   child: ClipRRect(
-                    //     borderRadius: BorderRadius.circular(8),
-                    //     child: Container(
-                    //         height: SizeConfig.screenHeight*0.18,
-                    //         width: SizeConfig.screenWidth*0.9,
-                    //         decoration: BoxDecoration(
-                    //             borderRadius: BorderRadius.circular(8),
-                    //             color: common_color
-                    //         ),
-                    //         child: Stack(
-                    //             alignment: Alignment.centerRight,
-                    //             children:[
-                    //               //CIRCLE YELLOW
-                    //               Positioned(
-                    //                 left: SizeConfig.screenWidth*0.5,
-                    //                 child: Container(
-                    //                   height: SizeConfig.screenHeight*0.9,
-                    //                   width: SizeConfig.screenWidth*0.6,
-                    //                   decoration: BoxDecoration(
-                    //                       shape: BoxShape.circle,
-                    //                       gradient: RadialGradient(
-                    //                           center: Alignment.centerLeft,
-                    //                           colors: [
-                    //                             Color(0xffBF8D2C),
-                    //                             Color(0xffDBE466),
-                    //                           ],
-                    //                           radius: 1
-                    //                       )
-                    //                     // color: yellow_col
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //
-                    //               //PROFEESIONAL IMAGE
-                    //               Positioned (
-                    //                 bottom: -1,
-                    //                 right:  SizeConfig.screenWidth*0.00,
-                    //                 child: Container(
-                    //                   height: SizeConfig.screenHeight*0.18,
-                    //                   width: SizeConfig.screenWidth*0.52,
-                    //                   decoration: BoxDecoration(
-                    //                       image: DecorationImage(
-                    //                           image: AssetImage("assets/images/cartified_trained_img.png"),
-                    //                           fit: BoxFit.fill
-                    //                       )
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               Positioned(
-                    //                 left: SizeConfig.screenWidth*0.05,
-                    //                 child: Column(
-                    //                   mainAxisAlignment: MainAxisAlignment.center,
-                    //                   crossAxisAlignment: CrossAxisAlignment.start,
-                    //                   children: [
-                    //                     Container(
-                    //                       height: SizeConfig.screenHeight*0.07,
-                    //                       width: SizeConfig.screenWidth*0.14,
-                    //                       decoration: BoxDecoration(
-                    //                           shape: BoxShape.circle,
-                    //                           image: DecorationImage(
-                    //                               image: AssetImage("assets/images/bws_logo.png"),
-                    //                               fit: BoxFit.cover
-                    //                           )
-                    //                       ),
-                    //
-                    //                     ),
-                    //                     SizedBox(height: SizeConfig.screenHeight*0.01,),
-                    //                     Container(
-                    //                         width: SizeConfig.screenWidth*0.3,
-                    //                         child: Text("Certified & Trained Professionals",style: font_style.white_600_12,)),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //
-                    //             ]
-                    //         )
-                    //     ),
-                    //   ),
-                    // ),
+                    ):SizedBox(),
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.02,
                     ),

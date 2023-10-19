@@ -9,7 +9,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
+import 'package:hairgarden/COMMON/comontoast.dart';
 import 'package:hairgarden/COMMON/font_style.dart';
+import 'package:hairgarden/USER/address/Controller/get_pincode_controller.dart';
 import 'package:hairgarden/USER/bottombar/Screens/bottombar.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +30,7 @@ var logger = Logger();
 
 class updateaddress extends StatefulWidget {
   double? passlat, passlong;
-  String? addid, buildname, locname, pagename,pinCode="";
+  String? addid, buildname, locname, pagename,pinCode="",area="";
 
   updateaddress(
       {required this.passlat,
@@ -37,7 +39,8 @@ class updateaddress extends StatefulWidget {
       required this.buildname,
       required this.locname,
       required this.pagename,
-      this.pinCode
+      this.pinCode,
+        this.area
       });
 
   @override
@@ -62,7 +65,9 @@ class _updateaddressState extends State<updateaddress> {
   TextEditingController areaName = TextEditingController();
   TextEditingController updlocaname = TextEditingController();
   TextEditingController updpincode = TextEditingController();
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey();
+  String postalCode  = "";
+  final _get_pincode = Get.put(get_pincode_controller());
 
   Future<void> getCurruntLocation() async {
     final LocationSettings locationSettings = const LocationSettings(
@@ -71,35 +76,40 @@ class _updateaddressState extends State<updateaddress> {
     );
     await Geolocator.getCurrentPosition().then((value) async {
       List<Placemark> locations =
-          await placemarkFromCoordinates(value.latitude, value.longitude);
+          await placemarkFromCoordinates(widget.passlat??0.0, widget.passlong??0.0);
+      log("LOCAtiON=====${locations[0].name}");
+      log("LOCALITY=====${locations[0].locality}");
+      log("COUNTRY=====${locations[0].country}");
+      log("AREA=====${locations[0].country}");
+      log("COUNTRY=====${locations[0].country}");
+      log("PINCODE=====${locations[0].postalCode}");
+      log("LAT=====${widget.passlat}");
+      log("LONG=====${widget.passlong}");
       setState(() {
-        _text.text = locations[0].name.toString() +
-            ", " +
-            locations[0].locality.toString() +
-            ", " +
-            locations[0].country.toString();
+        _text.text = "${locations[0].name}, ${locations[0].locality}, ${locations[0].country}";
         // setpincode=locations[0].postalCode.toString();
         lat = value.latitude;
         long = value.longitude;
+        postalCode = locations[0].postalCode ?? '';
         // center = LatLng(double.parse(lat.toString()), double.parse(long.toString()));
       });
-      print(lat);
-      print(long);
     });
   }
 
   LatLng? center;
   getuserid() async {
     SharedPreferences sf = await SharedPreferences.getInstance();
-
     setState(() {
       center = LatLng(double.parse(widget.passlat.toString()),
           (double.parse(widget.passlong.toString())));
       updbuildname.text = widget.buildname??"";
       updlocaname.text = widget.locname??"";
       updpincode.text = widget.pinCode??"";
+      areaName.text = widget.area??"";
       uid = sf.getString("stored_uid");
     });
+    getCurruntLocation();
+    _get_pincode.get_pincode_cont();
   }
 
   @override
@@ -177,7 +187,7 @@ class _updateaddressState extends State<updateaddress> {
                           width: SizeConfig.screenWidth,
                           child: PlacePicker(
                             forceAndroidLocationManager: true,
-                            apiKey: "AIzaSyCNlG7IWvqOeMtAyIXURo0WiDiPaEtIq5g",
+                            apiKey: "AIzaSyDKX-OUoO-PE053N5bjifQX9qnVp2jmatk",
                             hintText: "Find a place ...",
                             searchingText: "Please wait ...",
                             selectText: "Select place",
@@ -232,9 +242,12 @@ class _updateaddressState extends State<updateaddress> {
                                     pincodes.add(nu[i]);
                                   }
                                 }
-                                pincodestr = pincodes.join("");
-
-                                print(count);
+                                postalCode = pincodes.join("");
+                                updpincode.text = pincodes.join("");
+                                lat = selectedPlace.geometry?.location.lat;
+                                long = selectedPlace.geometry?.location.lng;
+                                print("NEW LAT==${lat}");
+                                print("NEW LONG==${long}");
                                 print(nu);
                               }
 
@@ -332,101 +345,137 @@ class _updateaddressState extends State<updateaddress> {
 
                                                 //ENTER BUILDING NAME
 
-                                                TextFormField(
-                                                  controller: updbuildname,
-                                                  style:
-                                                      font_style.black_400_16,
-                                                  decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: yellow_col),
-                                                    ),
-                                                    focusedBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: yellow_col),
-                                                    ),
-                                                    hintText:
-                                                        "Enter Building Name",
-                                                    hintStyle: font_style
-                                                        .B3B3B3_400_16,
-                                                  ),
-                                                ),
-                                                TextFormField(
-                                                  controller: areaName,
-                                                  style:
-                                                  font_style.black_400_16,
-                                                  decoration: InputDecoration(
-                                                    enabledBorder:
-                                                    UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: yellow_col),
-                                                    ),
-                                                    focusedBorder:
-                                                    UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: yellow_col),
-                                                    ),
-                                                    hintText:
-                                                    "Enter Area Name",
-                                                    hintStyle: font_style
-                                                        .B3B3B3_400_16,
-                                                  ),
-                                                ),
+                                                Form(
+                                                  key: formKey,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      TextFormField(
+                                                        controller: updbuildname,
+                                                        style:
+                                                        font_style.black_400_16,
+                                                        validator: (value) {
+                                                          if(value!.isEmpty)
+                                                          {
+                                                            return "Please Enter Building Name";
+                                                          }
+                                                          return null;
+                                                        },
+                                                        decoration: InputDecoration(
+                                                          enabledBorder:
+                                                          UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: yellow_col),
+                                                          ),
+                                                          focusedBorder:
+                                                          UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: yellow_col),
+                                                          ),
+                                                          hintText:
+                                                          "Enter Building Name",
+                                                          hintStyle: font_style
+                                                              .B3B3B3_400_16,
+                                                        ),
+                                                      ),
+                                                      TextFormField(
+                                                        validator: (value) {
+                                                          if(value!.isEmpty)
+                                                          {
+                                                            return "Please Enter Area Name";
+                                                          }
+                                                          return null;
+                                                        },
+                                                        controller: areaName,
+                                                        style:
+                                                        font_style.black_400_16,
+                                                        decoration: InputDecoration(
+                                                          enabledBorder:
+                                                          UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: yellow_col),
+                                                          ),
+                                                          focusedBorder:
+                                                          UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: yellow_col),
+                                                          ),
+                                                          hintText:
+                                                          "Enter Area Name",
+                                                          hintStyle: font_style
+                                                              .B3B3B3_400_16,
+                                                        ),
+                                                      ),
 
-                                                //ENTER LOCALITY
+                                                      //ENTER LOCALITY
 
-                                                TextFormField(
-                                                  controller: updlocaname,
-                                                  style:
-                                                      font_style.black_400_16,
-                                                  decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: yellow_col),
-                                                    ),
-                                                    focusedBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: yellow_col),
-                                                    ),
-                                                    hintText: "Enter Locality",
-                                                    hintStyle: font_style
-                                                        .B3B3B3_400_16,
-                                                  ),
-                                                ),
+                                                      TextFormField(
+                                                        validator: (value) {
+                                                          if(value!.isEmpty)
+                                                          {
+                                                            return "Please Enter Locality Name";
+                                                          }
+                                                          return null;
+                                                        },
+                                                        controller: updlocaname,
+                                                        style:
+                                                        font_style.black_400_16,
+                                                        decoration: InputDecoration(
+                                                          enabledBorder:
+                                                          UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: yellow_col),
+                                                          ),
+                                                          focusedBorder:
+                                                          UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: yellow_col),
+                                                          ),
+                                                          hintText: "Enter Locality",
+                                                          hintStyle: font_style
+                                                              .B3B3B3_400_16,
+                                                        ),
+                                                      ),
 
-                                                // PINCODE TXTFORM
-                                                TextFormField(
+                                                      // PINCODE TXTFORM
+                                                      TextFormField(
+                                                        validator: (value) {
+                                                          if(value!.isEmpty)
+                                                          {
+                                                            return "Please Enter Pincode";
+                                                          }
+                                                          return null;
+                                                        },
                                                         controller: updpincode,
                                                         style: font_style
                                                             .black_400_16,
                                                         maxLength: 6,
                                                         keyboardType:
-                                                            TextInputType.phone,
+                                                        TextInputType.phone,
                                                         decoration:
-                                                            InputDecoration(
+                                                        InputDecoration(
                                                           counterText: "",
                                                           enabledBorder:
-                                                              UnderlineInputBorder(
+                                                          UnderlineInputBorder(
                                                             borderSide: BorderSide(
                                                                 color:
-                                                                    yellow_col),
+                                                                yellow_col),
                                                           ),
                                                           focusedBorder:
-                                                              UnderlineInputBorder(
+                                                          UnderlineInputBorder(
                                                             borderSide: BorderSide(
                                                                 color:
-                                                                    yellow_col),
+                                                                yellow_col),
                                                           ),
                                                           hintText:
-                                                              "Enter Picode",
+                                                          "Enter Picode",
                                                           hintStyle: font_style
                                                               .B3B3B3_400_16,
                                                         ),
                                                       ),
+                                                    ],
+                                                  ),
+                                                ),
                                                     // : Container(),
                                                 SizedBox(
                                                   height:
@@ -444,65 +493,61 @@ class _updateaddressState extends State<updateaddress> {
                                                             ? const CommonIndicator()
                                                             : InkWell(
                                                                 onTap: () {
-
-                                                                  // Get.to(address_page());
-                                                                  if (updbuildname
-                                                                              .text
-                                                                              .toString() ==
-                                                                          "" ||
-                                                                      updlocaname
-                                                                              .text
-                                                                              .toString() ==
-                                                                          "") {
-                                                                    Fluttertoast
-                                                                        .showToast(
-                                                                            msg:
-                                                                                "Enter Valid Address");
-                                                                  } else {
-                                                                    _upd_address
-                                                                        .edit_address_cont(
+                                                                  print("FINAL LAT==${lat}");
+                                                                  print("FINAL LONG==${long}");
+                                                                  if(formKey.currentState!.validate())
+                                                                  {
+                                                                    if((_get_pincode
+                                                                        .listofpincode
+                                                                        .contains(updpincode.text.toString())))
+                                                                    {
+                                                                      if(postalCode
+                                                                          .toLowerCase()
+                                                                          .contains(updpincode.text.toLowerCase()))
+                                                                      {
+                                                                        _upd_address
+                                                                            .edit_address_cont(
                                                                             widget
                                                                                 .addid,
-
-                                                                            // uid.toString(),
                                                                             selectedPlace!.formattedAddress
                                                                                 .toString(),
                                                                             updbuildname
                                                                                 .text,
                                                                             updlocaname
                                                                                 .text,
-                                                                            widget.passlat
-                                                                                .toString(),
-                                                                            widget.passlong
-                                                                                .toString(),
+                                                                            lat.toString(),
+                                                                           long.toString(),
                                                                             pincodestr.toString() == ""
                                                                                 ? updpincode.text
-                                                                                : pincodestr.toString())
-                                                                        .then((value) => _get_address.get_address_cont(uid).then((value) {
-                                                                              if (widget.pagename == "common") {
-                                                                                _get_testimonials.get_testimonials_cont(uid.toString()).then((value) {
-                                                                                  _get_testimonials.yturl;
-                                                                                  fillYTlists();
-                                                                                  print(_get_testimonials.yturl);
-                                                                                });
-                                                                                Get.to(const BottomBar(pasindx: 0));
-                                                                              } else {
-                                                                                Get.back();
-                                                                              }
-                                                                            }));
-                                                                    logger.i(
-                                                                        "add--${widget.addid}");
-                                                                    logger.i(
-                                                                        "addresh--${selectedPlace.formattedAddress.toString()}");
-                                                                    logger.i(
-                                                                        "update building--${updbuildname.text}");
-                                                                    logger.i(
-                                                                        " updatelocality--${updlocaname.text}");
-                                                                    logger.i(
-                                                                        "up latitude--${widget.passlat}");
-                                                                    logger.i(
-                                                                        "update longgutude--${widget.passlong}");
+                                                                                : pincodestr.toString(),areaName.text)
+                                                                            .then((value) => _get_address.get_address_cont(uid).then((value) {
+                                                                          if (widget.pagename == "common") {
+                                                                            _get_testimonials.get_testimonials_cont(uid.toString()).then((value) {
+                                                                              _get_testimonials.yturl;
+                                                                              fillYTlists();
+                                                                            });
+                                                                            Get.to(const BottomBar(pasindx: 0));
+                                                                          } else {
+                                                                            Get.back();
+                                                                          }
+                                                                        }));
+                                                                      }
+                                                                      else
+                                                                      {
+                                                                        commontoas(
+                                                                            "Please Enter Valid Address");
+                                                                      }
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                      commontoas(
+                                                                          "Services are not available");
+                                                                    }
+
                                                                   }
+
+
                                                                 },
                                                                 child:
                                                                     Container(
@@ -529,12 +574,12 @@ class _updateaddressState extends State<updateaddress> {
                                                                           GradientType
                                                                               .linear,
                                                                       radius: 1,
-                                                                      colors: [
-                                                                        const Color(
+                                                                      colors: const [
+                                                                        Color(
                                                                             0xffBF8D2C),
-                                                                        const Color(
+                                                                        Color(
                                                                             0xffDBE466),
-                                                                        const Color(
+                                                                        Color(
                                                                             0xffBF8D2C)
                                                                       ],
                                                                       "Update",

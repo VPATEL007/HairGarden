@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -364,79 +365,74 @@ class _bookslot_pageState extends State<bookslot_page> {
                                   _get_address.response.value.data!.isEmpty &&
                                       _get_address.response.value.status ==
                                           false
-                              ? InkWell(
+                              ? Align(
+                                alignment: Alignment.centerLeft,
+                                child: InkWell(
                                   onTap: () {
+
                                     _get_time_slots
                                         .get_time_slots_cont("random", "")
                                         .then((value) {
                                       gettimeslotfromcurrtime();
                                     });
                                   },
-                                  child: SizedBox(
-                                    height: SizeConfig.screenHeight * 0.23,
-                                    width: SizeConfig.screenWidth * 0.9,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                  child: Container(
+                                    height:
+                                        SizeConfig.screenHeight * 0.23,
+                                    width: SizeConfig.screenWidth * 0.3,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 6, horizontal: 5),
+                                    margin: EdgeInsets.symmetric(horizontal: 20),
+                                    decoration: BoxDecoration(
+                                      color: newLightColor,
+                                      borderRadius:
+                                          BorderRadius.circular(8),
+                                      border:
+                                          Border.all(color: yellow_col),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Container(
                                           height:
-                                              SizeConfig.screenHeight * 0.23,
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 6, horizontal: 5),
-                                          width: SizeConfig.screenWidth * 0.3,
+                                              SizeConfig.screenHeight *
+                                                  0.093,
+                                          width: SizeConfig.screenWidth *
+                                              0.3,
                                           decoration: BoxDecoration(
-                                            color: newLightColor,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            border:
-                                                Border.all(color: yellow_col),
+                                            color: yellow_col,
+                                            shape: BoxShape.circle,
                                           ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                height:
-                                                    SizeConfig.screenHeight *
-                                                        0.093,
-                                                width: SizeConfig.screenWidth *
-                                                    0.3,
-                                                decoration: BoxDecoration(
-                                                  color: yellow_col,
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  "assets/images/random.svg",
-                                                  fit: BoxFit.scaleDown,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height:
-                                                    SizeConfig.screenHeight *
-                                                        0.01,
-                                              ),
-                                              Text("Random",
-                                                  style:
-                                                      font_style.green_600_14),
+                                          child: SvgPicture.asset(
+                                            "assets/images/random.svg",
+                                            fit: BoxFit.scaleDown,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                              SizeConfig.screenHeight *
+                                                  0.01,
+                                        ),
+                                        Text("Random",
+                                            style:
+                                                font_style.green_600_14),
 
-                                              SizedBox(
-                                                height:
-                                                    SizeConfig.screenHeight *
-                                                        0.01,
-                                              ),
-                                              // Spacer(),
-                                              Text(
-                                                "We’ll Assign the best Professional",
-                                                style: font_style
-                                                    .grey52525B_400_12,
-                                              ),
-                                            ],
-                                          ),
+                                        SizedBox(
+                                          height:
+                                              SizeConfig.screenHeight *
+                                                  0.01,
+                                        ),
+                                        // Spacer(),
+                                        Text(
+                                          "We’ll Assign the best Professional",
+                                          style: font_style
+                                              .grey52525B_400_12,
                                         ),
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                              )
                               : Padding(
                                   padding: EdgeInsets.only(
                                       left: SizeConfig.screenWidth * 0.05),
@@ -454,6 +450,7 @@ class _bookslot_pageState extends State<bookslot_page> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
+                                            log("Vijay 1");
                                             setState(() {
                                               selected_prof = index;
                                               staffid = index == 0
@@ -873,7 +870,6 @@ class _bookslot_pageState extends State<bookslot_page> {
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
-                        // height: showdet==true?SizeConfig.screenHeight*0.2:SizeConfig.screenHeight*0.09,
                         decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
@@ -1005,221 +1001,218 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                         itemBuilder: (context,
                                                             bottomindex) {
                                                           return Obx(() {
-                                                            return Container(
-                                                              // height: SizeConfig.screenHeight*0.04,
-                                                              child: Row(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Text(
-                                                                        _get_cart
-                                                                            .response
-                                                                            .value
-                                                                            .data![bottomindex]
-                                                                            .title
-                                                                            .toString(),
-                                                                        style: font_style
-                                                                            .black_500_12,
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height: SizeConfig.screenHeight *
-                                                                            0.008,
-                                                                      ),
+                                                            return Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      _get_cart
+                                                                          .response
+                                                                          .value
+                                                                          .data![bottomindex]
+                                                                          .title
+                                                                          .toString(),
+                                                                      style: font_style
+                                                                          .black_500_12,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: SizeConfig.screenHeight *
+                                                                          0.008,
+                                                                    ),
 
-                                                                      //Rs. DISCOUNT
-                                                                      Row(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Text(
-                                                                            "${_get_cart.response.value.data![bottomindex].finalPrice.toString()}",
-                                                                            style:
-                                                                                font_style.greyA1A1AA_400_10,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                SizeConfig.screenWidth * 0.02,
-                                                                          ),
-                                                                          // Text("₹${_get_cart.response.value.data![bottomindex].finalPrice.toString()}",style: font_style.yell_400_10,),
-                                                                          Text(
-                                                                            "₹${int.parse(_get_cart.response.value.data![bottomindex].price.toString()) * int.parse(_get_cart.response.value.data![bottomindex].qty.toString())}",
-                                                                            style:
-                                                                                font_style.yell_400_10,
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  const Spacer(),
-                                                                  selectedind ==
-                                                                          bottomindex
-                                                                      ? Container(
+                                                                    //Rs. DISCOUNT
+                                                                    Row(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment.center,
+                                                                      children: [
+                                                                        Text(
+                                                                          "${_get_cart.response.value.data![bottomindex].finalPrice.toString()}",
+                                                                          style:
+                                                                              font_style.greyA1A1AA_400_10,
+                                                                        ),
+                                                                        SizedBox(
                                                                           width:
-                                                                              SizeConfig.screenWidth * 0.18,
-                                                                          padding: const EdgeInsets
-                                                                              .symmetric(
-                                                                              vertical: 8,
-                                                                              horizontal: 5),
-                                                                          decoration: BoxDecoration(
-                                                                              color: yellow_col,
-                                                                              borderRadius: BorderRadius.circular(44)),
-                                                                          child: const CupertinoActivityIndicator(
-                                                                              color: Colors.white,
-                                                                              radius: 8.2),
-                                                                        )
-                                                                      : _get_cart.response.value.data![bottomindex].type.toString() ==
-                                                                              "service"
-                                                                          ? Container(
+                                                                              SizeConfig.screenWidth * 0.02,
+                                                                        ),
+                                                                        // Text("₹${_get_cart.response.value.data![bottomindex].finalPrice.toString()}",style: font_style.yell_400_10,),
+                                                                        Text(
+                                                                          "₹${int.parse(_get_cart.response.value.data![bottomindex].price.toString()) * int.parse(_get_cart.response.value.data![bottomindex].qty.toString())}",
+                                                                          style:
+                                                                              font_style.yell_400_10,
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                const Spacer(),
+                                                                selectedind ==
+                                                                        bottomindex
+                                                                    ? Container(
+                                                                        width:
+                                                                            SizeConfig.screenWidth * 0.18,
+                                                                        padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                            vertical: 8,
+                                                                            horizontal: 5),
+                                                                        decoration: BoxDecoration(
+                                                                            color: yellow_col,
+                                                                            borderRadius: BorderRadius.circular(44)),
+                                                                        child: const CupertinoActivityIndicator(
+                                                                            color: Colors.white,
+                                                                            radius: 8.2),
+                                                                      )
+                                                                    : _get_cart.response.value.data![bottomindex].type.toString() ==
+                                                                            "service"
+                                                                        ? Container(
+                                                                            width: SizeConfig.screenWidth * 0.18,
+                                                                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                                                                            decoration: BoxDecoration(color: yellow_col, borderRadius: BorderRadius.circular(44)),
+                                                                            child: Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                              children: [
+                                                                                //SUBTRACT
+                                                                                Flexible(
+                                                                                  child: InkWell(
+                                                                                      onTap: () {
+                                                                                        setState(() {
+                                                                                          sState(() {
+                                                                                            if (_get_cart.response.value.data![bottomindex].qty.toString() == '1') {
+                                                                                              sState(() {
+                                                                                                selectedind = bottomindex;
+                                                                                              });
+
+                                                                                              _remove_from_cart
+                                                                                                  .remove_fromcart_cont(
+                                                                                                      // _get_cart.response.value.data![bottomindex].serviceCateId.toString(),
+                                                                                                      uid.toString(),
+                                                                                                      _deviceId.toString(),
+                                                                                                      _get_cart.response.value.data![bottomindex].id.toString()
+                                                                                                      // "service"
+                                                                                                      )
+                                                                                                  .then((value) {
+                                                                                                sState(() {
+                                                                                                  selectedind = null;
+                                                                                                });
+                                                                                                if (_get_cart.prodid.length == 1) {
+                                                                                                  _get_cart.prodid.clear();
+                                                                                                  Get.back();
+                                                                                                  _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
+                                                                                                }
+                                                                                                _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
+                                                                                              });
+                                                                                            } else {
+                                                                                              print(selectedind);
+                                                                                              print(bottomindex);
+                                                                                              sState(() {
+                                                                                                selectedind = bottomindex;
+                                                                                              });
+                                                                                              _decrease_cart.decrease_cart_cont(_get_cart.response.value.data![bottomindex].serviceCateId.toString(), uid, _deviceId, "${int.parse(_get_cart.response.value.data![bottomindex].qty.toString()) - 1}").then((value) {
+                                                                                                sState(() {
+                                                                                                  selectedind = null;
+                                                                                                });
+                                                                                                _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
+                                                                                              });
+                                                                                            }
+                                                                                          });
+                                                                                        });
+                                                                                      },
+                                                                                      child: Container(
+                                                                                          child: const Icon(
+                                                                                        Icons.remove,
+                                                                                        color: Colors.white,
+                                                                                        size: 16,
+                                                                                      ))),
+                                                                                ),
+
+                                                                                //TOTAL
+                                                                                Text(
+                                                                                  _get_cart.response.value.data![bottomindex].qty.toString(),
+                                                                                  style: font_style.white_400_10,
+                                                                                ),
+
+                                                                                //ADD
+                                                                                Flexible(
+                                                                                  child: InkWell(
+                                                                                      onTap: () {
+                                                                                        setState(() {
+                                                                                          sState(() {
+                                                                                            sState(() {
+                                                                                              selectedind = bottomindex;
+                                                                                            });
+                                                                                            _decrease_cart.decrease_cart_cont(_get_cart.response.value.data![bottomindex].serviceCateId.toString(), uid, _deviceId, "${int.parse(_get_cart.response.value.data![bottomindex].qty.toString()) + 1}").then((value) {
+                                                                                              sState(() {
+                                                                                                selectedind = null;
+                                                                                              });
+                                                                                              _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
+                                                                                            });
+                                                                                          });
+                                                                                        });
+                                                                                      },
+                                                                                      child: Container(
+                                                                                          child: const Icon(
+                                                                                        Icons.add,
+                                                                                        color: Colors.white,
+                                                                                        size: 16,
+                                                                                      ))),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        : InkWell(
+                                                                            onTap: () {
+                                                                              setState(() {
+                                                                                sState(() {
+                                                                                  sState(() {
+                                                                                    selectedind = bottomindex;
+                                                                                  });
+                                                                                  _remove_from_cart
+                                                                                      .remove_fromcart_cont(
+                                                                                          // _get_cart.response.value.data![bottomindex].serviceCateId.toString(),
+                                                                                          uid.toString(),
+                                                                                          _deviceId.toString(),
+                                                                                          _get_cart.response.value.data![bottomindex].id.toString()
+                                                                                          // "service"
+                                                                                          )
+                                                                                      .then((value) {
+                                                                                    sState(() {
+                                                                                      selectedind = null;
+                                                                                    });
+                                                                                    if (_get_cart.prodid.length == 1) {
+                                                                                      _get_cart.prodid.clear();
+                                                                                      Get.back();
+                                                                                      _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
+                                                                                    }
+                                                                                    _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
+                                                                                  });
+                                                                                });
+                                                                              });
+                                                                            },
+                                                                            child: Container(
                                                                               width: SizeConfig.screenWidth * 0.18,
                                                                               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                                                                               decoration: BoxDecoration(color: yellow_col, borderRadius: BorderRadius.circular(44)),
                                                                               child: Row(
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                                                 children: [
-                                                                                  //SUBTRACT
-                                                                                  Flexible(
-                                                                                    child: InkWell(
-                                                                                        onTap: () {
-                                                                                          setState(() {
-                                                                                            sState(() {
-                                                                                              if (_get_cart.response.value.data![bottomindex].qty.toString() == '1') {
-                                                                                                sState(() {
-                                                                                                  selectedind = bottomindex;
-                                                                                                });
-
-                                                                                                _remove_from_cart
-                                                                                                    .remove_fromcart_cont(
-                                                                                                        // _get_cart.response.value.data![bottomindex].serviceCateId.toString(),
-                                                                                                        uid.toString(),
-                                                                                                        _deviceId.toString(),
-                                                                                                        _get_cart.response.value.data![bottomindex].id.toString()
-                                                                                                        // "service"
-                                                                                                        )
-                                                                                                    .then((value) {
-                                                                                                  sState(() {
-                                                                                                    selectedind = null;
-                                                                                                  });
-                                                                                                  if (_get_cart.prodid.length == 1) {
-                                                                                                    _get_cart.prodid.clear();
-                                                                                                    Get.back();
-                                                                                                    _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
-                                                                                                  }
-                                                                                                  _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
-                                                                                                });
-                                                                                              } else {
-                                                                                                print(selectedind);
-                                                                                                print(bottomindex);
-                                                                                                sState(() {
-                                                                                                  selectedind = bottomindex;
-                                                                                                });
-                                                                                                _decrease_cart.decrease_cart_cont(_get_cart.response.value.data![bottomindex].serviceCateId.toString(), uid, _deviceId, "${int.parse(_get_cart.response.value.data![bottomindex].qty.toString()) - 1}").then((value) {
-                                                                                                  sState(() {
-                                                                                                    selectedind = null;
-                                                                                                  });
-                                                                                                  _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
-                                                                                                });
-                                                                                              }
-                                                                                            });
-                                                                                          });
-                                                                                        },
-                                                                                        child: Container(
-                                                                                            child: const Icon(
-                                                                                          Icons.remove,
-                                                                                          color: Colors.white,
-                                                                                          size: 16,
-                                                                                        ))),
-                                                                                  ),
-
                                                                                   //TOTAL
                                                                                   Text(
-                                                                                    _get_cart.response.value.data![bottomindex].qty.toString(),
+                                                                                    "Remove",
                                                                                     style: font_style.white_400_10,
-                                                                                  ),
-
-                                                                                  //ADD
-                                                                                  Flexible(
-                                                                                    child: InkWell(
-                                                                                        onTap: () {
-                                                                                          setState(() {
-                                                                                            sState(() {
-                                                                                              sState(() {
-                                                                                                selectedind = bottomindex;
-                                                                                              });
-                                                                                              _decrease_cart.decrease_cart_cont(_get_cart.response.value.data![bottomindex].serviceCateId.toString(), uid, _deviceId, "${int.parse(_get_cart.response.value.data![bottomindex].qty.toString()) + 1}").then((value) {
-                                                                                                sState(() {
-                                                                                                  selectedind = null;
-                                                                                                });
-                                                                                                _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
-                                                                                              });
-                                                                                            });
-                                                                                          });
-                                                                                        },
-                                                                                        child: Container(
-                                                                                            child: const Icon(
-                                                                                          Icons.add,
-                                                                                          color: Colors.white,
-                                                                                          size: 16,
-                                                                                        ))),
                                                                                   ),
                                                                                 ],
                                                                               ),
-                                                                            )
-                                                                          : InkWell(
-                                                                              onTap: () {
-                                                                                setState(() {
-                                                                                  sState(() {
-                                                                                    sState(() {
-                                                                                      selectedind = bottomindex;
-                                                                                    });
-                                                                                    _remove_from_cart
-                                                                                        .remove_fromcart_cont(
-                                                                                            // _get_cart.response.value.data![bottomindex].serviceCateId.toString(),
-                                                                                            uid.toString(),
-                                                                                            _deviceId.toString(),
-                                                                                            _get_cart.response.value.data![bottomindex].id.toString()
-                                                                                            // "service"
-                                                                                            )
-                                                                                        .then((value) {
-                                                                                      sState(() {
-                                                                                        selectedind = null;
-                                                                                      });
-                                                                                      if (_get_cart.prodid.length == 1) {
-                                                                                        _get_cart.prodid.clear();
-                                                                                        Get.back();
-                                                                                        _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
-                                                                                      }
-                                                                                      _get_cart.get_cart_cont(uid.toString() == "" || uid == null ? "" : uid.toString(), _deviceId.toString());
-                                                                                    });
-                                                                                  });
-                                                                                });
-                                                                              },
-                                                                              child: Container(
-                                                                                width: SizeConfig.screenWidth * 0.18,
-                                                                                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                                                                                decoration: BoxDecoration(color: yellow_col, borderRadius: BorderRadius.circular(44)),
-                                                                                child: Row(
-                                                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                                  children: [
-                                                                                    //TOTAL
-                                                                                    Text(
-                                                                                      "Remove",
-                                                                                      style: font_style.white_400_10,
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
                                                                             ),
-                                                                ],
-                                                              ),
+                                                                          ),
+                                                              ],
                                                             );
                                                           });
                                                         },
@@ -1241,10 +1234,11 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                         },
                                                       ),
                                                     ),
-
-                                                    // SizedBox(height: SizeConfig.screenHeight*0.015,),
-
-                                                    //LINE
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                              .screenHeight *
+                                                          0.008,
+                                                    ),
                                                     Container(
                                                       height: 1,
                                                       width: SizeConfig
@@ -1253,52 +1247,8 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                     ),
                                                     SizedBox(
                                                       height: SizeConfig
-                                                              .screenHeight *
-                                                          0.015,
-                                                    ),
-
-                                                    // Row(
-                                                    //   mainAxisAlignment:
-                                                    //       MainAxisAlignment
-                                                    //           .spaceBetween,
-                                                    //   children: [
-                                                    //     Text(
-                                                    //       "Service Cost",
-                                                    //       style: font_style
-                                                    //           .black_500_12,
-                                                    //     ),
-                                                    //     Text(
-                                                    //       _get_cart.response
-                                                    //           .value.total
-                                                    //           .toString(),
-                                                    //       style: font_style
-                                                    //           .black_400_12,
-                                                    //     ),
-                                                    //   ],
-                                                    // ),
-                                                    // SizedBox(
-                                                    //   height: SizeConfig
-                                                    //           .screenHeight *
-                                                    //       0.015,
-                                                    // ),
-
-                                                    //LINE
-                                                    Container(
-                                                      height: 1,
-                                                      width: SizeConfig
-                                                          .screenWidth,
-                                                      color: Colors.grey,
-                                                    ),
-                                                    SizedBox(
-                                                      height: SizeConfig
-                                                              .screenHeight *
-                                                          0.015,
-                                                    ),
-
-                                                    SizedBox(
-                                                      width: SizeConfig
                                                               .screenWidth *
-                                                          0.02,
+                                                          0.015,
                                                     ),
                                                     Row(
                                                       children: [
@@ -1326,7 +1276,6 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                         InkWell(
                                                           onTap: () {
                                                             getselectedaddress();
-                                                            ;
                                                             if (_get_address
                                                                 .response
                                                                 .value
@@ -1371,10 +1320,11 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                                     .screenWidth *
                                                                 0.25,
                                                             padding:
-                                                                const EdgeInsets
+                                                                 EdgeInsets
                                                                     .symmetric(
                                                                     vertical:
-                                                                        10),
+                                                                    SizeConfig
+                                                                        .screenHeight*0.01),
                                                             decoration: BoxDecoration(
                                                                 color:
                                                                     yellow_col,

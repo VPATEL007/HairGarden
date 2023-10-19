@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' as formData;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hairgarden/COMMON/common_color.dart';
+import 'package:hairgarden/COMMON/comontoast.dart';
 import 'package:hairgarden/COMMON/font_style.dart';
 import 'package:hairgarden/COMMON/size_config.dart';
 import 'package:hairgarden/USER/book_slot%20Payment/Screens/instamojo_screen.dart';
@@ -107,7 +108,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                 controller: amountController,
                 decoration: InputDecoration(
                     isDense: true,
-                    hintText: '₹1000',
+                    hintText: '1000',
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 13, horizontal: 15),
                     enabledBorder: OutlineInputBorder(
@@ -118,16 +119,6 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
               ),
             ),
             const SizedBox(height: 15),
-
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 15),
-            //   child: Align(
-            //     child: Text(
-            //       "Recommended*",
-            //       style: font_style.black_600_16.copyWith(fontSize: 16),
-            //     ),
-            //   ),
-            // ),
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
               child: Row(
@@ -145,7 +136,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                           border: Border.all(color: yellow_col),
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
-                        "₹1000",
+                        "1000",
                         style: font_style.black_600_16
                             .copyWith(fontSize: 16, color: yellow_col),
                       ),
@@ -163,7 +154,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                           border: Border.all(color: yellow_col),
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
-                        "₹2000",
+                        "2000",
                         style: font_style.black_600_16
                             .copyWith(fontSize: 16, color: yellow_col),
                       ),
@@ -181,7 +172,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                           border: Border.all(color: yellow_col),
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
-                        "₹3000",
+                        "3000",
                         style: font_style.black_600_16
                             .copyWith(fontSize: 16, color: yellow_col),
                       ),
@@ -196,7 +187,21 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                 child: InkWell(
                   onTap: () {
                     // Get.to(const PaymentGatewayScreen());
-                    startInstamojo(10);
+                    if(amountController.text.isNotEmpty)
+                    {
+                      if(int.parse(amountController.text.toString())>100)
+                      {
+                        startInstamojo(int.parse(amountController.text.toString()));
+                      }
+                      else
+                      {
+                        commontoas("Please Add Minimum 100 Rs.");
+                      }
+                    }
+                    else
+                    {
+                      commontoas("Please Enter Amount");
+                    }
                   },
                   child: Container(
                     width: 175,
@@ -256,6 +261,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                           walletController.applyAvailableCashback(userID,walletController.availableCoupon().data?[index].offerAmount,walletController.availableCoupon().data?[index].id).then((value)
                           {
                             amountController.text = walletController.availableCoupon().data?[index].offerAmount??'';
+                            startInstamojo(int.parse(amountController.text.toString()));
                           });
                         },
                         child: Text(

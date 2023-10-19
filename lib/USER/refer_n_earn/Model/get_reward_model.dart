@@ -1,77 +1,65 @@
+// To parse this JSON data, do
+//
+//     final getRewardsModel = getRewardsModelFromJson(jsonString);
+
+import 'dart:convert';
+
+get_rewards_model getRewardsModelFromJson(String str) => get_rewards_model.fromJson(json.decode(str));
+
+String getRewardsModelToJson(get_rewards_model data) => json.encode(data.toJson());
+
 class get_rewards_model {
   bool? status;
-  String? message;
-  List<Data>? data;
+  List<Datum>? data;
 
-  get_rewards_model({this.status, this.message, this.data});
+  get_rewards_model({
+    this.status,
+    this.data,
+  });
 
-  get_rewards_model.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
-  }
+  factory get_rewards_model.fromJson(Map<String, dynamic> json) => get_rewards_model(
+    status: json["status"],
+    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "status": status,
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+  };
 }
 
-class Data {
-  String? id;
-  String? userId;
-  String? name;
-  Null? profile;
-  String? amount;
+class Datum {
+  String? receiver;
+  String? fullname;
   String? remark;
-  String? via;
-  String? createdAt;
-  String? updatedAt;
+  String? amount;
+  int? isreceiver;
+  String? referCode;
 
-  Data(
-      {this.id,
-        this.userId,
-        this.name,
-        this.profile,
-        this.amount,
-        this.remark,
-        this.via,
-        this.createdAt,
-        this.updatedAt});
+  Datum({
+    this.receiver,
+    this.fullname,
+    this.remark,
+    this.amount,
+    this.isreceiver,
+    this.referCode,
+  });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
-    userId = json['user_id'].toString();
-    name = json['name'];
-    profile = json['profile'];
-    amount = json['amount'].toString();
-    remark = json['remark'];
-    via = json['via'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    receiver: json["Receiver"],
+    fullname: json["Fullname"],
+    remark: json["remark"],
+    amount: json["amount"],
+    isreceiver: json["Isreceiver"],
+    referCode: json["ReferCode"],
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['name'] = this.name;
-    data['profile'] = this.profile;
-    data['amount'] = this.amount;
-    data['remark'] = this.remark;
-    data['via'] = this.via;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "Receiver": receiver,
+    "Fullname": fullname,
+    "remark": remark,
+    "amount": amount,
+    "Isreceiver": isreceiver,
+    "ReferCode": referCode,
+  };
 }

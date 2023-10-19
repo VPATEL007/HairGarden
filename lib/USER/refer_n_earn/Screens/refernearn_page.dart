@@ -436,55 +436,55 @@ class _refernearn_pageState extends State<refernearn_page> {
                                                           0.05),
                                               child: Row(
                                                 children: [
-                                                  Container(
-                                                    height: SizeConfig
-                                                            .screenHeight *
-                                                        0.07,
-                                                    width:
-                                                        SizeConfig.screenWidth *
-                                                            0.2,
-                                                    decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        image: DecorationImage(
-                                                            image: _get_rewards
-                                                                            .response
-                                                                            .value
-                                                                            .data![
-                                                                                index]
-                                                                            .profile
-                                                                            .toString() ==
-                                                                        "" ||
-                                                                    _get_rewards
-                                                                            .response
-                                                                            .value
-                                                                            .data![
-                                                                                index]
-                                                                            .profile
-                                                                            .toString() ==
-                                                                        "null"
-                                                                ? const AssetImage("assets/images/person2.jpg")
-                                                                    as ImageProvider
-                                                                : NetworkImage(
-                                                                    _get_rewards
-                                                                        .response
-                                                                        .value
-                                                                        .data![index]
-                                                                        .profile
-                                                                        .toString()),
-                                                            fit: BoxFit.cover)),
-                                                  ),
+                                                  // Container(
+                                                  //   height: SizeConfig
+                                                  //           .screenHeight *
+                                                  //       0.07,
+                                                  //   width:
+                                                  //       SizeConfig.screenWidth *
+                                                  //           0.2,
+                                                  //   decoration: BoxDecoration(
+                                                  //       shape: BoxShape.circle,
+                                                  //       image: DecorationImage(
+                                                  //           image: _get_rewards
+                                                  //                           .response
+                                                  //                           .value
+                                                  //                           .data![
+                                                  //                               index]
+                                                  //                           .profile
+                                                  //                           .toString() ==
+                                                  //                       "" ||
+                                                  //                   _get_rewards
+                                                  //                           .response
+                                                  //                           .value
+                                                  //                           .data![
+                                                  //                               index]
+                                                  //                           .profile
+                                                  //                           .toString() ==
+                                                  //                       "null"
+                                                  //               ? const AssetImage("assets/images/person2.jpg")
+                                                  //                   as ImageProvider
+                                                  //               : NetworkImage(
+                                                  //                   _get_rewards
+                                                  //                       .response
+                                                  //                       .value
+                                                  //                       .data![index]
+                                                  //                       .profile
+                                                  //                       .toString()),
+                                                  //           fit: BoxFit.cover)),
+                                                  // ),
                                                   Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        _get_rewards
+                                                        "Referral By - ${_get_rewards
                                                             .response
                                                             .value
                                                             .data![index]
-                                                            .name
-                                                            .toString(),
+                                                            .receiver
+                                                            .toString().capitalizeFirst??""}",
                                                         style: font_style
                                                             .black_600_14_nounderline,
                                                       ),

@@ -13,10 +13,10 @@ class add_address_controller extends GetxController{
 
 
 
-  Future<void>add_address_cont(user_id, location, building_name, locality, latitude ,longitude,pincode)async{
+  Future<void>add_address_cont(user_id, location, building_name, locality, latitude ,longitude,pincode,area)async{
     try{
       loading(true);
-      final respo = await api_service().add_address(user_id, location, building_name, locality,latitude,longitude,pincode);
+      final respo = await api_service().add_address(user_id, location, building_name, locality,latitude,longitude,pincode,area);
       log("ADD ADDRESS COUNT===${respo.status}");
       log("ADD ADDRESS MESSAGE===${respo.message}");
       log("USERID===${user_id}");

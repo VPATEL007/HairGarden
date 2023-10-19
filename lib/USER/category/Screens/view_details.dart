@@ -59,12 +59,9 @@ class _view_detailsState extends State<view_details> {
   }
 
   final _view_det = Get.put(view_prod_details_controller());
-  final _get_allprod = Get.put(get_all_cat_products_controller());
   final _add_cart = Get.put(add_cart_controller());
   final _decrease_cart = Get.put(decrease_cart_controller());
   final _get_cart = Get.put(get_cart_controller());
-  final _add_include = Get.put(include_update_cart_controller());
-
   final _remove_from_cart = Get.put(remove_fromcart_controller());
 
   List includelst = [];
@@ -79,14 +76,6 @@ class _view_detailsState extends State<view_details> {
   }
 
   var getinclude;
-
-  // removehtml(){
-  //   final document = parse(_view_det.response.value.data!.whatincludes.toString().replaceAll("<li>", "• "));
-  //   final String parsedString = parse(document.body!.text).documentElement!.text;
-  //   setState(() {
-  //     getinclude=parsedString;
-  //   });
-  // }
 
   @override
   void initState() {
@@ -161,7 +150,7 @@ class _view_detailsState extends State<view_details> {
                           width: SizeConfig.screenWidth * 0.9,
                           child: Text(
                             "Service Detail",
-                            style: font_style.black_600_20,
+                            style: font_style.black_600_18,
                           ),
                         ),
                       ),
@@ -196,7 +185,7 @@ class _view_detailsState extends State<view_details> {
                                   Text(
                                     _view_det.response.value.data!.title
                                         .toString(),
-                                    style: font_style.black_500_18,
+                                    style: font_style.black_500_15,
                                   ),
                                   SizedBox(
                                     height: SizeConfig.screenHeight * 0.008,
@@ -205,6 +194,13 @@ class _view_detailsState extends State<view_details> {
                                   Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
+                                      Text(
+                                        "₹${_view_det.response.value.data!.sellPrice.toString()}",
+                                        style: font_style.yell_400_14,
+                                      ),
+                                      SizedBox(
+                                        width: SizeConfig.screenWidth * 0.02,
+                                      ),
                                       Text(
                                         _view_det
                                             .response.value.data!.regularPrice
@@ -215,9 +211,13 @@ class _view_detailsState extends State<view_details> {
                                         width: SizeConfig.screenWidth * 0.02,
                                       ),
                                       Text(
-                                        "₹${_view_det.response.value.data!.sellPrice.toString()}",
-                                        style: font_style.yell_400_14,
+                                        "${_view_det
+                                            .response.value.data?.percent}% OFF",
+                                        style: font_style
+                                            .black_400_14,
                                       ),
+
+
                                     ],
                                   ),
                                 ],
@@ -243,13 +243,19 @@ class _view_detailsState extends State<view_details> {
 
                                       //ADD REMOVE ROW
                                       Container(
-                                          width: SizeConfig.screenWidth * 0.18,
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8, horizontal: 5),
-                                          decoration: BoxDecoration(
-                                              color: yellow_col,
-                                              borderRadius:
-                                                  BorderRadius.circular(44)),
+                                        width: SizeConfig.screenWidth *
+                                            0.18,
+                                        padding: const EdgeInsets
+                                            .symmetric(
+                                            vertical:
+                                            6,
+                                            horizontal:
+                                            5),
+                                        decoration: BoxDecoration(
+                                            color:
+                                            yellow_col,
+                                            borderRadius:
+                                            BorderRadius.circular(44)),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceAround,
@@ -363,12 +369,11 @@ class _view_detailsState extends State<view_details> {
                                                         });
                                                       }
                                                     },
-                                                    child: Container(
-                                                        child: const Icon(
+                                                    child: const Icon(
                                                       Icons.remove,
                                                       color: Colors.white,
                                                       size: 16,
-                                                    ))),
+                                                    )),
                                               ),
 
                                               //TOTAL
@@ -433,8 +438,6 @@ class _view_detailsState extends State<view_details> {
                                           ),
                                         )
                                       :
-
-                                      //ADD BUTTON:
                                       InkWell(
                                           onTap: () {
                                             initPlatformState();
@@ -462,6 +465,7 @@ class _view_detailsState extends State<view_details> {
                                                 // _get_allprod.loadinglist[_get_allprod.allproductid.indexOf(_get_allprod.response.value.data![_get_allprod.getbiyd.indexOf(widget.cateid)].serviceCategoryData![scrollindex].subcateProduct![prodindex].id.toString())] = false;
                                               });
                                             });
+                                            //DURATION TIME
                                           },
                                           child: Container(
                                             alignment: Alignment.center,
@@ -496,9 +500,8 @@ class _view_detailsState extends State<view_details> {
                           ),
                         ),
                       ),
-
                       SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
+                        height: SizeConfig.screenHeight * 0.02,
                       ),
 
                       //LINE
@@ -524,24 +527,22 @@ class _view_detailsState extends State<view_details> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "Service Cost",
+                                      "${_view_det.response.value.data?.title}",
                                       style: font_style.black_500_14,
                                     ),
                                     Text(
                                       "₹${int.parse(_view_det.response.value.data!.sellPrice.toString()) * int.parse(_get_cart.response.value.data![_get_cart.prodid.indexOf(_view_det.response.value.data!.id.toString())].qty.toString())}",
-                                      style: font_style.black_500_14,
+                                      style: font_style.yell_400_14,
                                     ),
                                   ],
                                 ),
                               ),
                             )
                           : Container(),
-
                       SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
+                        height: _get_cart.prodid.contains(
+                            _view_det.response.value.data!.id.toString())?SizeConfig.screenHeight * 0.02:0,
                       ),
-
-                      //LINE
                       _get_cart.prodid.contains(
                               _view_det.response.value.data!.id.toString())
                           ? Center(
@@ -551,14 +552,10 @@ class _view_detailsState extends State<view_details> {
                               width: SizeConfig.screenWidth * 0.9,
                             ))
                           : Container(),
-                      _get_cart.prodid.contains(
-                              _view_det.response.value.data!.id.toString())
-                          ? SizedBox(
-                              height: SizeConfig.screenHeight * 0.02,
-                            )
-                          : Container(),
-
-                      //DURATION TIME
+                      SizedBox(
+                        height: _get_cart.prodid.contains(
+                            _view_det.response.value.data!.id.toString())?SizeConfig.screenHeight * 0.02:0,
+                      ),
                       Center(
                         child: SizedBox(
                           width: SizeConfig.screenWidth * 0.9,
@@ -566,27 +563,27 @@ class _view_detailsState extends State<view_details> {
                             children: [
                               Text(
                                 "Duration",
-                                style: font_style.black_600_20,
+                                style: font_style.black_500_15,
                               ),
                               const Spacer(),
-                              SvgPicture.asset("assets/images/duration.svg",color: common_color),
+                              SvgPicture.asset("assets/images/duration.svg",color: common_color,width: SizeConfig.screenWidth * 0.04),
                               SizedBox(width: SizeConfig.screenWidth * 0.01),
                               Text(
                                 _view_det.response.value.data!.duration
                                     .toString(),
-                                style: font_style.green_600_12,
+                                style: font_style.yell_400_14,
                               )
                             ],
                           ),
                         ),
                       ),
-
                       SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
+                        height: SizeConfig.screenHeight * 0.02,
                       ),
                       _view_det.response.value.data!.whatincludes.toString() !=
                               "null"
                           ? Column(
+
                               children: [
                                 //LINE
                                 Center(
@@ -606,7 +603,7 @@ class _view_detailsState extends State<view_details> {
                                     width: SizeConfig.screenWidth * 0.9,
                                     child: Text(
                                       "What it includes:",
-                                      style: font_style.black_600_20,
+                                      style: font_style.black_500_15,
                                     ),
                                   ),
                                 ),
@@ -620,8 +617,8 @@ class _view_detailsState extends State<view_details> {
                                   child: SizedBox(
                                     width: SizeConfig.screenWidth * 0.86,
                                     child: Text(
-                                      _view_det.inlcudetxt.toString(),
-                                      style: font_style.black_500_14,
+                                      _view_det.inlcudetxt??"",
+                                      style: font_style.black_400_14,
                                     ),
                                   ),
                                 ),

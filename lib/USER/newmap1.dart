@@ -42,14 +42,10 @@ class newmaps extends StatefulWidget {
 class _newmapsState extends State<newmaps> {
   PickResult? selectedPlace;
   bool _showPlacePickerInContainer = false;
-  bool _showGoogleMapInContainer = false;
 
-  bool _mapsInitialized = false;
-  String _mapsRenderer = "latest";
   double? lat;
   double? long;
   String? uid;
-  bool _isclicked = true;
 
   final _text = TextEditingController();
 
@@ -61,17 +57,12 @@ class _newmapsState extends State<newmaps> {
   final _get_testimonials = Get.put(get_testimonials_controller());
   final _get_pincode = Get.put(get_pincode_controller());
 
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   String localityGet = '';
   String postalCode = '';
 
   LatLng? center;
 
   Future<void> getCurruntLocation() async {
-    final LocationSettings locationSettings = const LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
-    );
     await Geolocator.getCurrentPosition().then((value) async {
       List<Placemark> locations =
           await placemarkFromCoordinates(value.latitude, value.longitude);
@@ -79,20 +70,15 @@ class _newmapsState extends State<newmaps> {
       print('Area===${locations[0].administrativeArea}');
       print('City===${locations[0].postalCode}');
       setState(() {
-        _text.text = locations[0].name.toString() +
-            ", " +
-            locations[0].locality.toString() +
-            ", " +
-            locations[0].country.toString();
-        // setpincode=locations[0].postalCode.toString();
+        _text.text = "${locations[0].name}, ${locations[0].locality}, ${locations[0].country}";
         lat = value.latitude;
         long = value.longitude;
         localityGet = locations[0].locality ?? '';
-        log("LOCALITY===${localityGet}");
+        log("LOCALITY===$localityGet");
         postalCode = locations[0].postalCode ?? '';
         center =
             LatLng(double.parse(lat.toString()), double.parse(long.toString()));
-        print('Center===${center}');
+        print('Center===$center');
       });
       print(lat);
       print(long);
@@ -196,7 +182,7 @@ class _newmapsState extends State<newmaps> {
                           width: SizeConfig.screenWidth,
                           child: PlacePicker(
                             forceAndroidLocationManager: true,
-                            apiKey: "AIzaSyCNlG7IWvqOeMtAyIXURo0WiDiPaEtIq5g",
+                            apiKey: "AIzaSyDKX-OUoO-PE053N5bjifQX9qnVp2jmatk",
                             hintText: "Find a place ...",
                             searchingText: "Please wait ...",
                             selectText: "Select place",
@@ -208,15 +194,21 @@ class _newmapsState extends State<newmaps> {
                             zoomGesturesEnabled: true,
                             zoomControlsEnabled: true,
                             enableMyLocationButton: true,
+                            onCameraIdle: (p0) {
+                              log("PO===${p0.desiredAccuracy}");
+                            },
                             selectedPlaceWidgetBuilder:
                                 (_, selectedPlace, state, isSearchBarFocused) {
-                              print("1");
+                              print("11111");
                               if (state == SearchingState.Searching) {
                                 const CommonIndicator();
                               } else {
+                                print("ADRRSS");
                                 int count = 0;
                                 List nu = [];
                                 print(selectedPlace!.formattedAddress!.length);
+                               print("PINCODE==${postalCode}");
+                               print("PINCODE==${selectedPlace}");
                                 for (int i = 0;
                                     i < selectedPlace.formattedAddress!.length;
                                     i++) {
@@ -261,9 +253,11 @@ class _newmapsState extends State<newmaps> {
                                   }
                                 }
                                 pincodestr = pincodes.join("");
-
+                                postalCode = pincodes.join("");
+                                lat=selectedPlace.geometry?.location.lat;
+                                long=selectedPlace.geometry?.location.lng;
+                                print("NEW PINCODE==${pincodestr}");
                               }
-
                               return isSearchBarFocused
                                   ? Container()
                                   : FloatingCard(
@@ -511,8 +505,7 @@ class _newmapsState extends State<newmaps> {
                                                         ? const CommonIndicator()
                                                         : InkWell(
                                                             onTap: () async {
-                                                              log("Home===${widget
-                                                                  .pname}");
+                                                              log("Home===${widget.pname}");
                                                               if (widget
                                                                       .pname ==
                                                                   "home") {
@@ -527,87 +520,53 @@ class _newmapsState extends State<newmaps> {
                                                                               .text
                                                                           : pincodestr
                                                                               .toString())) {
-                                                                    if(postalCode.isNotEmpty)
-                                                                      {
-                                                                        if ((localityGet.toLowerCase().contains(cityName
-                                                                            .text
-                                                                            .toLowerCase())) &&
-                                                                            (postalCode
-                                                                                .toLowerCase()
-                                                                                .contains(pincode.text.toLowerCase()))) {
+                                                                    if (postalCode
+                                                                        .isNotEmpty) {
+                                                                      log("POSTAL CODE===${postalCode
+                                                                          .toLowerCase()}");
+                                                                      log("CONTREOLLER POSTAL CODE===${pincode
+                                                                          .text
+                                                                          .toLowerCase()}");
+                                                                      if (postalCode
+                                                                          .toLowerCase()
+                                                                          .contains(pincode
+                                                                              .text
+                                                                              .toLowerCase())) {
+                                                                        SharedPreferences
+                                                                            sf =
+                                                                            await SharedPreferences.getInstance();
+                                                                        _add_address
+                                                                            .add_address_cont(
+                                                                                uid.toString(),
+                                                                                selectedPlace!.formattedAddress.toString(),
+                                                                                buildname.text,
+                                                                                localityName.text,
+                                                                                lat.toString(),
+                                                                                long.toString(),
+                                                                                pincodestr.toString() == "" ? pincode.text : pincodestr.toString(),
+                                                                                cityName.text
 
-                                                                          SharedPreferences
-                                                                          sf =
-                                                                          await SharedPreferences
-                                                                              .getInstance();
-                                                                          _add_address
-                                                                              .add_address_cont(
-                                                                              uid.toString(),
-                                                                              selectedPlace!.formattedAddress.toString(),
-                                                                              buildname.text,
-                                                                              localityName.text,
-                                                                              lat.toString(),
-                                                                              long.toString(),
-                                                                              pincodestr.toString() == "" ? pincode.text : pincodestr.toString())
-                                                                              .then((value) => _get_address.get_address_cont(uid).then((value) async {
-                                                                            setState(() {
-                                                                              sf.setString("selectedaddressid", _get_address.response.value.data![0].id.toString()).then((value) {
-                                                                                getselectedaddress();
-                                                                                _add_default_address.add_default_address(uid.toString(), _get_address.addsidlst[0].toString());
-                                                                                Get.back();
-                                                                              });
-                                                                            });
-                                                                          }));
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                          commontoas(
-                                                                              "Please Enter Valid Address");
-                                                                        }
+                                                                        )
+                                                                            .then((value) => _get_address.get_address_cont(uid).then((value) async {
+                                                                                  setState(() {
+                                                                                    sf.setString("selectedaddressid", _get_address.response.value.data![0].id.toString()).then((value) {
+                                                                                      getselectedaddress();
+                                                                                      _add_default_address.add_default_address(uid.toString(), _get_address.addsidlst[0].toString());
+                                                                                      Get.off(BottomBar(pasindx: 0));
+                                                                                    });
+                                                                                  });
+                                                                                }));
+                                                                      } else {
+                                                                        commontoas(
+                                                                            "Please Enter Valid Address");
                                                                       }
-                                                                    else
-                                                                      {
-                                                                        if ((localityGet.toLowerCase().contains(cityName
-                                                                            .text
-                                                                            .toLowerCase()))) {
-
-                                                                          SharedPreferences
-                                                                          sf =
-                                                                          await SharedPreferences
-                                                                              .getInstance();
-                                                                          _add_address
-                                                                              .add_address_cont(
-                                                                              uid.toString(),
-                                                                              selectedPlace!.formattedAddress.toString(),
-                                                                              buildname.text,
-                                                                              localityName.text,
-                                                                              lat.toString(),
-                                                                              long.toString(),
-                                                                              pincodestr.toString() == "" ? pincode.text : pincodestr.toString())
-                                                                              .then((value) => _get_address.get_address_cont(uid).then((value) async {
-                                                                            setState(() {
-                                                                              sf.setString("selectedaddressid", _get_address.response.value.data![0].id.toString()).then((value) {
-                                                                                getselectedaddress();
-                                                                                _add_default_address.add_default_address(uid.toString(), _get_address.addsidlst[0].toString());
-                                                                                Get.back();
-                                                                              });
-                                                                            });
-                                                                          }));
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                          commontoas(
-                                                                              "Please Enter Valid Address");
-                                                                        }
-                                                                      }
-
+                                                                    }
                                                                   } else {
                                                                     commontoas(
                                                                         "Services are not available");
                                                                   }
                                                                 }
-                                                              }
-                                                              else if (_get_pincode
+                                                              } else if (_get_pincode
                                                                   .listofpincode
                                                                   .contains(pincodestr
                                                                               .toString() ==
@@ -653,7 +612,7 @@ class _newmapsState extends State<newmaps> {
                                                                               /// latatitude ,  longutude pass by me
                                                                               lat.toString(),
                                                                               long.toString(),
-                                                                              pincodestr.toString() == "" ? pincode.text : pincodestr.toString())
+                                                                              pincodestr.toString() == "" ? pincode.text : pincodestr.toString(),cityName.text)
                                                                           .then((value) => _get_address.get_address_cont(uid).then((value) async {
                                                                                 setState(() {
                                                                                   sf.setString("selectedaddressid", _get_address.response.value.data![0].id.toString()).then((value) {
@@ -664,7 +623,7 @@ class _newmapsState extends State<newmaps> {
                                                                                 });
                                                                               }));
                                                                       print(
-                                                                          "uid${uid.toString()}--adddresss--${selectedPlace.formattedAddress.toString()}--old build-${buildname.text}-old locality-${localityName.text}--old lat-${lat}---old lag--${long}");
+                                                                          "uid${uid.toString()}--adddresss--${selectedPlace.formattedAddress.toString()}--old build-${buildname.text}-old locality-${localityName.text}--old lat-$lat---old lag--$long");
                                                                     } else {
                                                                       _add_address
                                                                           .add_address_cont(
@@ -676,12 +635,13 @@ class _newmapsState extends State<newmaps> {
                                                                               /// latatitude ,  longutude pass by me
                                                                               lat.toString(),
                                                                               long.toString(),
-                                                                              pincodestr.toString() == "" ? pincode.text : pincodestr.toString())
+                                                                              pincodestr.toString() == "" ? pincode.text : pincodestr.toString(),
+                                                                              cityName.text
+                                                                      )
                                                                           .then((value) => _get_address.get_address_cont(uid).then((value) async {
                                                                                 getselectedaddress();
                                                                                 Get.back();
                                                                               }));
-
                                                                     }
                                                                   }
                                                                 } else {
@@ -706,7 +666,7 @@ class _newmapsState extends State<newmaps> {
                                                                             /// latatitude ,  longutude pass by me
                                                                             lat.toString(),
                                                                             long.toString(),
-                                                                            pincodestr.toString() == "" ? pincode.text : pincodestr.toString())
+                                                                            pincodestr.toString() == "" ? pincode.text : pincodestr.toString(),cityName.text)
                                                                         .then((value) => _get_address.get_address_cont(uid).then((value) async {
                                                                               _get_testimonials.get_testimonials_cont(uid.toString()).then((value) {
                                                                                 setState(() {
@@ -723,7 +683,7 @@ class _newmapsState extends State<newmaps> {
                                                                               });
                                                                             }));
                                                                     logger.i(
-                                                                        "uid${uid.toString()}--adddresss--${selectedPlace.formattedAddress.toString()}--old build-${buildname.text}-old locality-${localityName.text}--old lat-${lat}---old lag--${long}");
+                                                                        "uid${uid.toString()}--adddresss--${selectedPlace.formattedAddress.toString()}--old build-${buildname.text}-old locality-${localityName.text}--old lat-$lat---old lag--$long");
                                                                   } else {
                                                                     print(
                                                                         '7 Enter');
@@ -737,7 +697,7 @@ class _newmapsState extends State<newmaps> {
                                                                             /// latatitude ,  longutude pass by me
                                                                             lat.toString(),
                                                                             long.toString(),
-                                                                            pincodestr.toString() == "" ? pincode.text : pincodestr.toString())
+                                                                            pincodestr.toString() == "" ? pincode.text : pincodestr.toString(),cityName.text)
                                                                         .then((value) => _get_address.get_address_cont(uid).then((value) async {
                                                                               _get_testimonials.get_testimonials_cont(uid.toString()).then((value) {
                                                                                 _get_testimonials.yturl;
@@ -751,8 +711,7 @@ class _newmapsState extends State<newmaps> {
                                                                             }));
                                                                   }
                                                                 }
-                                                              }
-                                                              else {
+                                                              } else {
                                                                 commontoas(
                                                                     "Services are not available in your area");
                                                                 // commontoas(msg: "Services are not available in your City");
@@ -761,7 +720,7 @@ class _newmapsState extends State<newmaps> {
                                                             child: Container(
                                                               padding:
                                                                   const EdgeInsets
-                                                                          .symmetric(
+                                                                      .symmetric(
                                                                       vertical:
                                                                           10),
                                                               alignment:

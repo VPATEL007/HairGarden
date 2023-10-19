@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hairgarden/COMMON/common_circular_indicator.dart';
 import 'package:hairgarden/COMMON/font_style.dart';
 import 'package:hairgarden/USER/book_slot%20Payment/Screens/bookslot_page.dart';
+import 'package:hairgarden/USER/bottombar/Screens/bottombar.dart';
 import 'package:hairgarden/USER/updatemap.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -294,6 +295,7 @@ class _address_pageState extends State<address_page> {
                                                     "yes"
                                             ? InkWell(
                                                 onTap: () {
+                                                  log("ENTER VIJAY");
                                                   setState(() {
                                                     _add_default_address
                                                         .add_default_address(
@@ -304,10 +306,15 @@ class _address_pageState extends State<address_page> {
                                                                 .data![index]
                                                                 .id
                                                                 .toString())
-                                                        .then((value) =>
-                                                            _get_address
-                                                                .get_address_cont(
-                                                                    uid));
+                                                        .then((value)
+                                                    {
+                                                      _get_address
+                                                          .get_address_cont(
+                                                          uid);
+                                                      Get.offAll(const BottomBar(
+                                                        pasindx: 0,
+                                                      ));
+                                                    });
                                                   });
                                                 },
                                                 child: Row(
@@ -400,6 +407,8 @@ class _address_pageState extends State<address_page> {
                                               locname: _get_address.response
                                                   .value.data![index].locality,
                                               pagename: "",
+                                              area: _get_address.response
+                                                  .value.data![index].area,
                                             ));
                                           },
                                           child: Container(
@@ -522,6 +531,7 @@ class _address_pageState extends State<address_page> {
                                   setState(() {
                                     _oneValue = value!;
                                   });
+
                                 },
                               ),
                             ),

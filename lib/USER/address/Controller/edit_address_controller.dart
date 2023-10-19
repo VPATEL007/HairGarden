@@ -9,10 +9,10 @@ class edit_address_controller extends GetxController{
   var loading = false.obs;
   var response = edit_address_model().obs;
 
-  Future<void>edit_address_cont(id, location, building_name, locality,latitude, longitude,pincode)async{
+  Future<void>edit_address_cont(id, location, building_name, locality,latitude, longitude,pincode,area)async{
     try{
       loading(true);
-      final respo = await api_service().edit_address(id, location, building_name, locality,latitude,longitude,pincode);
+      final respo = await api_service().edit_address(id, location, building_name, locality,latitude,longitude,pincode,area);
       if(respo.status == true){
         response = respo.obs;
 

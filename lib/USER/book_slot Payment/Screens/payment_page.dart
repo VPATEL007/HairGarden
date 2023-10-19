@@ -821,7 +821,7 @@ class _payment_pageState extends State<payment_page> {
                                                                 InputBorder
                                                                     .none,
                                                             hintText:
-                                                                "Enter COUPON here",
+                                                                "Enter Coupon here",
                                                             hintStyle: font_style
                                                                 .greyA1A1AA_400_16,
                                                             contentPadding:
@@ -1036,19 +1036,7 @@ class _payment_pageState extends State<payment_page> {
                       height: SizeConfig.screenHeight * 0.015,
                     ),
                     //CHOOSE PAYMENT OPTION
-                    (((_get_cart.response.value.total ?? 0) >
-                                _get_cart.walletAMount.value) &&
-                            isWallet == true)
-                        ? Center(
-                            child: SizedBox(
-                              width: SizeConfig.screenWidth * 0.9,
-                              child: Text(
-                                "Choose your payment method",
-                                style: font_style.black_600_16,
-                              ),
-                            ),
-                          )
-                        : const SizedBox(),
+
 
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.015,
@@ -1141,7 +1129,7 @@ class _payment_pageState extends State<payment_page> {
                             color: Colors.white,
                           )
                         : Text(
-                            "PROCEED TO BOOKING",
+                      _oneValue==0?"PROCEED TO PAY":"PROCEED TO BOOKING",
                             style: font_style.white_600_16,
                           ),
                   ),
