@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_svg/svg.dart';
@@ -308,6 +310,7 @@ class _login_pageState extends State<login_page> {
                           onTap: () {
                             setState(() {
                               if (_send_otp.isotp() == false) {
+                                log("MOBILE==${mobile.text}");
                                 if(mobile.text.length>=10)
                                   {
                                     _send_otp
@@ -316,15 +319,12 @@ class _login_pageState extends State<login_page> {
                                   }
                                 else
                                   {
-                                    commonToast('Please Enter 10 DIgit Mobile Number');
+                                    commonToast('Please Enter 10 Digit Mobile Number');
                                   }
                               } else {
                                 _staff_login
                                     .staff_login_cont(
-                                        mobile.text, otp.toString())
-                                    .then((value) {
-                                  otp = "";
-                                });
+                                        mobile.text, otp.toString());
                                 // isotp=false;
                               }
                             });

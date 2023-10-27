@@ -4,9 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:hairgardenemployee/COMMON/common_color.dart';
 import 'package:hairgardenemployee/COMMON/common_indicator.dart';
 import 'package:hairgardenemployee/COMMON/size_config.dart';
-import 'package:hairgardenemployee/EMPLOYEE/appointments/Screens/help_page.dart';
 import 'package:hairgardenemployee/COMMON/font_style.dart';
-import 'package:hairgardenemployee/EMPLOYEE/appointments/Screens/rescheduling_request.dart';
 import 'package:hairgardenemployee/COMMON/common_txt_lst.dart';
 import 'package:hairgardenemployee/EMPLOYEE/my%20earnings/controller/my_earning_detail_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -112,11 +110,7 @@ class _earning_details_pageState extends State<earning_details_page> {
                             children: [
                               Text("Date", style: font_style.yell_400_16),
                               Text(
-                                  myEarningDetailController
-                                          .myEarningModel()
-                                          .data
-                                          ?.date ??
-                                      '',
+                                  "${myEarningDetailController.myEarningModel().data?.date ?? DateTime.now()}",
                                   style: font_style.darkgray_400_14),
                             ],
                           ),
@@ -130,13 +124,7 @@ class _earning_details_pageState extends State<earning_details_page> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Address", style: font_style.yell_400_16),
-                              Text(
-                                  myEarningDetailController
-                                          .myEarningModel()
-                                          .data
-                                          ?.date ??
-                                      '',
-                                  style: font_style.darkgray_400_10),
+                              Text('N/A', style: font_style.darkgray_400_10),
                             ],
                           ),
                         ],
@@ -198,11 +186,7 @@ class _earning_details_pageState extends State<earning_details_page> {
                             children: [
                               Text("ID ORDER", style: font_style.yellow_400_14),
                               Text(
-                                  myEarningDetailController
-                                          .myEarningModel()
-                                          .data
-                                          ?.orderId ??
-                                      '',
+                                  '${myEarningDetailController.myEarningModel().data?.orderId.toString()}',
                                   style: font_style.darkgray_400_14),
                             ],
                           ),
@@ -218,7 +202,7 @@ class _earning_details_pageState extends State<earning_details_page> {
                               Text("Sub Total",
                                   style: font_style.yellow_400_14),
                               Text(
-                                  "₹ ${myEarningDetailController.myEarningModel().data?.price.toString()??''}",
+                                  "₹ ${myEarningDetailController.myEarningModel().data?.price.toString() ?? ''}",
                                   style: font_style.darkgray_600_14),
                             ],
                           ),
@@ -233,7 +217,12 @@ class _earning_details_pageState extends State<earning_details_page> {
                             children: [
                               Text("Payment Method",
                                   style: font_style.yellow_400_14),
-                              Text(myEarningDetailController.myEarningModel().data?.paymentType ?? '',
+                              Text(
+                                  myEarningDetailController
+                                          .myEarningModel()
+                                          .data
+                                          ?.paymentType ??
+                                      '',
                                   style: font_style.darkgray_600_14),
                             ],
                           ),
@@ -247,8 +236,15 @@ class _earning_details_pageState extends State<earning_details_page> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Status", style: font_style.yellow_400_14),
-                              Text(myEarningDetailController.myEarningModel().data?.paymentStatus?.capitalizeFirst??"",
-                                  style: font_style.lightgeen_600_14.copyWith(color: const Color(0xff16A34A))),
+                              Text(
+                                  myEarningDetailController
+                                          .myEarningModel()
+                                          .data
+                                          ?.paymentStatus
+                                          ?.capitalizeFirst ??
+                                      "",
+                                  style: font_style.lightgeen_600_14.copyWith(
+                                      color: const Color(0xff16A34A))),
                             ],
                           ),
                         ],
@@ -293,7 +289,8 @@ class _earning_details_pageState extends State<earning_details_page> {
                             children: [
                               Text("Sub Total",
                                   style: font_style.yellow_400_14),
-                              Text("₹ ${myEarningDetailController.myEarningModel().data?.price ?? ''.toString()}",
+                              Text(
+                                  "₹ ${myEarningDetailController.myEarningModel().data?.price ?? ''.toString()}",
                                   style: font_style.darkgray_600_14),
                             ],
                           ),
@@ -308,7 +305,12 @@ class _earning_details_pageState extends State<earning_details_page> {
                             children: [
                               Text("Payment Method",
                                   style: font_style.yellow_400_14),
-                              Text(myEarningDetailController.myEarningModel().data?.paymentType ?? '',
+                              Text(
+                                  myEarningDetailController
+                                          .myEarningModel()
+                                          .data
+                                          ?.paymentType ??
+                                      '',
                                   style: font_style.darkgray_600_14),
                             ],
                           ),
@@ -354,7 +356,12 @@ class _earning_details_pageState extends State<earning_details_page> {
                             children: [
                               Text("Service Type",
                                   style: font_style.yellow_400_14),
-                              Text(myEarningDetailController.myEarningModel().data?.serviceCategoryTitle ?? '',
+                              Text(
+                                  myEarningDetailController
+                                          .myEarningModel()
+                                          .data
+                                          ?.serviceCategoryTitle ??
+                                      '',
                                   style: font_style.darkgray_600_14),
                             ],
                           ),
@@ -371,7 +378,12 @@ class _earning_details_pageState extends State<earning_details_page> {
                                   style: font_style.yellow_400_14),
                               const SizedBox(width: 10),
                               Expanded(
-                                child: Text(myEarningDetailController.myEarningModel().data?.serviceDescription ?? '',
+                                child: Text(
+                                    myEarningDetailController
+                                            .myEarningModel()
+                                            .data
+                                            ?.serviceDescription ??
+                                        '',
                                     style: font_style.darkgray_600_14),
                               ),
                             ],

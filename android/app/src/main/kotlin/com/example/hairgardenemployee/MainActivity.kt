@@ -1,4 +1,4 @@
-package com.example.hairgardenemployee
+package com.parlourwali.partner
 
 import io.flutter.embedding.android.FlutterActivity
 

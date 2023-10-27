@@ -299,6 +299,7 @@ class api_services {
     user_form.fields.add(const MapEntry("type", "login"));
 
     final value_user = await dio.post("$baseurl/generate-otp", data: user_form);
+    log("ABC===${value_user.statusMessage}");
     if (value_user.statusCode == 200) {
       final result_user = send_login_otp_model.fromJson(value_user.data);
       return result_user;
@@ -308,9 +309,7 @@ class api_services {
 
   //staff login
   Future<staff_login_model> staff_login(mobile, otp) async {
-    final user_form = FormData();String? fcmToken = await FirebaseMessaging.instance.getToken();
-    log('FCM TOKEN===$fcmToken');
-    user_form.fields.add(MapEntry("fcmToken", fcmToken??""));
+    final user_form = FormData();
     user_form.fields.add(MapEntry("mobile", mobile));
     user_form.fields.add(MapEntry("otp", otp));
     final value_user =

@@ -16,7 +16,6 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();

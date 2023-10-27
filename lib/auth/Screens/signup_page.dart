@@ -6,12 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hairgardenemployee/COMMON/comman_toast.dart';
-import 'package:hairgardenemployee/EMPLOYEE/emp_bottombar.dart';
-import 'package:hairgardenemployee/EMPLOYEE/relaxnow_page.dart';
-import 'package:hairgardenemployee/auth/Screens/signup_page.dart';
 import 'package:hairgardenemployee/auth/controller/send_reg_otp_controller.dart';
 import 'package:hairgardenemployee/auth/controller/staff_signup_controller.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 import '../../COMMON/common_color.dart';
 import '../../COMMON/common_indicator.dart';
 import '../../COMMON/no_glow.dart';
@@ -59,15 +55,7 @@ class _signup_pageState extends State<signup_page> {
     'OTHERS',
   ];
   String selectedGenderValue = 'MALE';
-  // final List<String> items2 = [
-  //   'Beautician',
-  //   'Massage Therapist',
-  //   'Make up Artist',
-  //   'Hair Stylist',
-  //   'Pedicurist',
-  //   'Nail Technician',
-  //   'Hair Technician',
-  // ];
+
   String? selectedValue1, selectedValue2;
   GlobalKey<FormState> formKey = GlobalKey();
 
@@ -87,15 +75,17 @@ class _signup_pageState extends State<signup_page> {
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-             Image(image: const AssetImage("assets/images/HG_logo_small.png"),color: common_color),
+            Image(
+                image: const AssetImage("assets/images/HG_logo_small.png"),
+                color: common_color),
             // Text("Hair Garden",style:font_style.grad_600_20),
             SizedBox(
-              width: SizeConfig.screenWidth * 0.2,
+              width: SizeConfig.screenWidth * 0.07,
             ),
             SizedBox(
                 height: SizeConfig.screenHeight * 0.015,
                 width: SizeConfig.screenWidth * 0.03,
-                child:  Image(
+                child: Image(
                   image: const AssetImage("assets/images/star.png"),
                   color: common_color,
                   fit: BoxFit.fill,
@@ -131,11 +121,10 @@ class _signup_pageState extends State<signup_page> {
                                     Border.all(color: yellow_col, width: 3)),
                           ),
                         ),
-
                         SingleChildScrollView(
                           child: Column(
                             // mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               //SIGNUP
@@ -144,75 +133,77 @@ class _signup_pageState extends State<signup_page> {
                                       clipBehavior: Clip.none,
                                       alignment: Alignment.topLeft,
                                       children: [
-                                    // Container(
-                                    //     padding: const EdgeInsets.only(left: 5),
-                                    //     color: common_color,
-                                    //     child: const Text(
-                                    //       " ",
-                                    //       style: TextStyle(
-                                    //           fontSize: 32,
-                                    //           fontFamily: 'Lato',
-                                    //           color: Colors.white,
-                                    //           fontWeight: FontWeight.w600),
-                                    //     )),
-                                    //LEFT STAR
-                                    Positioned(
-                                        top: -SizeConfig.screenHeight * 0.00,
-                                        left: -SizeConfig.screenWidth * 0.23,
-                                        child: SizedBox(
-                                            height:
+                                        // Container(
+                                        //     padding: const EdgeInsets.only(left: 5),
+                                        //     color: common_color,
+                                        //     child: const Text(
+                                        //       " ",
+                                        //       style: TextStyle(
+                                        //           fontSize: 32,
+                                        //           fontFamily: 'Lato',
+                                        //           color: Colors.white,
+                                        //           fontWeight: FontWeight.w600),
+                                        //     )),
+                                        //LEFT STAR
+                                        Positioned(
+                                            top: -SizeConfig.screenHeight * 0.00,
+                                            left: -SizeConfig.screenWidth * 0.23,
+                                            child: SizedBox(
+                                                height:
                                                 SizeConfig.screenHeight * 0.015,
-                                            width:
+                                                width:
                                                 SizeConfig.screenWidth * 0.09,
-                                            child: SvgPicture.asset(
-                                                "assets/images/lest_star.svg",color: common_color))),
+                                                child: SvgPicture.asset(
+                                                    "assets/images/lest_star.svg",
+                                                    color: common_color))),
 
-                                    //BIG STAR
-                                    Positioned(
-                                        top: -SizeConfig.screenHeight * 0.00,
-                                        right: -SizeConfig.screenWidth * 0.14,
-                                        child: SizedBox(
-                                            height:
+                                        //BIG STAR
+                                        Positioned(
+                                            top: -SizeConfig.screenHeight * 0.00,
+                                            right: -SizeConfig.screenWidth * 0.14,
+                                            child: SizedBox(
+                                                height:
                                                 SizeConfig.screenHeight * 0.035,
-                                            width:
+                                                width:
                                                 SizeConfig.screenWidth * 0.08,
-                                            child: SvgPicture.asset(
-                                                "assets/images/big_star_svg.svg",color: common_color))),
+                                                child: SvgPicture.asset(
+                                                    "assets/images/big_star_svg.svg",
+                                                    color: common_color))),
 
-                                    //CIRCLE
-                                    Positioned(
-                                      top: -SizeConfig.screenHeight * 0.04,
-                                      left: -SizeConfig.screenWidth * 0.1,
-                                      child: Container(
-                                        height: SizeConfig.screenHeight * 0.08,
-                                        width: SizeConfig.screenWidth * 0.16,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                color: yellow_col, width: 3)),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -SizeConfig.screenHeight * 0.002,
-                                      left: SizeConfig.screenWidth * 0.008,
-                                      child: Container(
-                                        height: SizeConfig.screenHeight * 0.04,
-                                        width: SizeConfig.screenWidth * 0.1,
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.only(left: 5),
-                                        color: newLightColor,
-                                        child:  Text(
-                                          "SIGN UP",
-                                          style: TextStyle(
-                                              fontSize: 32,
-                                              fontFamily: 'Lato',
-                                              color: common_color,
-                                              fontWeight: FontWeight.w600),
-                                        )),
-                                  ])),
+                                        //CIRCLE
+                                        Positioned(
+                                          top: -SizeConfig.screenHeight * 0.04,
+                                          left: -SizeConfig.screenWidth * 0.1,
+                                          child: Container(
+                                            height: SizeConfig.screenHeight * 0.08,
+                                            width: SizeConfig.screenWidth * 0.16,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color: yellow_col, width: 3)),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: -SizeConfig.screenHeight * 0.002,
+                                          left: SizeConfig.screenWidth * 0.008,
+                                          child: Container(
+                                            height: SizeConfig.screenHeight * 0.04,
+                                            width: SizeConfig.screenWidth * 0.1,
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                        Container(
+                                            padding: const EdgeInsets.only(left: 5),
+                                            color: newLightColor,
+                                            child: Text(
+                                              "SIGN UP",
+                                              style: TextStyle(
+                                                  fontSize: 32,
+                                                  fontFamily: 'Lato',
+                                                  color: common_color,
+                                                  fontWeight: FontWeight.w600),
+                                            )),
+                                      ])),
 
                               Form(
                                 key: formKey,
@@ -230,14 +221,18 @@ class _signup_pageState extends State<signup_page> {
                                             }
                                             return null;
                                           },
-                                          style: font_style.white_400_16.copyWith(color: Colors.black),
+                                          style: font_style.white_400_16
+                                              .copyWith(color: Colors.black),
                                           decoration: InputDecoration(
                                             hintText: "First Name*",
-                                            hintStyle: font_style.white_400_16.copyWith(color: Colors.black),
-                                            enabledBorder: const UnderlineInputBorder(
+                                            hintStyle: font_style.white_400_16
+                                                .copyWith(color: Colors.black),
+                                            enabledBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
-                                            focusedBorder: const UnderlineInputBorder(
+                                            focusedBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
                                           ),
@@ -261,14 +256,18 @@ class _signup_pageState extends State<signup_page> {
                                             return null;
                                           },
                                           controller: lastname,
-                                          style: font_style.white_400_16.copyWith(color: Colors.black),
+                                          style: font_style.white_400_16
+                                              .copyWith(color: Colors.black),
                                           decoration: InputDecoration(
                                             hintText: "Last Name*",
-                                            hintStyle: font_style.white_400_16.copyWith(color: Colors.black),
-                                            enabledBorder: const UnderlineInputBorder(
+                                            hintStyle: font_style.white_400_16
+                                                .copyWith(color: Colors.black),
+                                            enabledBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
-                                            focusedBorder: const UnderlineInputBorder(
+                                            focusedBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
                                           ),
@@ -294,14 +293,18 @@ class _signup_pageState extends State<signup_page> {
                                             }
                                             return null;
                                           },
-                                          style: font_style.white_400_16.copyWith(color: Colors.black),
+                                          style: font_style.white_400_16
+                                              .copyWith(color: Colors.black),
                                           decoration: InputDecoration(
                                             hintText: "E-mail*",
-                                            hintStyle: font_style.white_400_16.copyWith(color: Colors.black),
-                                            enabledBorder: const UnderlineInputBorder(
+                                            hintStyle: font_style.white_400_16
+                                                .copyWith(color: Colors.black),
+                                            enabledBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
-                                            focusedBorder: const UnderlineInputBorder(
+                                            focusedBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
                                           ),
@@ -317,146 +320,162 @@ class _signup_pageState extends State<signup_page> {
                                     SizedBox(
                                       width: SizeConfig.screenWidth * 0.9,
                                       child:
-                                          Obx(() => DropdownButtonHideUnderline(
-                                                child: DropdownButton2(
-                                                  isExpanded: true,
-                                                  hint: Row(
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          'What is your Profession?*',
-                                                          style: font_style
-                                                              .white_400_16.copyWith(color: Colors.black),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  items: List.generate(
-                                                      _staff_signup
-                                                              .getStaffService()
-                                                              .data
-                                                              ?.length ??
-                                                          0,
-                                                      (index) =>
-                                                          DropdownMenuItem<
-                                                              String>(
-                                                            value: _staff_signup
-                                                                .getStaffService()
-                                                                .data?[index]
-                                                                .name,
-                                                            child: Row(
-                                                              children: [
-                                                                Obx(() =>
-                                                                    Checkbox(
-                                                                        activeColor:
-                                                                            yellow_col,
-                                                                        value: _staff_signup
-                                                                            .selectedCheckValueList
-                                                                            .contains(
-                                                                                index),
-                                                                        onChanged:
-                                                                            (value) {
-                                                                          if (_staff_signup
-                                                                              .selectedCheckValueList
-                                                                              .contains(index)) {
-                                                                            _staff_signup.selectedCheckValueList.remove(index); // unselect
-                                                                          } else {
-                                                                            if (!_staff_signup.selectedProfession.contains(_staff_signup.getStaffService().data?[index].id)) {
-                                                                              _staff_signup.selectedProfession.add(_staff_signup.getStaffService().data?[index].id);
-                                                                            }
-
-                                                                            _staff_signup.selectedCheckValueList.add(index);
-                                                                            print('Length===${_staff_signup.selectedProfession.toString().substring(1,_staff_signup.selectedProfession.toString().length-1)}'); // select
-                                                                          }
-                                                                        })),
-                                                                Text(
-                                                                  _staff_signup
-                                                                          .getStaffService()
-                                                                          .data?[
-                                                                              index]
-                                                                          .name ??
-                                                                      '',
-                                                                  style: font_style
-                                                                      .white_400_16.copyWith(color: common_color),
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )),
-                                                  value: selectedValue1,
-                                                  style:
-                                                      font_style.white_400_16,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      selectedValue1 =
-                                                          value as String;
-                                                    });
-                                                  },
-                                                  buttonStyleData:
-                                                      ButtonStyleData(
-                                                    height: 50,
-                                                    padding: EdgeInsets.zero,
-                                                    width:
-                                                        SizeConfig.screenWidth *
-                                                            0.9,
-                                                    decoration: const BoxDecoration(
-                                                      border: Border(
-                                                        bottom: BorderSide(
-                                                            color: Colors.black),
-                                                      ),
-                                                      color: Colors.transparent,
-                                                    ),
-                                                    elevation: 0,
-                                                  ),
-                                                  iconStyleData: IconStyleData(
-                                                    icon: const Icon(
-                                                      Icons.keyboard_arrow_down,
-                                                      color: Colors.black,
-                                                    ),
-                                                    iconSize: 20,
-                                                    iconEnabledColor:
-                                                        yellow_col,
-                                                    iconDisabledColor:
-                                                        Colors.grey,
-                                                  ),
-                                                  dropdownStyleData:
-                                                      DropdownStyleData(
-                                                          maxHeight: 200,
-                                                          width: SizeConfig
-                                                                  .screenWidth *
-                                                              0.9,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius: const BorderRadius
-                                                                    .only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        14),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        14)),
-                                                            border: Border.all(
-                                                                color:
-                                                                    common_color),
-                                                          ),
-                                                          elevation: 0,
-                                                          scrollbarTheme:
-                                                              ScrollbarThemeData(
-                                                            radius: const Radius
-                                                                .circular(40),
-                                                            thickness:
-                                                                MaterialStateProperty
-                                                                    .all(6),
-                                                            thumbVisibility:
-                                                                MaterialStateProperty
-                                                                    .all(true),
-                                                          )),
+                                      Obx(() => DropdownButtonHideUnderline(
+                                        child: DropdownButton2(
+                                          isExpanded: true,
+                                          hint: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  'What is your Profession?*',
+                                                  style: font_style
+                                                      .white_400_16
+                                                      .copyWith(
+                                                      color: Colors
+                                                          .black),
+                                                  overflow: TextOverflow
+                                                      .ellipsis,
                                                 ),
+                                              ),
+                                            ],
+                                          ),
+                                          items: List.generate(
+                                              _staff_signup
+                                                  .getStaffService()
+                                                  .data
+                                                  ?.length ??
+                                                  0,
+                                                  (index) =>
+                                                  DropdownMenuItem<
+                                                      String>(
+                                                    value: _staff_signup
+                                                        .getStaffService()
+                                                        .data?[index]
+                                                        .name,
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                      MainAxisSize
+                                                          .min,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Obx(() => Checkbox(
+                                                                visualDensity: VisualDensity.compact,
+                                                                activeColor: yellow_col,
+                                                                value: _staff_signup.selectedCheckValueList.contains(index),
+                                                                onChanged: (value) {
+                                                                  if (_staff_signup
+                                                                      .selectedCheckValueList
+                                                                      .contains(index)) {
+                                                                    _staff_signup.selectedCheckValueList.remove(index); // unselect
+                                                                  } else {
+                                                                    if (!_staff_signup.selectedProfession.contains(_staff_signup.getStaffService().data?[index].id)) {
+                                                                      _staff_signup.selectedProfession.add(_staff_signup.getStaffService().data?[index].id);
+                                                                    }
+
+                                                                    _staff_signup.selectedCheckValueList.add(index);
+                                                                    print('Length===${_staff_signup.selectedProfession.toString().substring(1, _staff_signup.selectedProfession.toString().length - 1)}'); // select
+                                                                  }
+                                                                })),
+                                                            Text(
+                                                              _staff_signup
+                                                                  .getStaffService()
+                                                                  .data?[index]
+                                                                  .name ??
+                                                                  '',
+                                                              style: font_style
+                                                                  .white_400_16
+                                                                  .copyWith(
+                                                                  color: common_color),
+                                                              overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Container(
+                                                          height: 1.5,
+                                                          width: SizeConfig
+                                                              .screenWidth *
+                                                              0.9,
+                                                          color:
+                                                          yellow_col,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )),
+                                          value: selectedValue1,
+                                          style:
+                                          font_style.white_400_16,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedValue1 =
+                                              value as String;
+                                            });
+                                          },
+                                          buttonStyleData:
+                                          ButtonStyleData(
+                                            height: 50,
+                                            padding: EdgeInsets.zero,
+                                            width:
+                                            SizeConfig.screenWidth *
+                                                0.9,
+                                            decoration:
+                                            const BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
+                                                    color:
+                                                    Colors.black),
+                                              ),
+                                              color: Colors.transparent,
+                                            ),
+                                            elevation: 0,
+                                          ),
+                                          iconStyleData: IconStyleData(
+                                            icon: const Icon(
+                                              Icons.keyboard_arrow_down,
+                                              color: Colors.black,
+                                            ),
+                                            iconSize: 20,
+                                            iconEnabledColor:
+                                            yellow_col,
+                                            iconDisabledColor:
+                                            Colors.grey,
+                                          ),
+                                          dropdownStyleData:
+                                          DropdownStyleData(
+                                              maxHeight: 250,
+                                              width: SizeConfig
+                                                  .screenWidth *
+                                                  0.9,
+                                              decoration:
+                                              BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(
+                                                    14),
+                                                border: Border.all(
+                                                    color:
+                                                    common_color),
+                                              ),
+                                              elevation: 2,
+                                              padding:
+                                              const EdgeInsets
+                                                  .symmetric(
+                                                  vertical: 10),
+                                              scrollbarTheme:
+                                              ScrollbarThemeData(
+                                                radius: const Radius
+                                                    .circular(40),
+                                                thickness:
+                                                MaterialStateProperty
+                                                    .all(6),
+                                                thumbVisibility:
+                                                MaterialStateProperty
+                                                    .all(true),
                                               )),
+                                        ),
+                                      )),
                                     ),
                                     SizedBox(
                                       height: SizeConfig.screenHeight * 0.015,
@@ -467,36 +486,40 @@ class _signup_pageState extends State<signup_page> {
                                       child: Row(
                                         children: List.generate(
                                             items.length,
-                                            (index) => Row(
-                                                  children: [
-                                                    Transform.scale(
-                                                    scale:0.7,
-                                                      child: Theme(
-                                                        data: ThemeData(
-                                                            unselectedWidgetColor:
-                                                            Colors.black),
-                                                        child: Radio(
-                                                          activeColor: Colors.black,
-                                                          value: items[index],
-                                                          groupValue:
-                                                              selectedGenderValue,
-                                                          onChanged:
-                                                              (String? value) {
-                                                            setState(() {
-                                                              selectedGenderValue =
-                                                                  value!;
-                                                            });
-                                                          },
-                                                        ),
-                                                      ),
+                                                (index) => Row(
+                                              children: [
+                                                Transform.scale(
+                                                  scale: 0.7,
+                                                  child: Theme(
+                                                    data: ThemeData(
+                                                        unselectedWidgetColor:
+                                                        Colors.black),
+                                                    child: Radio(
+                                                      activeColor:
+                                                      Colors.black,
+                                                      value: items[index],
+                                                      groupValue:
+                                                      selectedGenderValue,
+                                                      onChanged:
+                                                          (String? value) {
+                                                        setState(() {
+                                                          selectedGenderValue =
+                                                          value!;
+                                                        });
+                                                      },
                                                     ),
-                                                    Text(items[index],
-                                                        style: font_style
-                                                            .white_400_16.copyWith(color: Colors.black),
-                                                        overflow:
-                                                            TextOverflow.ellipsis)
-                                                  ],
-                                                )),
+                                                  ),
+                                                ),
+                                                Text(items[index],
+                                                    style: font_style
+                                                        .white_400_16
+                                                        .copyWith(
+                                                        color: Colors
+                                                            .black),
+                                                    overflow: TextOverflow
+                                                        .ellipsis)
+                                              ],
+                                            )),
                                       ),
                                     ),
                                     // SizedBox(
@@ -521,15 +544,19 @@ class _signup_pageState extends State<signup_page> {
                                           controller: mobile,
                                           maxLength: 10,
                                           keyboardType: TextInputType.number,
-                                          style: font_style.white_400_16.copyWith(color: Colors.black),
+                                          style: font_style.white_400_16
+                                              .copyWith(color: Colors.black),
                                           decoration: InputDecoration(
                                             counterText: "",
                                             hintText: "Mobile no.*",
-                                            hintStyle: font_style.white_400_16.copyWith(color: Colors.black),
-                                            enabledBorder: const UnderlineInputBorder(
+                                            hintStyle: font_style.white_400_16
+                                                .copyWith(color: Colors.black),
+                                            enabledBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
-                                            focusedBorder: const UnderlineInputBorder(
+                                            focusedBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
                                           ),
@@ -538,7 +565,8 @@ class _signup_pageState extends State<signup_page> {
                                     ),
 
                                     SizedBox(
-                                        height: SizeConfig.screenHeight * 0.002),
+                                        height:
+                                        SizeConfig.screenHeight * 0.002),
                                     Center(
                                       child: SizedBox(
                                         width: SizeConfig.screenWidth * 0.9,
@@ -550,14 +578,18 @@ class _signup_pageState extends State<signup_page> {
                                             }
                                             return null;
                                           },
-                                          style: font_style.white_400_16.copyWith(color: Colors.black),
+                                          style: font_style.white_400_16
+                                              .copyWith(color: Colors.black),
                                           decoration: InputDecoration(
                                             hintText: "Address*",
-                                            hintStyle: font_style.white_400_16.copyWith(color: Colors.black),
-                                            enabledBorder: const UnderlineInputBorder(
+                                            hintStyle: font_style.white_400_16
+                                                .copyWith(color: Colors.black),
+                                            enabledBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
-                                            focusedBorder: const UnderlineInputBorder(
+                                            focusedBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
                                           ),
@@ -572,7 +604,6 @@ class _signup_pageState extends State<signup_page> {
                                       child: SizedBox(
                                         width: SizeConfig.screenWidth * 0.9,
                                         child: TextFormField(
-
                                           validator: (value) {
                                             if (value!.isEmpty) {
                                               return "Please Enter Pincode";
@@ -586,14 +617,18 @@ class _signup_pageState extends State<signup_page> {
                                             LengthLimitingTextInputFormatter(6)
                                           ],
                                           controller: pincode,
-                                          style: font_style.white_400_16.copyWith(color: Colors.black),
+                                          style: font_style.white_400_16
+                                              .copyWith(color: Colors.black),
                                           decoration: InputDecoration(
                                             hintText: "Pincode*",
-                                            hintStyle: font_style.white_400_16.copyWith(color: Colors.black),
-                                            enabledBorder: const UnderlineInputBorder(
+                                            hintStyle: font_style.white_400_16
+                                                .copyWith(color: Colors.black),
+                                            enabledBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
-                                            focusedBorder: const UnderlineInputBorder(
+                                            focusedBorder:
+                                            const UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.black)),
                                           ),
@@ -608,50 +643,64 @@ class _signup_pageState extends State<signup_page> {
                                     _send_otp.isotp() == false
                                         ? Container()
                                         : Center(
-                                            child: SizedBox(
-                                              width:
-                                                  SizeConfig.screenWidth * 0.9,
-                                              child: OtpTextField(
-                                                numberOfFields: 6,
-                                                fillColor: Colors.black,
-                                                cursorColor: Colors.white,
-                                                autoFocus: true,
-                                                borderColor: Colors.black,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                styles: [
-                                                  font_style.otp_txtstyl.copyWith(color: Colors.black),
-                                                  font_style.otp_txtstyl.copyWith(color: Colors.black),
-                                                  font_style.otp_txtstyl.copyWith(color: Colors.black),
-                                                  font_style.otp_txtstyl.copyWith(color: Colors.black),
-                                                  font_style.otp_txtstyl.copyWith(color: Colors.black),
-                                                  font_style.otp_txtstyl.copyWith(color: Colors.black),
-                                                ],
-                                                enabledBorderColor: Colors.black,
-                                                keyboardType:
-                                                    TextInputType.phone,
-                                                focusedBorderColor: Colors.black,
-                                                //set to true to show as box or false to show as dash
-                                                showFieldAsBox: false,
-                                                //runs when a code is typed in
-                                                onCodeChanged: (String code) {
-                                                  FocusScope.of(context)
-                                                      .nextFocus();
-                                                  setState(() {
-                                                    // otp_controller = code.toString() ;
-                                                  });
-                                                },
-                                                //runs when every textfield is filled
-                                                onSubmit:
-                                                    (String verificationCode) {
-                                                  setState(() {
-                                                    otp = verificationCode;
-                                                  });
-                                                }, // end onSubmit
-                                              ),
-                                            ),
-                                          ),
+                                      child: SizedBox(
+                                        width:
+                                        SizeConfig.screenWidth * 0.9,
+                                        child: OtpTextField(
+                                          numberOfFields: 6,
+                                          fillColor: Colors.black,
+                                          cursorColor: Colors.white,
+                                          autoFocus: true,
+                                          borderColor: Colors.black,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          styles: [
+                                            font_style.otp_txtstyl
+                                                .copyWith(
+                                                color: Colors.black),
+                                            font_style.otp_txtstyl
+                                                .copyWith(
+                                                color: Colors.black),
+                                            font_style.otp_txtstyl
+                                                .copyWith(
+                                                color: Colors.black),
+                                            font_style.otp_txtstyl
+                                                .copyWith(
+                                                color: Colors.black),
+                                            font_style.otp_txtstyl
+                                                .copyWith(
+                                                color: Colors.black),
+                                            font_style.otp_txtstyl
+                                                .copyWith(
+                                                color: Colors.black),
+                                          ],
+                                          enabledBorderColor:
+                                          Colors.black,
+                                          keyboardType:
+                                          TextInputType.phone,
+                                          focusedBorderColor:
+                                          Colors.black,
+                                          //set to true to show as box or false to show as dash
+                                          showFieldAsBox: false,
+                                          //runs when a code is typed in
+                                          onCodeChanged: (String code) {
+                                            FocusScope.of(context)
+                                                .nextFocus();
+                                            setState(() {
+                                              // otp_controller = code.toString() ;
+                                            });
+                                          },
+                                          //runs when every textfield is filled
+                                          onSubmit:
+                                              (String verificationCode) {
+                                            setState(() {
+                                              otp = verificationCode;
+                                            });
+                                          }, // end onSubmit
+                                        ),
+                                      ),
+                                    ),
                                     SizedBox(
                                       height: SizeConfig.screenHeight * 0.015,
                                     ),
@@ -670,29 +719,38 @@ class _signup_pageState extends State<signup_page> {
                                         _send_otp.send_reg_otp_cont(
                                             mobile.text.toString());
                                       } else {
-                                        if(_staff_signup.selectedProfession.isNotEmpty)
-                                          {
-                                            _staff_signup
-                                                .staff_signup_cont(
-                                                fullname.text.toString(),
-                                                lastname.text.toString(),
-                                                email.text.toString(),
-                                                mobile.text.toString(),
-                                                "123456",
-                                                otp.toString(),
-                                                selectedGenderValue.toString(),
-                                                _staff_signup.selectedProfession.toString().substring(1,_staff_signup.selectedProfession.toString().length-1),
-                                                "",
-                                                pincode.text,
-                                                address.text)
-                                                .then((value) {
-                                              otp = "";
-                                            });
-                                          }
-                                        else
-                                          {
-                                            commonToast('Please Select Your Profession');
-                                          }
+                                        if (_staff_signup
+                                            .selectedProfession.isNotEmpty) {
+                                          _staff_signup
+                                              .staff_signup_cont(
+                                              fullname.text.toString(),
+                                              lastname.text.toString(),
+                                              email.text.toString(),
+                                              mobile.text.toString(),
+                                              "123456",
+                                              otp.toString(),
+                                              selectedGenderValue
+                                                  .toString(),
+                                              _staff_signup
+                                                  .selectedProfession
+                                                  .toString()
+                                                  .substring(
+                                                  1,
+                                                  _staff_signup
+                                                      .selectedProfession
+                                                      .toString()
+                                                      .length -
+                                                      1),
+                                              "",
+                                              pincode.text,
+                                              address.text)
+                                              .then((value) {
+                                            otp = "";
+                                          });
+                                        } else {
+                                          commonToast(
+                                              'Please Select Your Profession');
+                                        }
                                       }
                                     }
                                   },
@@ -704,16 +762,19 @@ class _signup_pageState extends State<signup_page> {
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         color: common_color,
-                                        border: Border.all(color: common_color, width: 1),
+                                        border: Border.all(
+                                            color: common_color, width: 1),
                                         borderRadius: BorderRadius.circular(32),
                                       ),
                                       child: _send_otp.loading.value ||
-                                              _staff_signup.loading.value
+                                          _staff_signup.loading.value
                                           ? const commonindicator()
-                                          : Text(_send_otp.isotp()
-                                          ? "SIGN UP"
-                                          : "GET OTP",
-                                        style: font_style.grad_600_16.copyWith(color: bg_col),
+                                          : Text(
+                                        _send_otp.isotp()
+                                            ? "SIGN UP"
+                                            : "GET OTP",
+                                        style: font_style.grad_600_16
+                                            .copyWith(color: bg_col),
                                       ),
                                     ),
                                   ),
@@ -729,7 +790,8 @@ class _signup_pageState extends State<signup_page> {
                                     children: [
                                       Text(
                                         "Already have an Account? ",
-                                        style: font_style.white_400_14.copyWith(color: Colors.black),
+                                        style: font_style.white_400_14
+                                            .copyWith(color: Colors.black),
                                       ),
                                       GestureDetector(
                                           onTap: () {
@@ -738,7 +800,8 @@ class _signup_pageState extends State<signup_page> {
                                           child: Text(
                                             "Log In",
                                             style: font_style
-                                                .yellow_400_14_underline.copyWith(color: Colors.black),
+                                                .yellow_400_14_underline
+                                                .copyWith(color: Colors.black),
                                           )),
                                     ],
                                   ),

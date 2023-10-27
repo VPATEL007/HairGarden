@@ -47,7 +47,7 @@ class staff_login_controller extends GetxController{
 
   void startTimer()
   {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if(timer.tick<30)
       {
         timerValue.value--;

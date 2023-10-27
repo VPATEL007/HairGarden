@@ -9,9 +9,9 @@ MyEarningDetailDataModel myEarningDetailDataModelFromJson(String str) => MyEarni
 String myEarningDetailDataModelToJson(MyEarningDetailDataModel data) => json.encode(data.toJson());
 
 class MyEarningDetailDataModel {
-  final bool? status;
-  final String? message;
-  final Data? data;
+  bool? status;
+  String? message;
+  Data? data;
 
   MyEarningDetailDataModel({
     this.status,
@@ -33,31 +33,31 @@ class MyEarningDetailDataModel {
 }
 
 class Data {
-  final String? id;
-  final String? userName;
-  final String? userMobile;
-  final String? price;
-  final String? paymentId;
-  final String? paymentType;
-  final String? orderId;
-  final String? serviceCategoryTitle;
-  final String? serviceDescription;
-  final dynamic serviceWhatincludes;
-  final String? paymentStatus;
-  final String? slotId;
-  final String? slotName;
-  final String? bookingDate;
-  final String? bookingId;
-  final String? isWalletApplied;
-  final String? tipamount;
-  final String? walletamount;
-  final String? addressId;
-  final String? otp;
-  final String? pincode;
-  final String? staffType;
-  final String? reason;
-  final String? status;
-  final String? date;
+  int? id;
+  String? userName;
+  String? userMobile;
+  String? price;
+  String? paymentId;
+  String? paymentType;
+  int? orderId;
+  String? serviceCategoryTitle;
+  String? serviceDescription;
+  String? serviceWhatincludes;
+  String? paymentStatus;
+  int? slotId;
+  String? slotName;
+  DateTime? bookingDate;
+  String? bookingId;
+  String? isWalletApplied;
+  int? tipamount;
+  int? walletamount;
+  int? addressId;
+  int? otp;
+  int? pincode;
+  String? staffType;
+  String? reason;
+  String? status;
+  DateTime? date;
 
   Data({
     this.id,
@@ -101,7 +101,7 @@ class Data {
     paymentStatus: json["payment_status"],
     slotId: json["slot_id"],
     slotName: json["slot_name"],
-    bookingDate: json["booking_date"],
+    bookingDate: json["booking_date"] == null ? null : DateTime.parse(json["booking_date"]),
     bookingId: json["booking_id"],
     isWalletApplied: json["isWalletApplied"],
     tipamount: json["tipamount"],
@@ -112,7 +112,7 @@ class Data {
     staffType: json["staff_type"],
     reason: json["reason"],
     status: json["status"],
-    date: json["date"],
+    date: json["date"] == null ? null : DateTime.parse(json["date"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -129,7 +129,7 @@ class Data {
     "payment_status": paymentStatus,
     "slot_id": slotId,
     "slot_name": slotName,
-    "booking_date": bookingDate,
+    "booking_date": "${bookingDate!.year.toString().padLeft(4, '0')}-${bookingDate!.month.toString().padLeft(2, '0')}-${bookingDate!.day.toString().padLeft(2, '0')}",
     "booking_id": bookingId,
     "isWalletApplied": isWalletApplied,
     "tipamount": tipamount,
@@ -140,6 +140,6 @@ class Data {
     "staff_type": staffType,
     "reason": reason,
     "status": status,
-    "date": date,
+    "date": date?.toIso8601String(),
   };
 }

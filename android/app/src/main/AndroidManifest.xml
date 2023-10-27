@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hairgardenemployee">
+    package="com.parlourwali.partner">
     <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
     <application
         android:label="hairgardenemployee"
