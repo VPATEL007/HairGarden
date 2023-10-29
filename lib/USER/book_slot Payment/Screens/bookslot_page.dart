@@ -181,9 +181,7 @@ class _bookslot_pageState extends State<bookslot_page> {
               .get_staffs_cont(
                   getseladdindx != "" || getseladdindx != null
                       ? getseladdindx
-                      : _get_address.defaultaddid.toString() == null
-                          ? ""
-                          : _get_address.defaultaddid.toString(),
+                      : _get_address.defaultaddid.toString() ?? "",
                   _get_cart.response.value.data![0].categoryId)
               .then((value) {
             _get_time_slots.get_time_slots_cont("random", "").then((value) {
@@ -450,7 +448,6 @@ class _bookslot_pageState extends State<bookslot_page> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
-                                            log("Vijay 1");
                                             setState(() {
                                               selected_prof = index;
                                               staffid = index == 0
@@ -539,17 +536,13 @@ class _bookslot_pageState extends State<bookslot_page> {
                                                 ),
                                                 InkWell(
                                                     onTap: () {
-                                                      _get_staff_details
-                                                          .get_staffs_details_cont(
-                                                              int.parse(_get_staffs
-                                                                  .response
-                                                                  .value
-                                                                  .data![
-                                                                      index - 1]
-                                                                  .id
-                                                                  .toString()));
                                                       Get.to(
                                                           professional_details(
+                                                       staffID: _get_staffs
+                                                                          .response
+                                                                          .value
+                                                                          .data![
+                                                                              index - 1].id,
                                                         name: _get_staffs
                                                             .response
                                                             .value

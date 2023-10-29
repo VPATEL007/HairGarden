@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:hairgarden/auth/Model/staff_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../COMMON/common_color.dart';
 import '../../../COMMON/comontoast.dart';
@@ -11,6 +14,7 @@ import '../Model/get_staffs_model.dart';
 class get_staffs_details_controller extends GetxController {
   var loading = false.obs;
   var response = get_staff_details_model().obs;
+  var staffModel = GetStaffDataModel().obs;
   bool hasnodata = false;
   var myreviewimg = [].obs;
   var myreviewname = [].obs;
@@ -51,6 +55,24 @@ class get_staffs_details_controller extends GetxController {
       } else {
         response = respo.obs;
         // commontoas(respo.message.toString());
+      }
+    } finally {
+      loading(false);
+    }
+  }
+
+  Future<void> getStaffDetail(staff_id) async {
+    print(staff_id.runtimeType);
+    print(staff_id);
+    try {
+      loading(true);
+      final respo = await api_service().getStaffDetail(staff_id);
+      log("STAFF====${respo.data}");
+      if (respo.status == true) {
+        staffModel = respo.obs;
+      } else {
+        staffModel = respo.obs;
+        commontoas(respo.message.toString());
       }
     } finally {
       loading(false);

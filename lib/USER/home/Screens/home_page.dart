@@ -85,14 +85,9 @@ class _home_pageState extends State<home_page> {
 
   @override
   void initState() {
-    _get_banner.get_banner_cont().then((value)
-    {
-      log("BOTTOM BANNER===${_get_banner.bottombannerimg.length}");
-    });
+    _get_banner.get_banner_cont();
 
-    _get_allprod.get_all_cat_products_cont().then((value) {
-      print('Vijay Count Cart====${_get_allprod.response().data?.length}');
-    });
+    _get_allprod.get_all_cat_products_cont();
     getuserid().then((value) {
       _get_address
           .get_address_cont(

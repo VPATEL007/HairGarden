@@ -142,7 +142,6 @@ class _HistoryPageState extends State<HistoryPage> {
                                                 .response.value.data?.length ??
                                             0,
                                         itemBuilder: (context, index) {
-
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 15),
@@ -409,7 +408,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                               ),
                                                                               const Spacer(),
                                                                               Text(
-                                                                                getOrderHistory.response.value.data![index].staffdata?.staffName.toString() == "" || getOrderHistory.response.value.data![index].staffdata?.staffName == null ? "Waiting for assign" : getOrderHistory.response.value.data![index].staffdata?.staffName.toString()??"",
+                                                                                getOrderHistory.response.value.data![index].staffdata?.staffName.toString() == "" || getOrderHistory.response.value.data![index].staffdata?.staffName == null ? "Waiting for assign" : getOrderHistory.response.value.data![index].staffdata?.staffName.toString() ?? "",
                                                                                 style: font_style.black_400_14_under.copyWith(fontSize: 16),
                                                                               ),
                                                                               const Icon(Icons.keyboard_arrow_right_outlined)
@@ -719,165 +718,228 @@ class _HistoryPageState extends State<HistoryPage> {
                                                 Row(
                                                   children: [
                                                     Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
                                                           'Write a Review*',
                                                           style: font_style
                                                               .black_400_14
                                                               .copyWith(
-                                                              color:
-                                                              yellow_col),
+                                                                  color:
+                                                                      yellow_col),
                                                         ),
-                                                        const SizedBox(height: 7),
+                                                        const SizedBox(
+                                                            height: 7),
                                                         Text(
                                                           'This help us Improve for you',
                                                           style: font_style
                                                               .black_400_12
                                                               .copyWith(
-                                                              color:
-                                                              const Color(0xffA1A1AA)),
+                                                                  color: const Color(
+                                                                      0xffA1A1AA)),
                                                         ),
                                                       ],
                                                     ),
                                                     const Spacer(),
                                                     InkWell(
-                                                      onTap:(){
-                                                        Get.bottomSheet(Container(
+                                                      onTap: () {
+                                                        Get.bottomSheet(
+                                                            Container(
                                                           decoration: const BoxDecoration(
-                                                            color: Colors.white,
-                                                            borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
-                                                          ),
+                                                              color:
+                                                                  Colors.white,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          20),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          20))),
                                                           constraints:
-                                                          BoxConstraints(
-                                                              maxHeight:
-                                                              Get.height *
-                                                                  0.50,
-                                                              minHeight:
-                                                              Get.height *
-                                                                  0.35),
+                                                              BoxConstraints(
+                                                                  maxHeight: Get
+                                                                          .height *
+                                                                      0.50,
+                                                                  minHeight:
+                                                                      Get.height *
+                                                                          0.35),
                                                           child: Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             children: [
-                                                              SizedBox(height: SizeConfig
-                                                                  .screenHeight *0.05),
+                                                              SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.05),
                                                               Align(
                                                                 child: Text(
                                                                   "Write a Review about the Service*",
-                                                                  style: font_style.black_600_14.copyWith(fontWeight: FontWeight.w400,color: yellow_col,decoration: TextDecoration.none,fontSize: 18),
+                                                                  style: font_style.black_600_14.copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color:
+                                                                          yellow_col,
+                                                                      decoration:
+                                                                          TextDecoration
+                                                                              .none,
+                                                                      fontSize:
+                                                                          18),
                                                                 ),
                                                               ),
-                                                              SizedBox(height: SizeConfig
-                                                                  .screenHeight *0.03),
+                                                              SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.03),
                                                               Center(
-                                                                child: RatingBar(
-                                                                  initialRating:_rating,
+                                                                child:
+                                                                    RatingBar(
+                                                                  initialRating:
+                                                                      _rating,
                                                                   minRating: 1,
-                                                                  direction: Axis.horizontal,
-                                                                  allowHalfRating: true,
-                                                                  unratedColor: yellow_col
-                                                                      .withOpacity(0.5),
+                                                                  direction: Axis
+                                                                      .horizontal,
+                                                                  allowHalfRating:
+                                                                      true,
+                                                                  unratedColor:
+                                                                      yellow_col
+                                                                          .withOpacity(
+                                                                              0.5),
                                                                   itemCount: 5,
                                                                   glow: false,
-                                                                  itemSize: SizeConfig
-                                                                      .screenHeight *
-                                                                      0.040,
+                                                                  itemSize:
+                                                                      SizeConfig
+                                                                              .screenHeight *
+                                                                          0.040,
 
-                                                                  itemPadding:
-                                                                  const EdgeInsets.symmetric(
-                                                                      horizontal: 4.0),
-                                                                  ratingWidget: RatingWidget(
-                                                                    full: Image.asset("assets/images/full_rating.png"),
-                                                                    empty: Image.asset("assets/images/empty_rating.png"), half: Image.asset("assets/images/empty_rating.png"),
+                                                                  itemPadding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          4.0),
+                                                                  ratingWidget:
+                                                                      RatingWidget(
+                                                                    full: Image
+                                                                        .asset(
+                                                                            "assets/images/full_rating.png"),
+                                                                    empty: Image
+                                                                        .asset(
+                                                                            "assets/images/empty_rating.png"),
+                                                                    half: Image
+                                                                        .asset(
+                                                                            "assets/images/empty_rating.png"),
                                                                   ),
                                                                   // itemBuilder: (context, _) =>
                                                                   //     Icon(Icons.star,
                                                                   //       color: yellow_col,
                                                                   //     ),
-                                                                  onRatingUpdate: (rating) {
-                                                                    setState(() {
-                                                                      _rating = rating;
+                                                                  onRatingUpdate:
+                                                                      (rating) {
+                                                                    setState(
+                                                                        () {
+                                                                      _rating =
+                                                                          rating;
                                                                     });
-
                                                                   },
-                                                                  updateOnDrag: true,
+                                                                  updateOnDrag:
+                                                                      true,
                                                                 ),
                                                               ),
-                                                              SizedBox(height: SizeConfig
-                                                                  .screenHeight *0.03),
+                                                              SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.03),
                                                               Padding(
-                                                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        15),
                                                                 child: Column(
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
                                                                   children: [
                                                                     Text(
                                                                       "Write a Comment",
-                                                                      style: font_style.black_600_16.copyWith(fontWeight: FontWeight.w600,color: const Color(0xff27272A)),
+                                                                      style: font_style.black_600_16.copyWith(
+                                                                          fontWeight: FontWeight
+                                                                              .w600,
+                                                                          color:
+                                                                              const Color(0xff27272A)),
                                                                     ),
-                                                                    const SizedBox(height: 10),
+                                                                    const SizedBox(
+                                                                        height:
+                                                                            10),
                                                                     Center(
-                                                                      child: SizedBox(
-                                                                        width: SizeConfig.screenWidth,
-                                                                        child: TextFormField(
-                                                                          keyboardType: TextInputType.text,
-                                                                          maxLines: 4,
+                                                                      child:
+                                                                          SizedBox(
+                                                                        width: SizeConfig
+                                                                            .screenWidth,
+                                                                        child:
+                                                                            TextFormField(
+                                                                          keyboardType:
+                                                                              TextInputType.text,
+                                                                          maxLines:
+                                                                              4,
                                                                           // readOnly: isotp == true ? true : false,
-                                                                          style: font_style.white_400_16
+                                                                          style: font_style
+                                                                              .white_400_16
                                                                               .copyWith(color: Colors.black),
-                                                                          decoration: InputDecoration(
-                                                                            counterText: "",
-                                                                            hintText: "What did you like the most?",
-                                                                            hintStyle: font_style.white_400_16.copyWith(
+                                                                          decoration:
+                                                                              InputDecoration(
+                                                                            counterText:
+                                                                                "",
+                                                                            hintText:
+                                                                                "What did you like the most?",
+                                                                            hintStyle:
+                                                                                font_style.white_400_16.copyWith(
                                                                               color: const Color(0xff999999),
                                                                             ),
-                                                                            enabledBorder: OutlineInputBorder(
-                                                                                borderSide: BorderSide(color: yellow_col)),
-                                                                            focusedBorder: OutlineInputBorder(
-                                                                                borderSide: BorderSide(color: yellow_col)),
+                                                                            enabledBorder:
+                                                                                OutlineInputBorder(borderSide: BorderSide(color: yellow_col)),
+                                                                            focusedBorder:
+                                                                                OutlineInputBorder(borderSide: BorderSide(color: yellow_col)),
                                                                           ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                    const SizedBox(height: 10),
+                                                                    const SizedBox(
+                                                                        height:
+                                                                            10),
                                                                     Row(
                                                                       children: [
                                                                         Expanded(
-                                                                          child: InkWell(
-                                                                            onTap:(){
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () {
                                                                               Get.back();
                                                                             },
-                                                                            child: Container(
+                                                                            child:
+                                                                                Container(
                                                                               width: 80,
                                                                               height: 40,
-                                                                              alignment:
-                                                                              Alignment.center,
-                                                                              padding: EdgeInsets.symmetric(
-                                                                                  vertical: SizeConfig
-                                                                                      .screenHeight *
-                                                                                      0.01),
-                                                                              decoration:
-                                                                              BoxDecoration(
-                                                                                  borderRadius:
-                                                                                  BorderRadius
-                                                                                      .circular(
-                                                                                      8.0),
-                                                                                  border: Border.all(
-                                                                                      color: yellow_col,
-                                                                                      width: 1
-                                                                                  )
-                                                                              ),
+                                                                              alignment: Alignment.center,
+                                                                              padding: EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.01),
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0), border: Border.all(color: yellow_col, width: 1)),
                                                                               // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
-                                                                              child: Text("Remind me Later",
-                                                                                style: font_style
-                                                                                    .white_600_16.copyWith(color: yellow_col),
+                                                                              child: Text(
+                                                                                "Remind me Later",
+                                                                                style: font_style.white_600_16.copyWith(color: yellow_col),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                         ),
-                                                                        const SizedBox(width: 15),
+                                                                        const SizedBox(
+                                                                            width:
+                                                                                15),
                                                                         Expanded(
-                                                                          child: InkWell(
-                                                                            onTap: () {
+                                                                          child:
+                                                                              InkWell(
+                                                                            onTap:
+                                                                                () {
                                                                               // _give_rating
                                                                               //     .give_rating_cont(
                                                                               //     widget.staffid,
@@ -886,28 +948,17 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                               //         .toString(),
                                                                               //     comment.text);
                                                                             },
-                                                                            child: Container(
+                                                                            child:
+                                                                                Container(
                                                                               width: 80,
                                                                               height: 40,
-                                                                              alignment:
-                                                                              Alignment.center,
-                                                                              padding: EdgeInsets.symmetric(
-                                                                                  vertical: SizeConfig
-                                                                                      .screenHeight *
-                                                                                      0.01),
-                                                                              decoration:
-                                                                              BoxDecoration(
-                                                                                borderRadius:
-                                                                                BorderRadius
-                                                                                    .circular(
-                                                                                    8.0),
-                                                                                color: yellow_col
-
-                                                                              ),
+                                                                              alignment: Alignment.center,
+                                                                              padding: EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.01),
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0), color: yellow_col),
                                                                               // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
-                                                                              child: Text("Submit",
-                                                                                style: font_style
-                                                                                    .white_600_16,
+                                                                              child: Text(
+                                                                                "Submit",
+                                                                                style: font_style.white_600_16,
                                                                               ),
                                                                             ),
                                                                           ),
@@ -917,7 +968,6 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                   ],
                                                                 ),
                                                               ),
-
                                                             ],
                                                           ),
                                                         ));
@@ -926,21 +976,22 @@ class _HistoryPageState extends State<HistoryPage> {
                                                         width: 80,
                                                         height: 32,
                                                         alignment:
-                                                        Alignment.center,
+                                                            Alignment.center,
                                                         padding: EdgeInsets.symmetric(
                                                             vertical: SizeConfig
-                                                                .screenHeight *
+                                                                    .screenHeight *
                                                                 0.01),
                                                         decoration:
-                                                        BoxDecoration(
+                                                            BoxDecoration(
                                                           borderRadius:
-                                                          BorderRadius
-                                                              .circular(
-                                                              8.0),
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
                                                           color: yellow_col,
                                                         ),
                                                         // child: Text("PAY ₹ ${int.parse(_get_cart.response.value.total.toString())+int.parse(selected_tip.toString().substring(1))}",style: font_style.white_600_14,),
-                                                        child: Text("Review",
+                                                        child: Text(
+                                                          "Review",
                                                           style: font_style
                                                               .white_600_16,
                                                         ),
@@ -1104,6 +1155,31 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                           const Spacer(),
                                                                           Text(
                                                                             getUpcomingOrderController.response.value.data![index].bookingDate.toString(),
+                                                                            style:
+                                                                                font_style.black_400_16,
+                                                                          ),
+                                                                        ],
+                                                                      )),
+                                                                ),
+
+                                                                SizedBox(
+                                                                  height: SizeConfig
+                                                                          .screenHeight *
+                                                                      0.01,
+                                                                ),
+                                                                Center(
+                                                                  child: SizedBox(
+                                                                      width: SizeConfig.screenWidth * 0.9,
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            "SLOT TIME",
+                                                                            style:
+                                                                                font_style.yell_400_16,
+                                                                          ),
+                                                                          const Spacer(),
+                                                                          Text(
+                                                                            getUpcomingOrderController.response.value.data![index].slotName.toString(),
                                                                             style:
                                                                                 font_style.black_400_16,
                                                                           ),
@@ -1361,6 +1437,39 @@ class _HistoryPageState extends State<HistoryPage> {
                                                                     .data![
                                                                         index]
                                                                     .bookingDate
+                                                                    .toString(),
+                                                                style: font_style
+                                                                    .black_400_16,
+                                                              ),
+                                                            ],
+                                                          )),
+                                                    ),
+
+                                                    SizedBox(
+                                                      height: SizeConfig
+                                                              .screenHeight *
+                                                          0.01,
+                                                    ),
+                                                    Center(
+                                                      child: SizedBox(
+                                                          width: SizeConfig
+                                                                  .screenWidth *
+                                                              0.9,
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "SLOT TIME",
+                                                                style: font_style
+                                                                    .yell_400_16,
+                                                              ),
+                                                              const Spacer(),
+                                                              Text(
+                                                                getUpcomingOrderController
+                                                                    .response
+                                                                    .value
+                                                                    .data![
+                                                                        index]
+                                                                    .slotName
                                                                     .toString(),
                                                                 style: font_style
                                                                     .black_400_16,

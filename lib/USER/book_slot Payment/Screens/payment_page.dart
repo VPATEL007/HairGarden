@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -99,7 +100,6 @@ class _payment_pageState extends State<payment_page> {
   int walletValue = -1;
   bool isWallet = false;
   bool isPayAfterService = false;
-  final _razorpay = Razorpay();
   String? _deviceId;
 
   final _get_profile_info = Get.put(get_profile_info_controller());
@@ -142,24 +142,6 @@ class _payment_pageState extends State<payment_page> {
   }
 
   String? tot, discount, slot;
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(response.message ?? ''),
-      ),
-    );
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet is selected
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(response.walletName ?? ''),
-      ),
-    );
-  }
 
   startInstamojo(var amount) async {
     Dio dio = Dio();
@@ -715,6 +697,7 @@ class _payment_pageState extends State<payment_page> {
                               if(isWallet)
                               {
                                 iscoupapply=false;
+                                _oneValue == 0;
                                 setState(() {
 
                                 });
@@ -1074,7 +1057,7 @@ class _payment_pageState extends State<payment_page> {
                           '${(int.parse(_get_cart.response.value.total.toString()) - (int.parse(selected_tip)))}';
                     } else if (isWallet == true) {
                       totalPrice =
-                          '${(int.parse(_get_cart.response.value.total.toString()))}';
+                          '${(int.parse(_get_cart.response.value.total.toString()))-(_get_cart.walletAMount.value)}';
                     } else {
                       totalPrice =
                           '${int.parse(_get_cart.response.value.total.toString())}';
@@ -1083,7 +1066,12 @@ class _payment_pageState extends State<payment_page> {
                     if (_oneValue == 0 && isWallet == false) {
                       print('3');
                       startInstamojo(double.parse(totalPrice.toString()));
-                    } else if (_oneValue == 1 || isWallet == true) {
+                    }
+                    else if(isWallet == true)
+                    {
+                      startInstamojo(double.parse(totalPrice.toString()));
+                    }
+                    else if (_oneValue == 1 || isWallet == true) {
                       print('2');
                       print('Total Price===${totalPrice}');
                       _book_service.book_service_cont(
@@ -1095,7 +1083,7 @@ class _payment_pageState extends State<payment_page> {
                               ? ""
                               : uid.toString(),
                           widget.getcatid.toString(),
-                          iscoupapply == false ? "0" : "1",
+                          isWallet == false ? "0" : "1",
                           selected_tip,
                           _deviceId.toString(),
                           widget.getslotid.toString(),

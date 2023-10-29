@@ -39,10 +39,18 @@ class _edit_profileState extends State<edit_profile> {
       pphno.text = _get_profile_info.response.value.data!.mobile.toString();
       pemail.text = _get_profile_info.response.value.data!.email.toString();
     });
+    print("IMAGE===${_get_profile_info.response.value.data?.profile??""}");
   }
 
   String? guid;
   bool ontapreadonly = false;
+  final List<String> items = [
+    'Male',
+    'Female',
+    'OTHERS',
+  ];
+  String selectedGenderValue = '';
+  int selectedIndex = 0;
 
   getuid() async {
     SharedPreferences sf = await SharedPreferences.getInstance();
@@ -78,11 +86,12 @@ class _edit_profileState extends State<edit_profile> {
     XFile? xf = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (xf != null) {
       setState(() {
-        profile_photo = File(xf!.path);
-        final bytes = File(xf!.path).readAsBytesSync();
+        profile_photo = File(xf.path);
+        final bytes = File(xf.path).readAsBytesSync();
         img64 = base64Encode(bytes);
         // print("THIS IS PROFILE PHOTO ${profile_photo}");
         print("THIS IS PROFILE PHOTO ${img64}");
+        print("PROFILE PHOTO ${profile_photo}");
       });
     }
   }
@@ -127,7 +136,7 @@ class _edit_profileState extends State<edit_profile> {
       body: Obx(() {
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Container(
+          child: SizedBox(
               height: SizeConfig.screenHeight - statusheight - appbarh,
               width: SizeConfig.screenWidth,
               child: Column(
@@ -139,28 +148,8 @@ class _edit_profileState extends State<edit_profile> {
                           alignment: Alignment.center,
                           clipBehavior: Clip.none,
                           children: [
-                            Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {},
-                                  child: Container(
-                                    width: SizeConfig.screenWidth,
-                                    height: SizeConfig.screenHeight * 0.18,
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/images/profile_bg_img.png"),
-                                            fit: BoxFit.cover)),
-                                  ),
-                                ),
-                                Container(
-                                  width: SizeConfig.screenWidth,
-                                  height: SizeConfig.screenHeight * 0.08,
-                                ),
-                              ],
-                            ),
                             Positioned(
-                              top: SizeConfig.screenHeight * 0.08,
+                              top: SizeConfig.screenHeight * 0.01,
                               child: InkWell(
                                 onTap: () {
                                   if (ontapreadonly == false) {
@@ -194,11 +183,11 @@ class _edit_profileState extends State<edit_profile> {
                             ),
                             ontapreadonly == true
                                 ? Positioned(
-                                    left: SizeConfig.screenWidth * 0.56,
-                                    top: SizeConfig.screenHeight * 0.2,
+                                    // right: SizeConfig.screenWidth * 0.10,
+                                    // top: SizeConfig.screenHeight * 0.5,
+
                                     child: InkWell(
                                       onTap: () {
-                                        print("dsd");
                                         if (ontapreadonly == false) {
                                         } else {
                                           profile_image();
@@ -220,103 +209,149 @@ class _edit_profileState extends State<edit_profile> {
                                   )
                                 : Container(),
                           ]),
-
-                      Text(
-                        _get_profile_info.response.value.data!.firstName
-                            .toString(),
-                        style: font_style.black_600_14_nounderline,
-                      ),
-
-                      //FIRST NAME
-                      Center(
-                        child: Container(
-                          width: SizeConfig.screenWidth * 0.9,
-                          child: Text(
-                            "First Name",
-                            style: font_style.gr27272A_600_14,
+                      Padding(
+                        padding:  EdgeInsets.only(top: SizeConfig.screenHeight * 0.20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              child: Text(
+                              _get_profile_info.response.value.data!.firstName
+                                  .toString(),
+                              style: font_style.black_600_14_nounderline,
                           ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.screenHeight * 0.01,
+                            ),
+
+                            //FIRST NAME
+                            Center(
+                              child: SizedBox(
+                                width: SizeConfig.screenWidth * 0.9,
+                                child: Text(
+                                  "First Name",
+                                  style: font_style.gr27272A_600_14,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.screenHeight * 0.01,
+                            ),
+                            Center(
+                              child: comon_pofile_txtform(
+                                  isreadonly: ontapreadonly == true ? false : true,
+                                  hinttxt: "Andrew",
+                                  controller: pfname),
+                            ),
+
+                            SizedBox(
+                              height: SizeConfig.screenHeight * 0.01,
+                            ),
+                            //LAST NAME
+                            Center(
+                              child: SizedBox(
+                                width: SizeConfig.screenWidth * 0.9,
+                                child: Text(
+                                  "Last Name",
+                                  style: font_style.gr27272A_600_14,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.screenHeight * 0.01,
+                            ),
+                            Center(
+                              child: comon_pofile_txtform(
+                                  isreadonly: ontapreadonly == true ? false : true,
+                                  hinttxt: "Andrew",
+                                  controller: plname),
+                            ),
+
+                            SizedBox(
+                              height: SizeConfig.screenHeight * 0.01,
+                            ),
+
+                            //PHONE NAME
+                            Center(
+                              child: SizedBox(
+                                width: SizeConfig.screenWidth * 0.9,
+                                child: Text(
+                                  "Phone Number",
+                                  style: font_style.gr27272A_600_14,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.screenHeight * 0.01,
+                            ),
+                            Center(
+                              child: comon_pofile_txtform(
+                                  isreadonly: true,
+                                  hinttxt: "-XX XXXXXXXXXX",
+                                  controller: pphno),
+                            ),
+
+                            SizedBox(
+                              height: SizeConfig.screenHeight * 0.01,
+                            ),
+
+                            //EMAIL
+                            Center(
+                              child: SizedBox(
+                                width: SizeConfig.screenWidth * 0.9,
+                                child: Text(
+                                  "E-mail",
+                                  style: font_style.gr27272A_600_14,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.screenHeight * 0.01,
+                            ),
+                            Center(
+                              child: comon_pofile_txtform(
+                                  isreadonly: ontapreadonly == true ? false : true,
+                                  hinttxt: "XXXXXX@XXXXX.XXX",
+                                  controller: pemail),
+                            ),
+                            Row(
+                              children: List.generate(
+                                  items.length,
+                                      (index) => Row(
+                                    children: [
+                                      Theme(
+                                        data: ThemeData(
+                                            unselectedWidgetColor:
+                                            Colors.black),
+                                        child: Radio(
+                                          activeColor: Colors.black,
+                                          value: items[index],
+                                          groupValue:
+                                          selectedGenderValue,
+                                          onChanged: (String? value) {
+                                            setState(() {
+                                              selectedIndex == index;
+                                              selectedGenderValue =
+                                              value!;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Text(items[index],
+                                          style: font_style.black_600_16
+                                              .copyWith(
+                                              color: Colors.black),
+                                          overflow:
+                                          TextOverflow.ellipsis)
+                                    ],
+                                  )),
+                            )
+
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
-                      ),
-                      Center(
-                        child: comon_pofile_txtform(
-                            isreadonly: ontapreadonly == true ? false : true,
-                            hinttxt: "Andrew",
-                            controller: pfname),
-                      ),
+                      )
 
-                      SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
-                      ),
-                      //LAST NAME
-                      Center(
-                        child: Container(
-                          width: SizeConfig.screenWidth * 0.9,
-                          child: Text(
-                            "Last Name",
-                            style: font_style.gr27272A_600_14,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
-                      ),
-                      Center(
-                        child: comon_pofile_txtform(
-                            isreadonly: ontapreadonly == true ? false : true,
-                            hinttxt: "Andrew",
-                            controller: plname),
-                      ),
-
-                      SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
-                      ),
-
-                      //PHONE NAME
-                      Center(
-                        child: Container(
-                          width: SizeConfig.screenWidth * 0.9,
-                          child: Text(
-                            "Phone Number",
-                            style: font_style.gr27272A_600_14,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
-                      ),
-                      Center(
-                        child: comon_pofile_txtform(
-                            isreadonly: true,
-                            hinttxt: "-XX XXXXXXXXXX",
-                            controller: pphno),
-                      ),
-
-                      SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
-                      ),
-
-                      //EMAIL
-                      Center(
-                        child: Container(
-                          width: SizeConfig.screenWidth * 0.9,
-                          child: Text(
-                            "E-mail",
-                            style: font_style.gr27272A_600_14,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.screenHeight * 0.01,
-                      ),
-                      Center(
-                        child: comon_pofile_txtform(
-                            isreadonly: ontapreadonly == true ? false : true,
-                            hinttxt: "XXXXXX@XXXXX.XXX",
-                            controller: pemail),
-                      ),
                     ],
                   ),
                   const Spacer(),
@@ -336,7 +371,7 @@ class _edit_profileState extends State<edit_profile> {
                                         plname.text,
                                         pphno.text,
                                         pemail.text,
-                                        "Male",
+                                        selectedGenderValue.toLowerCase().capitalizeFirst,
                                         img64 == ""
                                             ? _get_profile_info
                                                 .response.value.data!.profile
@@ -347,7 +382,6 @@ class _edit_profileState extends State<edit_profile> {
                                 });
                               }
                             });
-                            print(profile_photo);
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(

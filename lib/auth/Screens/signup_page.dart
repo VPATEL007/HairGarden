@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -98,6 +100,12 @@ class _signup_pageState extends State<signup_page> {
   }
 
   @override
+  void initState() {
+    initPlatformState();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     AppBar appbar = AppBar(
       backgroundColor: Colors.transparent,
@@ -114,7 +122,7 @@ class _signup_pageState extends State<signup_page> {
           SizedBox(
               height: SizeConfig.screenHeight * 0.015,
               width: SizeConfig.screenWidth * 0.03,
-              child:  Image(
+              child: Image(
                 image: const AssetImage("assets/images/star.png"),
                 fit: BoxFit.fill,
                 color: common_color,
@@ -279,17 +287,18 @@ class _signup_pageState extends State<signup_page> {
                                     width: SizeConfig.screenWidth * 0.9,
                                     child: TextFormField(
                                       controller: sfname,
-                                      style: font_style.black_600_16
-                                          ,
+                                      style: font_style.black_600_16,
                                       decoration: InputDecoration(
                                         hintText: "First Name*",
                                         hintStyle: font_style.black_600_16,
-                                        enabledBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
-                                        focusedBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
+                                        enabledBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
+                                        focusedBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
                                       ),
                                     ),
                                   ),
@@ -317,13 +326,15 @@ class _signup_pageState extends State<signup_page> {
                                       style: font_style.black_600_16,
                                       decoration: InputDecoration(
                                         hintText: "Last Name",
-                                        hintStyle: font_style.black_600_16 ,
-                                        enabledBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
-                                        focusedBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
+                                        hintStyle: font_style.black_600_16,
+                                        enabledBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
+                                        focusedBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
                                       ),
                                     ),
                                   ),
@@ -347,18 +358,18 @@ class _signup_pageState extends State<signup_page> {
                                     width: SizeConfig.screenWidth * 0.9,
                                     child: TextFormField(
                                       controller: smail,
-                                      style: font_style.black_600_16
-                                          ,
+                                      style: font_style.black_600_16,
                                       decoration: InputDecoration(
                                         hintText: "Enter Your E-Mail",
-                                        hintStyle: font_style.black_600_16
-                                            ,
-                                        enabledBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
-                                        focusedBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
+                                        hintStyle: font_style.black_600_16,
+                                        enabledBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
+                                        focusedBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
                                       ),
                                     ),
                                   ),
@@ -385,19 +396,19 @@ class _signup_pageState extends State<signup_page> {
                                       controller: smno,
                                       maxLength: 10,
                                       readOnly: isotp == true ? true : false,
-                                      style: font_style.black_600_16
-                                          ,
+                                      style: font_style.black_600_16,
                                       decoration: InputDecoration(
                                         hintText: "Enter Your Mobile",
                                         counterText: "",
-                                        hintStyle: font_style.black_600_16
-                                            ,
-                                        enabledBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
-                                        focusedBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
+                                        hintStyle: font_style.black_600_16,
+                                        enabledBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
+                                        focusedBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
                                       ),
                                     ),
                                   ),
@@ -421,7 +432,7 @@ class _signup_pageState extends State<signup_page> {
                                               Theme(
                                                 data: ThemeData(
                                                     unselectedWidgetColor:
-                                                    Colors.black),
+                                                        Colors.black),
                                                 child: Radio(
                                                   activeColor: Colors.black,
                                                   value: items[index],
@@ -539,18 +550,18 @@ class _signup_pageState extends State<signup_page> {
                                     child: TextFormField(
                                       keyboardType: TextInputType.text,
                                       controller: srefer,
-                                      style: font_style.black_600_16
-                                          ,
+                                      style: font_style.black_600_16,
                                       decoration: InputDecoration(
                                         hintText: "Refer Code",
-                                        hintStyle: font_style.black_600_16
-                                            ,
-                                        enabledBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
-                                        focusedBorder: const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.black)),
+                                        hintStyle: font_style.black_600_16,
+                                        enabledBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
+                                        focusedBorder:
+                                            const UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black)),
                                       ),
                                     ),
                                   ),
@@ -575,12 +586,18 @@ class _signup_pageState extends State<signup_page> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             styles: [
-                                              font_style.otp_txtstyl.copyWith(color: yellow_col),
-                                              font_style.otp_txtstyl.copyWith(color: yellow_col),
-                                              font_style.otp_txtstyl.copyWith(color: yellow_col),
-                                              font_style.otp_txtstyl.copyWith(color: yellow_col),
-                                              font_style.otp_txtstyl.copyWith(color: yellow_col),
-                                              font_style.otp_txtstyl.copyWith(color: yellow_col),
+                                              font_style.otp_txtstyl
+                                                  .copyWith(color: yellow_col),
+                                              font_style.otp_txtstyl
+                                                  .copyWith(color: yellow_col),
+                                              font_style.otp_txtstyl
+                                                  .copyWith(color: yellow_col),
+                                              font_style.otp_txtstyl
+                                                  .copyWith(color: yellow_col),
+                                              font_style.otp_txtstyl
+                                                  .copyWith(color: yellow_col),
+                                              font_style.otp_txtstyl
+                                                  .copyWith(color: yellow_col),
                                             ],
                                             enabledBorderColor: Colors.black,
                                             keyboardType: TextInputType.phone,
@@ -622,12 +639,10 @@ class _signup_pageState extends State<signup_page> {
                                       smno.text == "" ||
                                       selectedGenderValue == "") {
                                     commontoas("Please fill required field..");
-                                  }
-                                  else if(smno.text.length<10)
-                                  {
-                                    commontoas("Please Enter 10 Digit Mobile Number");
-                                  }
-                                  else {
+                                  } else if (smno.text.length < 10) {
+                                    commontoas(
+                                        "Please Enter 10 Digit Mobile Number");
+                                  } else {
                                     _registrationOtp
                                         .send_otp_cont(smno.text, "Singup")
                                         .then((value) {
@@ -646,7 +661,8 @@ class _signup_pageState extends State<signup_page> {
                                       decoration: kInnerDecoration,
                                       child: Obx(() => _registrationOtp
                                               .loading.value
-                                          ? const CommonIndicator(color: Colors.white)
+                                          ? const CommonIndicator(
+                                              color: Colors.white)
                                           : Text("GET OTP",
                                               style: font_style.grad_600_16
                                                   .copyWith(
@@ -661,30 +677,30 @@ class _signup_pageState extends State<signup_page> {
                                     // isotp=false;
                                     if (widget.frompage == "skip") {
                                       _signup.signup_cont(
-                                        'skip',
-                                        sfname.text,
-                                        slname.text,
-                                        smail.text,
-                                        smno.text,
-                                        "123456",
-                                        entered_otp,
-                                        srefer.text == "" ? "" : srefer.text,
-                                        selectedGenderValue.toString(),
-                                      );
+                                          'skip',
+                                          sfname.text,
+                                          slname.text,
+                                          smail.text,
+                                          smno.text,
+                                          "123456",
+                                          entered_otp,
+                                          srefer.text == "" ? "" : srefer.text,
+                                          selectedGenderValue.toString(),
+                                          _deviceId);
                                     } else {
                                       _signup.signup_cont(
-                                        '',
-                                        sfname.text,
-                                        slname.text,
-                                        smail.text,
-                                        smno.text,
-                                        "123456",
-                                        entered_otp,
-                                        srefer.text == "8076306373"
-                                            ? ""
-                                            : srefer.text,
-                                        selectedGenderValue.toString(),
-                                      );
+                                          '',
+                                          sfname.text,
+                                          slname.text,
+                                          smail.text,
+                                          smno.text,
+                                          "123456",
+                                          entered_otp,
+                                          srefer.text == "8076306373"
+                                              ? ""
+                                              : srefer.text,
+                                          selectedGenderValue.toString(),
+                                          _deviceId);
                                     }
                                   });
                                 },
@@ -695,14 +711,18 @@ class _signup_pageState extends State<signup_page> {
                                     height: SizeConfig.screenHeight * 0.06,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                        border: Border.all(color: common_color, width: 1),
-                                        borderRadius: BorderRadius.circular(32),
+                                      border: Border.all(
+                                          color: common_color, width: 1),
+                                      borderRadius: BorderRadius.circular(32),
                                     ),
                                     child: Obx(() {
                                       return _signup.loading.value
-                                          ? const CommonIndicator(color: Colors.white)
-                                          : Text( "SIGN UP",
-                                          style: font_style.grad_600_16.copyWith(color: common_color));
+                                          ? const CommonIndicator(
+                                              color: Colors.white)
+                                          : Text("SIGN UP",
+                                              style: font_style.grad_600_16
+                                                  .copyWith(
+                                                      color: common_color));
                                     }),
                                   ),
                                 ),
@@ -723,18 +743,23 @@ class _signup_pageState extends State<signup_page> {
                               InkWell(
                                   onTap: () {
                                     if (widget.frompage == "skip") {
-                                      Get.to(login_page(
-                                        frompage: 'skip',
-                                      ),transition: Transition.downToUp );
+                                      Get.to(
+                                          login_page(
+                                            frompage: 'skip',
+                                          ),
+                                          transition: Transition.downToUp);
                                     } else {
-                                      Get.to(login_page(
-                                        frompage: '',
-                                      ),transition: Transition.downToUp );
+                                      Get.to(
+                                          login_page(
+                                            frompage: '',
+                                          ),
+                                          transition: Transition.downToUp);
                                     }
                                   },
                                   child: Text(
                                     "Log In",
-                                    style: font_style.black_400_14_under.copyWith(fontWeight: FontWeight.w600),
+                                    style: font_style.black_400_14_under
+                                        .copyWith(fontWeight: FontWeight.w600),
                                   )),
                             ],
                           ),

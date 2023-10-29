@@ -119,7 +119,7 @@ class Staffdata {
   Staffdata({this.staffId, this.staffName, this.profile});
 
   Staffdata.fromJson(Map<String, dynamic> json) {
-    staffId = json['staff_id'];
+    staffId = json['staff_id'].toString();
     staffName = json['staff_name'];
     profile = json['profile'];
   }

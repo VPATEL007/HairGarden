@@ -13,8 +13,9 @@ import '../../book_slot Payment/Controller/get_staff_details_controller.dart';
 class professional_details extends StatefulWidget {
   String? name;
   String? profileurl;
+  String? staffID;
 
-  professional_details({required this.name, required this.profileurl});
+  professional_details({required this.name, required this.profileurl,required this.staffID});
 
   @override
   State<professional_details> createState() => _professional_detailsState();
@@ -27,7 +28,7 @@ class _professional_detailsState extends State<professional_details> {
 
   @override
   void initState() {
-    // _get_staff_details.get_staffs_details_cont("20");
+    _get_staff_details.getStaffDetail(widget.staffID);
     super.initState();
   }
 
@@ -116,8 +117,8 @@ class _professional_detailsState extends State<professional_details> {
                           SizedBox(
                             height: SizeConfig.screenHeight * 0.02,
                           ),
-                          _get_staff_details.response.value.status == false
-                              ? Container(
+                          _get_staff_details.staffModel.value.status == false
+                              ? SizedBox(
                                   width: SizeConfig.screenWidth,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -150,12 +151,12 @@ class _professional_detailsState extends State<professional_details> {
                                           color: Color(0xffF2C94C),
                                         ),
                                         Text(
-                                          _get_staff_details
-                                              .response.value.average??'0.0',
+                                          '${_get_staff_details
+                                              .staffModel.value.average??0.toString()}',
                                           style: font_style.black_400_20,
                                         ),
                                         Text(
-                                          " (${_get_staff_details.response.value.data?.length??0})",
+                                          " 0",
                                           style: font_style.greyA1A1AA_400_12,
                                         )
                                       ],
@@ -166,7 +167,7 @@ class _professional_detailsState extends State<professional_details> {
                                     //EXCELLENT GOOD
 
                                     Center(
-                                      child: Container(
+                                      child: SizedBox(
                                           width: SizeConfig.screenWidth * 0.9,
                                           child: ListView.builder(
                                             padding: EdgeInsets.zero,
@@ -176,7 +177,7 @@ class _professional_detailsState extends State<professional_details> {
                                             scrollDirection: Axis.vertical,
                                             itemCount: ratingname.length,
                                             itemBuilder: (context, index) {
-                                              return Container(
+                                              return SizedBox(
                                                 height:
                                                     SizeConfig.screenHeight *
                                                         0.035,
@@ -184,21 +185,21 @@ class _professional_detailsState extends State<professional_details> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   children: [
-                                                    Container(
+                                                    SizedBox(
                                                         width: SizeConfig
                                                                 .screenWidth *
                                                             0.4,
                                                         child: Text(
                                                           index == 0
-                                                              ? "${ratingname[0]}(${_get_staff_details.response.value.ratelist?.excellent??'0'})"
+                                                              ? "${ratingname[0]}(${_get_staff_details.staffModel.value.ratelist?.excellent??'0'})"
                                                               : index == 1
-                                                                  ? "${ratingname[1]}(${_get_staff_details.response.value.ratelist?.good??'0'})"
+                                                                  ? "${ratingname[1]}(${_get_staff_details.staffModel.value.ratelist?.good??'0'})"
                                                                   : index == 2
-                                                                      ? "${ratingname[2]}(${_get_staff_details.response.value.ratelist?.average??'0'})"
+                                                                      ? "${ratingname[2]}(${_get_staff_details.staffModel.value.ratelist?.average??'0'})"
                                                                       : index ==
                                                                               3
-                                                                          ? "${ratingname[3]}(${_get_staff_details.response.value.ratelist?.notGood??'0'})"
-                                                                          : "${ratingname[4]}(${_get_staff_details.response.value.ratelist?.poor??'0'})",
+                                                                          ? "${ratingname[3]}(${_get_staff_details.staffModel.value.ratelist?.notGood??'0'})"
+                                                                          : "${ratingname[4]}(${_get_staff_details.staffModel.value.ratelist?.poor??'0'})",
                                                           style: font_style
                                                               .black_600_14_nounderline,
                                                         )),
@@ -250,124 +251,83 @@ class _professional_detailsState extends State<professional_details> {
 
                                     //REVIEWS LISTVIEW
                                     Center(
-                                      child: Container(
+                                      child: SizedBox(
                                         width: SizeConfig.screenWidth * 0.9,
-                                        child: ListView.separated(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: _get_staff_details.response
-                                                  .value.data?.length ??
-                                              0,
-                                          itemBuilder: (context, index) {
-                                            return Container(
-                                              height: SizeConfig.screenHeight *
-                                                  0.06,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          children: [
+                                            //IMAGES
+                                            Container(
+                                              height: SizeConfig
+                                                  .screenHeight *
+                                                  0.07,
                                               width:
-                                                  SizeConfig.screenWidth * 0.9,
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  //IMAGES
-                                                  Container(
-                                                    height: SizeConfig
-                                                            .screenHeight *
-                                                        0.07,
-                                                    width:
-                                                        SizeConfig.screenWidth *
-                                                            0.14,
-                                                    decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        image: DecorationImage(
-                                                            image: NetworkImage(
-                                                                _get_staff_details
-                                                                    .response
-                                                                    .value
-                                                                    .data![
-                                                                        index]
-                                                                    .userimage
-                                                                    .toString()),
-                                                            fit: BoxFit.cover)),
-                                                  ),
-                                                  SizedBox(
-                                                    width:
-                                                        SizeConfig.screenWidth *
-                                                            0.01,
-                                                  ),
+                                              SizeConfig.screenWidth *
+                                                  0.14,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          '${_get_staff_details
+                                                              .staffModel
+                                                              .value
+                                                              .data?.profile??""}'),
+                                                      fit: BoxFit.cover)),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                              SizeConfig.screenWidth *
+                                                  0.01,
+                                            ),
 
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        _get_staff_details
-                                                            .response
-                                                            .value
-                                                            .data![index]
-                                                            .username
-                                                            .toString(),
-                                                        style: font_style
-                                                            .black_500_14,
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          const Icon(
-                                                            Icons.star_half,
-                                                            color: Color(
-                                                                0xffF2C94C),
-                                                            size: 15,
-                                                          ),
-                                                          Text(
-                                                            _get_staff_details
-                                                                .response
-                                                                .value
-                                                                .data![index]
-                                                                .ratings
-                                                                .toString(),
-                                                            style: font_style
-                                                                .black_400_10,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  const Spacer(),
-                                                  Text(
-                                                    _get_staff_details
-                                                        .response
-                                                        .value
-                                                        .data![index]
-                                                        .createdAt
-                                                        .toString()
-                                                        .substring(0, 10),
-                                                    style:
-                                                        font_style.black_400_12,
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                          separatorBuilder: (context, index) {
-                                            return Container(
-                                              margin: const EdgeInsets.symmetric(
-                                                  vertical: 10),
-                                              height: 1,
-                                              color: line_cont_col,
-                                              width:
-                                                  SizeConfig.screenWidth * 0.9,
-                                            );
-                                          },
+                                            Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceEvenly,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .start,
+                                              children: [
+                                                Text(
+                                                  '${_get_staff_details
+                                                      .staffModel
+                                                      .value
+                                                      .data?.firstName
+                                                      .toString()}${_get_staff_details
+                                                      .staffModel
+                                                      .value
+                                                      .data?.lastName
+                                                      .toString()}',
+                                                  style: font_style
+                                                      .black_500_14,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .center,
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.star_half,
+                                                      color: Color(
+                                                          0xffF2C94C),
+                                                      size: 15,
+                                                    ),
+                                                    Text(
+                                                      _get_staff_details
+                                                          .response
+                                                          .value.average
+                                                          .toString(),
+                                                      style: font_style
+                                                          .black_400_10,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     )
@@ -375,7 +335,7 @@ class _professional_detailsState extends State<professional_details> {
                                 )
                         ],
                       )
-                    : Container(
+                    : SizedBox(
                         width: SizeConfig.screenWidth,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

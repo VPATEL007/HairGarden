@@ -1,70 +1,100 @@
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-class CarouselWithIndicatorDemo extends StatefulWidget {
+
+class CustomTextAnimation extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _CarouselWithIndicatorState();
-  }
+  _CustomTextAnimationState createState() => _CustomTextAnimationState();
 }
 
-class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
-  List swiper_img=[
-    "assets/images/makeup1.jpeg",
-    "assets/images/makeup2.png",
-    "assets/images/makeup3.jpg"
-  ];
-  int _current = 0;
-  final CarouselController _controller = CarouselController();
+class _CustomTextAnimationState extends State<CustomTextAnimation> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  late AnimationController _controller2;
+  late Animation<double> _animation2;
+  bool isShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1), // Adjust the duration as per your preference
+    );
+
+    _animation = Tween<double>(begin: -3.0, end: 0.0).animate(_controller);
+
+    // Start the animation
+    _controller.forward();
+    Future.delayed(Duration(seconds: 2)).then((value)
+    {
+      setState(() {
+        isShown=true;
+      });
+      _controller2 = AnimationController(
+        vsync: this,
+        duration: Duration(seconds: 1), // Adjust the duration as per your preference
+      );
+
+      _animation2 = Tween<double>(begin: 1.0, end: 0.0).animate(_controller2);
+
+      // Start the animation
+      _controller2.forward();
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Carousel with indicator controller demo')),
-      body: Column(children: [
-        Expanded(
-          child: CarouselSlider(
-            items: swiper_img.map((item) => Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(
-                      image: AssetImage(item.toString()),fit: BoxFit.cover
-                  )
-              ),
-            ))
-                .toList(),
-            carouselController: _controller,
-            options: CarouselOptions(
-                autoPlay: true,
-                enlargeCenterPage: true,
-                aspectRatio: 2.0,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index;
-                  });
-                }),
+      appBar: AppBar(
+        title: Text('Custom Animation'),
+      ),
+      body: Column(
+        children: [
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Align(
+                alignment: Alignment(_animation.value, 0),
+                child: Text(
+                  'First Text',
+                  style: TextStyle(fontSize: 24.0),
+                ),
+              );
+            },
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: swiper_img.asMap().entries.map((entry) {
-            return InkWell(
-              onTap: () => _controller.animateToPage(entry.key),
-              child: Container(
-                width: 12.0,
-                height: 12.0,
-                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: (Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black)
-                        .withOpacity(_current == entry.key ? 0.9 : 0.4)),
-              ),
-            );
-          }).toList(),
-        ),
-      ]),
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Align(
+                alignment: Alignment(-_animation.value, 0),
+                child: Text(
+                  'Second Text',
+                  style: TextStyle(fontSize: 24.0),
+                ),
+              );
+            },
+          ),
+          isShown?AnimatedBuilder(
+            animation: _controller2,
+            builder: (context, child) {
+              return Align(
+                alignment: Alignment(-_animation.value, 30),
+                child: Text(
+                  'Third Text',
+                  style: TextStyle(fontSize: 24.0),
+                ),
+              );
+            },
+          ):SizedBox(),
+        ],
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

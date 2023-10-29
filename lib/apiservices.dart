@@ -9,6 +9,7 @@ import 'package:hairgarden/USER/category/Model/get_addons_model.dart';
 import 'package:hairgarden/USER/category/Model/get_prod_bysubcat_cat_model.dart';
 import 'package:hairgarden/auth/Model/available_coupon.dart';
 import 'package:hairgarden/auth/Model/notification_model.dart';
+import 'package:hairgarden/auth/Model/staff_model.dart';
 import 'package:hairgarden/auth/Model/support_chat_model.dart';
 import 'package:hairgarden/auth/Model/ticket_model.dart';
 import 'package:hairgarden/auth/Model/wallet_data_model.dart';
@@ -114,7 +115,7 @@ class api_service {
 
   //SIGNUP
   Future<signup_model> signup(first_name, last_name, email, mobile, password,
-      otp, refer_code, gender) async {
+      otp, refer_code, gender,device_key) async {
     final user_form = FormData();
     String? fcmToken = await FirebaseMessaging.instance.getToken();
     user_form.fields.add(MapEntry("fcmToken", fcmToken??""));
@@ -126,6 +127,7 @@ class api_service {
     user_form.fields.add(MapEntry("otp", otp));
     user_form.fields.add(MapEntry("refer_code", refer_code));
     user_form.fields.add(MapEntry("gender", gender));
+    user_form.fields.add(MapEntry("device_key", device_key));
     final value_user = await dio.post("$baseurl/user-sign-up", data: user_form);
     if (value_user.statusCode == 200) {
       final result_user = signup_model.fromJson(value_user.data);
@@ -545,7 +547,8 @@ class api_service {
 
     user_form.fields.add(MapEntry("address_id", address_id.toString()));
     user_form.fields.add(MapEntry("service_id", service_id));
-
+    log("ADDRESS ID=====${address_id}");
+    log("SERVICE ID=====${service_id}");
     final value_user =
         await dio.post("$baseurl/getProfessionals", data: user_form);
     if (value_user.statusCode == 200) {
@@ -571,6 +574,21 @@ class api_service {
     } else {
       final result_user = get_staff_details_model.fromJson(value_user.data);
       return result_user;
+    }
+    // throw "Somthing went wrong";
+  }
+
+  Future<GetStaffDataModel> getStaffDetail(staff_id) async {
+    Map<String, dynamic> map = {"user_id": staff_id};
+
+    final valueUser =
+    await dio.post("$baseurl/staff-profile", data: map);
+    if (valueUser.data['status'] == true) {
+      final resultUser = GetStaffDataModel.fromJson(valueUser.data);
+      return resultUser;
+    } else {
+      final resultUser = GetStaffDataModel.fromJson(valueUser.data);
+      return resultUser;
     }
     // throw "Somthing went wrong";
   }

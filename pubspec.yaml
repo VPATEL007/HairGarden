@@ -46,6 +46,7 @@ dependencies:
   dotted_border:
   flutter_rating_bar: ^4.0.1
   dio:
+  marquee: ^2.2.3
   fluttertoast:
   flutter_local_notifications: ^13.0.0
   firebase_core: ^2.4.0

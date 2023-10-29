@@ -66,7 +66,7 @@ class Data {
     id = json['id'].toString();
     userId = json['user_id'].toString();
     deviceId = json['device_id'];
-    categoryId = json['category_id'];
+    categoryId = json['category_id'].toString();
     serviceCateId = json['service_cate_id'].toString();
     title = json['title'];
     qty = json['qty'];

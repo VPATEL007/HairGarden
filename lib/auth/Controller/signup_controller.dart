@@ -12,10 +12,10 @@ class signup_controller extends GetxController{
   var loading = false.obs;
   var response = signup_model().obs;
 
-  Future<void>signup_cont(frompage,first_name, last_name, email, mobile, password, otp,refer_code,gender,)async{
+  Future<void>signup_cont(frompage,first_name, last_name, email, mobile, password, otp,refer_code,gender,device_key)async{
     try{
       loading(true);
-      final respo = await api_service().signup(first_name, last_name, email, mobile, password, otp,refer_code,gender);
+      final respo = await api_service().signup(first_name, last_name, email, mobile, password, otp,refer_code,gender,device_key);
       if(respo.status == true){
         response = respo.obs;
         // commontoas(msg: respo.message.toString());

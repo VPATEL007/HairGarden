@@ -8,12 +8,7 @@ class get_addons_model {
   get_addons_model.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
+    data = json["data"] == null ? [] : List<Data>.from(json["data"]!.map((x) => Data.fromJson(x)));
   }
 
   Map<String, dynamic> toJson() {

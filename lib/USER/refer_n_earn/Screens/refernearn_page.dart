@@ -338,7 +338,7 @@ class _refernearn_pageState extends State<refernearn_page> {
                                               title: 'Hair Garden',
                                               text:
                                                   "Join Hair Garden using my Reference Code : ${widget.refercode.toString()}",
-                                              chooserTitle: 'HIII');
+                                              chooserTitle: 'Refer Code');
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -363,44 +363,44 @@ class _refernearn_pageState extends State<refernearn_page> {
                                       height: SizeConfig.screenHeight * 0.02,
                                     ),
 
-                                    // ListView.separated(
-                                    //   itemCount: 3,
-                                    //   shrinkWrap: true,
-                                    //   scrollDirection: Axis.vertical,
-                                    //   itemBuilder: (context, index) {
-                                    //     return Row(
-                                    //       children: [
-                                    //         Container(
-                                    //           height: SizeConfig.screenHeight *
-                                    //               0.01,
-                                    //           width:
-                                    //               SizeConfig.screenWidth * 0.01,
-                                    //           decoration: const BoxDecoration(
-                                    //               color: Colors.black,
-                                    //               shape: BoxShape.circle),
-                                    //         ),
-                                    //         SizedBox(
-                                    //           width:
-                                    //               SizeConfig.screenWidth * 0.02,
-                                    //         ),
-                                    //         SizedBox(
-                                    //             width: SizeConfig.screenWidth *
-                                    //                 0.85,
-                                    //             child: Text(
-                                    //               "Earn ₹150 on the first successful of the Referee",
-                                    //               style:
-                                    //                   font_style.black_400_14,
-                                    //             ))
-                                    //       ],
-                                    //     );
-                                    //   },
-                                    //   separatorBuilder: (context, index) {
-                                    //     return SizedBox(
-                                    //       height:
-                                    //           SizeConfig.screenHeight * 0.01,
-                                    //     );
-                                    //   },
-                                    // )
+                                    ListView.separated(
+                                      itemCount: 3,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemBuilder: (context, index) {
+                                        return Row(
+                                          children: [
+                                            Container(
+                                              height: SizeConfig.screenHeight *
+                                                  0.01,
+                                              width:
+                                                  SizeConfig.screenWidth * 0.01,
+                                              decoration: const BoxDecoration(
+                                                  color: Colors.black,
+                                                  shape: BoxShape.circle),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                                  SizeConfig.screenWidth * 0.02,
+                                            ),
+                                            SizedBox(
+                                                width: SizeConfig.screenWidth *
+                                                    0.85,
+                                                child: Text(
+                                                  "Earn ₹150 on the first successful of the Referee",
+                                                  style:
+                                                      font_style.black_400_14,
+                                                ))
+                                          ],
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return SizedBox(
+                                          height:
+                                              SizeConfig.screenHeight * 0.01,
+                                        );
+                                      },
+                                    )
                                   ],
                                 ),
                               ),

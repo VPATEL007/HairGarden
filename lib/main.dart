@@ -92,7 +92,7 @@ class _MyAppState extends State<MyApp> {
           scaffoldBackgroundColor: bg_col,
           primarySwatch: Colors.blue,
         ),
-        home: const splash_screen(),
+        home: splash_screen(),
       ),
     );
   }

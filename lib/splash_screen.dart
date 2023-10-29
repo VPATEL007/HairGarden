@@ -1,18 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hairgarden/USER/bottombar/Screens/bottombar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'COMMON/common_color.dart';
 import 'COMMON/size_config.dart';
-import 'package:hairgarden/COMMON/font_style.dart';
 import 'USER/address/Controller/get_address_controller.dart';
 import 'USER/enable_location/Screens/enable_location_page.dart';
-import 'USER/map_page.dart';
 import 'auth/Screens/login_page.dart';
+import 'package:hairgarden/COMMON/font_style.dart';
 
 class splash_screen extends StatefulWidget {
   const splash_screen({Key? key}) : super(key: key);
@@ -39,7 +36,6 @@ class _splash_screenState extends State<splash_screen> {
           Permission.location,
           Permission.storage,
         ].request();
-        print('LOcation Status===${statuses[Permission.location]}');
         if(statuses[Permission.location]==PermissionStatus.denied)
         {
           Get.to(const enable_loation_page());
@@ -72,7 +68,8 @@ class _splash_screenState extends State<splash_screen> {
     SizeConfig().init(context);
     return Scaffold(
       backgroundColor:bg_col,
-      body: Column(
+      body:
+      Column(
         children: [
           const Spacer(flex: 3),
           Align(
@@ -96,7 +93,6 @@ class _splash_screenState extends State<splash_screen> {
               style: font_style.white_600_16.copyWith(color: yellow_col,fontStyle: FontStyle.italic)
           ),
           const Spacer(),
-
         ],
       )
     );
