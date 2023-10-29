@@ -768,7 +768,7 @@ class _signup_pageState extends State<signup_page> {
                                       ),
                                       child: _send_otp.loading.value ||
                                           _staff_signup.loading.value
-                                          ? const commonindicator()
+                                          ? const commonindicator(color: Colors.white)
                                           : Text(
                                         _send_otp.isotp()
                                             ? "SIGN UP"

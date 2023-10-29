@@ -77,7 +77,7 @@ class api_services {
     final user_form = FormData();
 
     user_form.fields.add(MapEntry("staff_id", staffId));
-    // user_form.fields.add(MapEntry("type", 'Confirmed'));
+    user_form.fields.add(MapEntry("type", 'Confirmed'));
 
     final value_user = await dio.post(
       "$baseurl/AllBookingForStaff",

@@ -71,7 +71,7 @@ class Datum {
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json["id"],
+        id: json["id"].toString(),
         orderId: json["orderId"],
         customer: json["customer"] == null
             ? null

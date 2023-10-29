@@ -161,14 +161,18 @@ class _appointment_details_pageState extends State<appointment_details_page> {
 
                               //ADDRESS
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Address",
+                                  Text("Address\t\t",
                                       style: font_style.yell_400_16),
-                                  Text(
-                                      "${appointmentDetailController.bookingDetailModel().data?[0].location ?? ''}",
-                                      style: font_style.darkgray_400_10),
+                                  SizedBox(
+                                    width:SizeConfig.screenWidth*0.70,
+                                    child: Text(
+                                        "${appointmentDetailController.bookingDetailModel().data?[0].location ?? ''}",
+                                        style: font_style.darkgray_400_10),
+                                  ),
                                 ],
                               ),
                             ],

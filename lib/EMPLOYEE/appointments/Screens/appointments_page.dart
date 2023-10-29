@@ -11,7 +11,6 @@ import 'package:hairgardenemployee/COMMON/font_style.dart';
 import 'package:hairgardenemployee/COMMON/size_config.dart';
 import 'package:hairgardenemployee/EMPLOYEE/appointments/Screens/appointment_details_page.dart';
 import 'package:hairgardenemployee/EMPLOYEE/appointments/controller/appoitment_controller.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class appointments_page extends StatefulWidget {
@@ -298,7 +297,7 @@ class _appointments_pageState extends State<appointments_page> {
                                           height: SizeConfig.screenHeight,
                                           child: Center(
                                             child: Text(
-                                              "You have no Upcoming Order",
+                                              "You Have No Upcoming Order",
                                               style: font_style
                                                   .grey52525B_400_10_noline,
                                             ),
@@ -355,14 +354,17 @@ class _appointments_pageState extends State<appointments_page> {
                                                                   .screenHeight *
                                                               0.005,
                                                         ),
-                                                        Text(
-                                                          appointmentController
-                                                                  .bookingHistoryModel()
-                                                                  .data?[index]
-                                                                  .location ??
-                                                              '',
-                                                          style: font_style
-                                                              .black_400_10,
+                                                        SizedBox(
+                                                          width:SizeConfig.screenWidth*0.70,
+                                                          child: Text(
+                                                            appointmentController
+                                                                    .bookingHistoryModel()
+                                                                    .data?[index]
+                                                                    .location ??
+                                                                '',
+                                                            style: font_style
+                                                                .black_400_10,
+                                                          ),
                                                         ),
                                                         SizedBox(
                                                           height: SizeConfig
@@ -417,7 +419,7 @@ class _appointments_pageState extends State<appointments_page> {
                                           alignment: Alignment.center,
                                           width: SizeConfig.screenWidth,
                                           child: Text(
-                                            "You have no History",
+                                            "You Have No History",
                                             style: font_style
                                                 .grey52525B_400_10_noline,
                                           ))),

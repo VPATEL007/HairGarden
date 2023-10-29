@@ -7,6 +7,7 @@ import 'package:hairgardenemployee/COMMON/const.dart';
 import 'package:hairgardenemployee/COMMON/size_config.dart';
 import 'package:hairgardenemployee/COMMON/font_style.dart';
 import 'package:hairgardenemployee/EMPLOYEE/Your_Reviews/controller/review_controller.dart';
+import 'package:hairgardenemployee/EMPLOYEE/profile/controller/profile_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,6 +54,7 @@ class _your_reviewsState extends State<your_reviews> {
   ];
 
   final reviewController = Get.put(ReviewController());
+  final staffProfileController = Get.put(StaffProfileController());
 
   getUserData() async {
     reviewController.isLoading(true);
@@ -115,9 +117,9 @@ class _your_reviewsState extends State<your_reviews> {
               height: SizeConfig.screenHeight * 0.01,
             ),
             Text(
-              "${reviewController
-                  .allRatingModel()
-                  .name}",
+              "${staffProfileController
+                  .model().data?.firstName} ${staffProfileController
+                  .model().data?.lastName}",
               style: font_style.black_600_14,
             ),
             SizedBox(
@@ -140,8 +142,7 @@ class _your_reviewsState extends State<your_reviews> {
                 Text(
                   double.parse(reviewController
                       .allRatingModel()
-                      .average
-                      .toString())
+                      .average??"0")
                       .toStringAsFixed(2),
                   style: font_style.black_400_20,
                 ),
@@ -184,7 +185,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.excellent ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,
@@ -224,7 +225,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.good ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,
@@ -264,7 +265,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.average ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,
@@ -304,7 +305,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.notGood ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,
@@ -344,7 +345,7 @@ class _your_reviewsState extends State<your_reviews> {
                                       .allRatingModel()
                                       .ratelist
                                       ?.poor ??
-                                      ''),
+                                      '0'),
                                   max: 100,
                                   min: 0,
                                   activeColor: yellow_col,

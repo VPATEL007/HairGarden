@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'common_color.dart';
 
 class commonindicator extends StatefulWidget {
-  const commonindicator({Key? key}) : super(key: key);
+  final Color? color;
+  const commonindicator({Key? key, this.color}) : super(key: key);
 
   @override
   State<commonindicator> createState() => _commonindicatorState();
@@ -12,6 +13,6 @@ class commonindicator extends StatefulWidget {
 class _commonindicatorState extends State<commonindicator> {
   @override
   Widget build(BuildContext context) {
-    return Center(child: CupertinoActivityIndicator(color: yellow_col,));
+    return Center(child: CupertinoActivityIndicator(color: widget.color??yellow_col));
   }
 }

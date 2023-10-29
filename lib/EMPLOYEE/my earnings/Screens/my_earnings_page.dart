@@ -8,7 +8,6 @@ import 'package:hairgardenemployee/COMMON/font_style.dart';
 import 'package:hairgardenemployee/COMMON/size_config.dart';
 import 'package:hairgardenemployee/EMPLOYEE/my%20earnings/Screens/earning_details_page.dart';
 import 'package:hairgardenemployee/EMPLOYEE/my%20earnings/controller/my_earning_controller.dart';
-import 'package:hairgardenemployee/EMPLOYEE/profile/controller/profile_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../COMMON/const.dart';
@@ -50,13 +49,13 @@ class _my_earnings_pageState extends State<my_earnings_page> {
           ? const Center(
               child: commonindicator(),
             )
-          : Column(
+          : (myEarningController.myEarningModel().status??false)?Column(
               children: [
                 SizedBox(
                   height: SizeConfig.screenHeight * 0.04,
                 ),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: SizeConfig.screenWidth * 0.9,
                     child: Row(
                       children: [
@@ -79,7 +78,7 @@ class _my_earnings_pageState extends State<my_earnings_page> {
 
                 //RECENT SERVICES
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: SizeConfig.screenWidth * 0.9,
                     child: Text(
                       "Recent Services",
@@ -95,7 +94,7 @@ class _my_earnings_pageState extends State<my_earnings_page> {
 
                 //LISTVIEW
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: SizeConfig.screenWidth,
                     child: ListView.separated(
                       shrinkWrap: true,
@@ -183,7 +182,14 @@ class _my_earnings_pageState extends State<my_earnings_page> {
                   color: line_cont_col,
                 )
               ],
-            )),
+            ):Container(
+          height: Get.height*0.80,
+          alignment: Alignment.center,
+          width: SizeConfig.screenWidth,
+          child: Text(
+            "Not Earned Yet",
+            style: font_style.grey52525B_400_10_noline,
+          ))),
     );
   }
 }

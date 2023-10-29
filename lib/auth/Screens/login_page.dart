@@ -342,7 +342,7 @@ class _login_pageState extends State<login_page> {
                               ),
                               child: _send_otp.loading.value ||
                                       _staff_login.loading.value
-                                  ? const commonindicator()
+                                  ? const commonindicator(color: Colors.white)
                                   : Text(_send_otp.isotp() == false
                                   ? "GET OTP"
                                   : "LOG IN",
